@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch. 1 — Électrostatique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ch1">
+<article class="content">
+
+<div class="kicker">Chapitre 1</div>
+<h1>Électrostatique : charges, champ, potentiel, Gauss</h1>
+<p class="lead">Des charges <b>immobiles</b> (on regarde à un instant donné) créent un champ $\vec E$. Ce champ dérive d'un potentiel $V$ et on le quantifie de deux façons : par son <b>flux</b> (Gauss → 1ʳᵉ équation de Maxwell) et par sa <b>circulation</b> (→ 2ᵉ équation).</p>
+
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list">
+<li>choisir λ, σ ou ρ et écrire $\mathrm dq$</li><li>calculer une force de Coulomb (norme + sens)</li>
+<li>utiliser les symétries pour trouver la FORME de $\vec E$</li><li>calculer $\vec E$ par superposition (anneau)</li>
+<li>passer de $\vec E$ à $V$ et inversement</li><li>appliquer Gauss en 5 étapes (sphère, fil, plan)</li>
+<li>expliquer div et rot avec des images</li><li>démontrer $\mathrm{div}\vec E=\rho/\varepsilon_0$ et $\overrightarrow{\mathrm{rot}}\vec E=\vec 0$</li>
+</ul></div>
+
+<h2 id="charge"><span class="h2num">1.1</span>La charge électrique</h2>
+<div class="card def"><span class="tag">Définition — charge électrique</span>
+<p>Propriété de la matière responsable des interactions électriques. Trois propriétés <b>expérimentales</b> :</p>
+<ol><li><b>Deux signes.</b> Même signe → répulsion ; signes opposés → attraction. (La masse n'a qu'un signe : la gravitation est toujours attractive.)</li>
+<li><b>Quantification.</b> Toute charge est un multiple entier de $e=1{,}602\times10^{-19}$ C : $q=\pm Ne$ (Millikan, 1909).</li>
+<li><b>Conservation.</b> La charge totale d'un système isolé ne varie pas (même statut que l'énergie).</li></ol></div>
+<div class="card ex"><span class="tag">Ordre de grandeur</span><p>Un objet portant $q=1$ nC contient $N=q/e=10^{-9}/1{,}602\times10^{-19}\approx6{,}2\times10^9$ charges élémentaires : <b>six milliards</b>. Impossible de les compter une par une → on passe à une description <b>continue</b> (densités).</p></div>
+
+<h2 id="densites"><span class="h2num">1.2</span>Distributions continues de charges</h2>
+<p>On découpe l'objet en petits morceaux ; <b>chaque morceau porte $\mathrm dq$ assimilable à une charge ponctuelle</b>. Comme une densité de population (habitants/km²), c'est un nombre de charges par unité d'espace.</p>
+<div class="tablewrap"><table>
+<tr><th>Densité</th><th>Symbole</th><th>Unité</th><th>Morceau</th><th>Total (si uniforme)</th><th>Objets</th></tr>
+<tr><td>Linéique (1D)</td><td>$\lambda$</td><td>C·m⁻¹</td><td>$\mathrm dq=\lambda\,\mathrm d\ell$</td><td>$Q=\lambda L$</td><td>fil, tige, câble fin</td></tr>
+<tr><td>Surfacique (2D)</td><td>$\sigma$</td><td>C·m⁻²</td><td>$\mathrm dq=\sigma\,\mathrm dS$</td><td>$Q=\sigma S$</td><td>plaque, feuille, surface d'un conducteur</td></tr>
+<tr><td>Volumique (3D)</td><td>$\rho$</td><td>C·m⁻³</td><td>$\mathrm dq=\rho\,\mathrm dV$</td><td>$Q=\rho V$</td><td>boule, bloc, nuage</td></tr>
+</table></div>
+<div class="card meth"><span class="tag">Méthode — choisir la bonne densité</span>
+<p>Question : <b>quelles dimensions de l'objet sont négligeables devant les autres et devant la distance d'observation ?</b></p>
+<ul><li>Deux négligeables (long et fin) → <b>ligne, λ</b>. Ex. : fil de 1 m, Ø 0,5 mm, vu à 10 cm.</li>
+<li>Une négligeable (large et mince) → <b>surface, σ</b>. Ex. : plaque de condensateur.</li>
+<li>Aucune → <b>volume, ρ</b>. Ex. : boule chargée, cœur d'un nuage d'orage.</li></ul>
+<p>Ce sont trois <b>modèles</b> d'un même objet réel selon l'échelle : un câble vu de loin = fil (λ) ; vu de près = cylindre plein (ρ).</p></div>
+<div class="card ex"><span class="tag">Exemple — la même charge de 1 nC</span>
+<p>Fil de 2 m : $\lambda=10^{-9}/2=5\times10^{-10}$ C/m. Plaque 10 cm × 10 cm ($S=0{,}01$ m²) : $\sigma=10^{-7}$ C/m². Boule de rayon 5 cm ($V=\frac43\pi R^3=5{,}24\times10^{-4}$ m³) : $\rho=1{,}9\times10^{-6}$ C/m³. <b>Ces nombres ne sont pas comparables</b> : ils n'ont pas la même unité.</p></div>
+<div class="card trap"><span class="tag">⚠ L'unité identifie la densité</span><p>Si on te donne « $\rho_0$ en C·m⁻³ », c'est volumique, point. Et pour retrouver des coulombs : λ × longueur, σ × surface, ρ × volume. Si $\rho$ dépend de $r$ (TD1 ex. 5), on ne peut PAS écrire $Q=\rho V$ : il faut intégrer $\mathrm dq=\rho(r)\,4\pi r^2\mathrm dr$.</p></div>
+
+<h2 id="coulomb"><span class="h2num">1.3</span>Loi de Coulomb</h2>
+<div class="card def"><span class="tag">Définition — loi de Coulomb</span>
+$$\vec F_{1\to2}=\frac{1}{4\pi\varepsilon_0}\,\frac{q_1q_2}{r^2}\,\vec u_{1\to2},\qquad \varepsilon_0=8{,}854\times10^{-12}\ \mathrm{F\,m^{-1}},\quad \frac{1}{4\pi\varepsilon_0}\approx9{,}0\times10^9\ \mathrm{N\,m^2\,C^{-2}}$$
+<p>$\vec u_{1\to2}$ : vecteur unitaire de 1 vers 2. Le <b>signe de $q_1q_2$</b> décide : $>0$ répulsion, $<0$ attraction.</p></div>
+<figure class="anim" data-anim="coulomb" data-badge><figcaption><b>Manipule :</b> déplace les charges, change leurs signes. Constate : (1) les deux forces ont toujours même norme et sens opposés ; (2) doubler la distance divise la force par 4 ; (3) changer un signe inverse le sens mais pas la norme.</figcaption></figure>
+<div class="card ex"><span class="tag">Exemple du cours</span><p>$q_1=+2$ nC, $q_2=\pm3$ nC, $r=5$ cm : $F=9\times10^9\times\frac{2\times10^{-9}\times3\times10^{-9}}{(5\times10^{-2})^2}\approx$ <b>21,6 µN</b>. Même norme dans les deux cas, sens opposés.</p></div>
+<div class="card why"><span class="tag">Pourquoi en $1/r^2$ ? Pourquoi $4\pi$ ?</span><p>Réponse au § Gauss : le « flux » émis par une charge se conserve et se répartit sur une sphère d'aire $4\pi r^2$. Le $4\pi$ est la surface de la sphère unité ; le $1/r^2$ est une conséquence <b>géométrique</b> (comme l'éclairement d'une ampoule).</p></div>
+<div class="card rem"><span class="tag">Électrique vs gravitation (TD1 ex. 1)</span><p>Dans l'atome d'hydrogène, $F_e/F_G\approx2\times10^{39}$ ! La gravitation ne domine à grande échelle que parce que la matière est neutre en moyenne (les charges + et − se compensent), alors que les masses s'additionnent toujours.</p></div>
+
+<h2 id="champ"><span class="h2num">1.4</span>Le champ électrique</h2>
+<p><b>L'idée :</b> Coulomb décrit une action à distance « magique ». La vision moderne coupe l'interaction en deux étapes : (1) la charge $q$ <b>modifie l'espace</b> autour d'elle en y créant un champ ; (2) une autre charge $q'$ <b>réagit au champ là où elle se trouve</b>.</p>
+<div class="card def"><span class="tag">Définition — champ électrique</span>
+$$\vec E(M)=\frac{1}{4\pi\varepsilon_0}\frac{q}{r^2}\vec e_r\qquad[\vec E]=\mathrm{V\,m^{-1}}=\mathrm{N\,C^{-1}},\qquad \vec F=q'\,\vec E(M)$$
+<p><b>La charge test n'interagit pas avec l'autre charge, mais avec le champ présent à sa position.</b> Le champ existe même sans charge test : c'est une propriété de l'espace.</p></div>
+<div class="card rem"><span class="tag">Orientation</span><p>Charge + → champ <b>sortant</b> ; charge − → champ <b>entrant</b>. Les lignes de champ vont <b>des charges + vers les charges −</b>. C'est un vecteur, pas un scalaire.</p></div>
+<div class="card def"><span class="tag">Définition — principe de superposition</span>
+$$\vec E(M)=\sum_i\vec E_i(M)\qquad\text{et pour une distribution continue :}\qquad \vec E(M)=\int_{P\in\mathcal D}\frac{1}{4\pi\varepsilon_0}\frac{\mathrm dq(P)}{PM^2}\,\vec u_{P\to M}$$
+<p>Somme <b>vectorielle</b>. $PM$ et $\vec u_{P\to M}$ <b>changent avec P</b> : c'est pourquoi on <b>projette avant d'intégrer</b>. Intégrale simple, double ou triple selon λ, σ, ρ. (Fait expérimental ; le Ch. 5 le retrouve comme conséquence de la linéarité des équations de Maxwell.)</p></div>
+<figure class="anim tall" data-anim="field" data-badge><figcaption><b>Manipule :</b> glisse les charges, ajoute-en. Rouge = potentiel élevé, bleu = bas, liserés = équipotentielles. Observe : les lignes partent des + et finissent sur les − ; elles coupent les équipotentielles à <b>angle droit</b> ; le preset « Condensateur » donne un champ <b>uniforme</b> entre les plaques et quasi nul dehors.</figcaption></figure>
+
+<h2 id="sym"><span class="h2num">1.5</span>Symétries : la forme du champ sans calcul</h2>
+<div class="card def"><span class="tag">Principe de Curie</span><p><b>Les symétries des causes se retrouvent dans les effets.</b> Une distribution de charges invariante par une transformation crée un champ invariant par cette même transformation. Cela contraint la <b>forme</b> du champ avant tout calcul.</p></div>
+<div class="card def"><span class="tag">Règles pratiques (pour $\vec E$, vrai vecteur)</span>
+<ul><li><b>Plan de symétrie</b> de la distribution : en tout point de ce plan, $\vec E$ est <b>contenu dans le plan</b>.</li>
+<li><b>Plan d'antisymétrie</b> (les charges changent de signe par réflexion) : $\vec E$ est <b>perpendiculaire au plan</b>.</li>
+<li><b>Invariance par translation</b> selon un axe ⇒ $\vec E$ ne dépend pas de cette coordonnée.</li>
+<li><b>Invariance par rotation</b> autour d'un axe ⇒ $\vec E$ ne dépend pas de l'angle.</li></ul></div>
+<div class="card why"><span class="tag">Pourquoi un plan de symétrie force E à être dans le plan ?</span><p>Prends un point M du plan Π et regarde-le dans un miroir posé sur Π. Les charges sont identiques dans le miroir, donc le champ en M aussi. Mais le miroir <b>retourne</b> la composante de $\vec E$ perpendiculaire à Π (et garde les composantes parallèles). La seule façon d'être égal à son reflet : composante ⟂ <b>nulle</b>. Dans l'anneau du TD1 : deux éléments $\mathrm dq$ symétriques par rapport à Π créent des $\mathrm d\vec E$ dont les composantes ⟂ à Π se compensent exactement.</p></div>
+<div class="card meth"><span class="tag">Méthode — déterminer la forme d'un champ (3 questions avant toute intégrale)</span>
+<ol><li><b>Invariances</b> (translation, rotation) → les <b>variables</b> dont dépend $\vec E$.</li>
+<li><b>Plans de symétrie</b> passant par M → la <b>direction</b> de $\vec E$ (intersection des plans).</li>
+<li><b>Système de coordonnées</b> qui exprime ces symétries.</li></ol>
+<p><i>Exemple travaillé : fil rectiligne infini uniformément chargé.</i> Invariant par translation le long du fil (pas de $z$) et par rotation autour (pas de $\theta$) ⇒ dépend de $r$ seul. Tout plan contenant le fil et M est plan de symétrie ; M appartient à une infinité de tels plans dont l'intersection est la droite ⟂ au fil passant par M ⇒ $\vec E$ radial. <b>Conclusion sans calcul : $\vec E(M)=E(r)\,\vec e_r$.</b> Il reste UNE fonction d'UNE variable : Gauss la trouvera en deux lignes.</p></div>
+<div class="tablewrap"><table>
+<tr><th>Distribution</th><th>Invariances</th><th>Forme de $\vec E$</th><th>Coordonnées</th></tr>
+<tr><td>Charge ponctuelle, sphère chargée (ρ(r))</td><td>toutes rotations autour de O</td><td>$E(r)\,\vec e_r$</td><td>sphériques</td></tr>
+<tr><td>Fil infini, cylindre infini, coaxial</td><td>translation $z$ + rotation $\theta$</td><td>$E(r)\,\vec e_r$</td><td>cylindriques</td></tr>
+<tr><td>Plan infini</td><td>translations $x$, $y$</td><td>$E(z)\,\vec e_z$, impair : $E(-z)=-E(z)$</td><td>cartésiennes</td></tr>
+<tr><td>Anneau / disque (sur l'axe)</td><td>rotation autour de $Oz$</td><td>$E(z)\,\vec e_z$ sur l'axe</td><td>cylindriques</td></tr>
+</table></div>
+<div class="card trap"><span class="tag">⚠ Piège : invariance ≠ direction</span><p>L'invariance par rotation dit que les <b>composantes</b> $E_r, E_\theta, E_z$ ne dépendent pas de $\theta$ ; elle ne dit PAS que $E_\theta=0$. Pour annuler une composante, il faut un <b>plan de symétrie</b>. (Contre-exemple : le champ magnétique d'un fil a la même invariance mais est purement orthoradial.)</p></div>
+
+<h2 id="anneau"><span class="h2num">1.6</span>Exemple complet : l'anneau chargé (superposition)</h2>
+<p>Anneau de rayon $R$, charge $Q$ uniforme. On cherche $\vec E$ au point M de l'axe, à la cote $z$.</p>
+<figure class="anim tall" data-anim="ring" data-badge><figcaption><b>Regarde :</b> à chaque instant, deux éléments $\mathrm dq$ diamétralement opposés. Leurs $\mathrm d\vec E$ (orange) ont des composantes ⟂ à l'axe qui s'annulent : seule la somme axiale (verte) survit. En bas, $E(z)$ : nul au centre, maximal en $z=R/\sqrt2$, puis en $1/z^2$.</figcaption></figure>
+<div class="steps" data-start="Afficher la démarche">
+<div class="step"><h4>Symétrie</h4><p>$Oz$ est axe de révolution, tout plan contenant $Oz$ est plan de symétrie ⇒ en M (sur l'axe) $\vec E=E(z)\,\vec e_z$. Les composantes radiales se compensent deux à deux.</p></div>
+<div class="step"><h4>Superposition + projection</h4><p>Un $\mathrm dq$ est à $d=\sqrt{R^2+z^2}$ de M : $\mathrm dE=\frac{1}{4\pi\varepsilon_0}\frac{\mathrm dq}{R^2+z^2}$. On ne garde que la projection sur $\vec e_z$, facteur $\cos\alpha=\frac{z}{\sqrt{R^2+z^2}}$ :
+$$\mathrm dE_z=\frac{1}{4\pi\varepsilon_0}\frac{z\,\mathrm dq}{(R^2+z^2)^{3/2}}$$</p></div>
+<div class="step"><h4>Intégration</h4><p>Tout est constant sur l'anneau sauf $\mathrm dq$ (tous les points sont à la même distance de M), et $\int\mathrm dq=Q$ :
+$$\boxed{E(z)=\frac{1}{4\pi\varepsilon_0}\frac{Qz}{(R^2+z^2)^{3/2}}}$$</p></div>
+<div class="step"><h4>Vérification par les cas limites</h4><p>Centre ($z=0$) : $E=0$, imposé par la symétrie. Loin ($z\gg R$) : $(R^2+z^2)^{3/2}\approx z^3$ ⇒ $E\approx\frac{Q}{4\pi\varepsilon_0z^2}$ : l'anneau vu de loin est une charge ponctuelle ✓.</p></div>
+</div>
+<div class="card rem"><span class="tag">Le réflexe « cas limites »</span><p>Un résultat qui ne redonne pas la charge ponctuelle à grande distance, ou qui n'est pas nul là où la symétrie l'impose, est <b>faux</b>. Fais toujours ces deux tests : ils rapportent des points et attrapent les erreurs.</p></div>
+
+<h2 id="potentiel"><span class="h2num">1.7</span>Le potentiel électrique</h2>
+<p><b>Avec les mains :</b> un potentiel est une <b>marche</b> à franchir. Monter une marche demande de l'énergie (on gagne de l'énergie potentielle, comme en montant un escalier) ; la descendre en restitue (le skateur en haut de la rampe convertit son énergie potentielle en vitesse).</p>
+<div class="card def"><span class="tag">Définition — potentiel électrique</span>
+$$\boxed{\vec E=-\vec\nabla V}\quad\Longleftrightarrow\quad\mathrm dV=-\vec E\cdot\mathrm d\vec\ell\qquad[V]=\mathrm V$$
+<p>Charge ponctuelle (convention $V(\infty)=0$) : $V(M)=\dfrac{1}{4\pi\varepsilon_0}\dfrac{q}{r}$ — en $1/r$, pas en $1/r^2$ (car la dérivée de $1/r$ est $-1/r^2$).</p></div>
+<div class="card def"><span class="tag">Définition — circulation de $\vec E$</span>
+$$\int_A^B\vec E\cdot\mathrm d\vec\ell=V(A)-V(B)$$
+<p>C'est la forme intégrée de $\mathrm dV=-\vec E\cdot\mathrm d\vec\ell$. <b>Elle ne dépend que des extrémités, pas du chemin</b> : le champ est dit <b>conservatif</b>.</p></div>
+<div class="card meth"><span class="tag">Méthode — potentiel d'une charge ponctuelle</span>
+<ol><li>Déplacement radial : $\mathrm d\vec\ell=\mathrm dr\,\vec e_r$ ⇒ $\vec E\cdot\mathrm d\vec\ell=E(r)\mathrm dr$, $\mathrm dV=-\frac{q}{4\pi\varepsilon_0}\frac{\mathrm dr}{r^2}$.</li>
+<li>Intégrer de $\infty$ à $r$ : $V(r)-V(\infty)=-\frac{q}{4\pi\varepsilon_0}\left[-\frac{1}{r'}\right]_\infty^r=\frac{q}{4\pi\varepsilon_0r}$.</li>
+<li>Convention $V(\infty)=0$.</li></ol></div>
+<div class="card rem"><span class="tag">Origine du signe moins</span><p>V ↔ altitude, $\vec E$ ↔ pente descendante. Une charge positive lâchée dans un champ va vers les potentiels décroissants, comme une bille descend une pente. <b>$\vec E$ est dirigé vers les V décroissants.</b></p></div>
+<div class="card ex"><span class="tag">Exemples 1D</span><p>$V(x)=5-0{,}6x$ ⇒ $E=-\mathrm dV/\mathrm dx=0{,}6$ : constant (V affine ⇒ E uniforme). V exponentiel décroissant ⇒ pente de plus en plus douce ⇒ E positif mais de plus en plus petit. <b>E nul n'implique pas V nul</b> : V peut être constant non nul (plateau).</p></div>
+<figure class="anim tall" data-anim="potential" data-badge><figcaption><b>Manipule :</b> lâche une charge + puis un électron sur chaque profil. Le + descend V ; l'électron remonte V (sens opposé à $\vec E$) — mais coche « tracer $E_p=qV$ » : il descend bien <i>son</i> énergie potentielle. Barrière : règle $v_0$ pour juste franchir le sommet.</figcaption></figure>
+<div class="card def"><span class="tag">Énergie et tension</span>
+$$W_{A\to B}=\int_A^Bq\vec E\cdot\mathrm d\vec\ell=q(V_A-V_B)=q\,U_{AB},\qquad E_p=qV$$
+<p>C'est la définition physique de la tension : <b>une tension est une énergie par unité de charge</b>. Un électron se déplace dans le sens opposé à $\vec E$, vers les potentiels croissants : il perd de l'énergie potentielle et gagne autant d'énergie cinétique.</p></div>
+<div class="card ex"><span class="tag">L'électron-volt</span><p>Énergie cinétique gagnée par un électron initialement immobile qui traverse 1 V : $\Delta E_p=-e(V_A-V_B)=-1{,}602\times10^{-19}$ J ⇒ $1\ \mathrm{eV}=1{,}602\times10^{-19}$ J. Échelle atomique : 13,6 eV pour ioniser l'hydrogène, 1,1 eV de bande interdite pour le silicium.</p></div>
+<div class="card def"><span class="tag">Superposition des potentiels</span>
+$$V(M)=\sum_iV_i(M)\qquad V(M)=\frac{1}{4\pi\varepsilon_0}\int_{P\in\mathcal D}\frac{\mathrm dq(P)}{PM}$$
+<p>Addition <b>scalaire</b> (le gradient est linéaire). Tous les $V_i$ avec la <b>même référence</b>. Plus aucune projection à faire !</p></div>
+<div class="card why"><span class="tag">Le potentiel comme raccourci (anneau en 2 lignes)</span><p>Tous les points de l'anneau sont à $\sqrt{R^2+z^2}$ de M : $V(z)=\frac{1}{4\pi\varepsilon_0}\frac{Q}{\sqrt{R^2+z^2}}$. Puis $E_z=-\frac{\mathrm dV}{\mathrm dz}=\frac{1}{4\pi\varepsilon_0}\frac{Qz}{(R^2+z^2)^{3/2}}$. Même résultat, sans projection. <b>Règle pratique : calculer V puis dériver chaque fois que la géométrie le permet.</b></p></div>
+
+<h2 id="gauss"><span class="h2num">1.8</span>Le théorème de Gauss</h2>
+<p>La superposition marche toujours mais devient vite impraticable. <b>En présence de symétrie, Gauss donne $\vec E$ sans intégration.</b></p>
+<div class="card def"><span class="tag">Définition — théorème de Gauss</span>
+$$\boxed{\oiint_S\vec E\cdot\mathrm d\vec S=\frac{Q_{int}}{\varepsilon_0}}\ \ \text{(forme intégrale)}\qquad \mathrm{div}\,\vec E=\frac{\rho}{\varepsilon_0}\ \ \text{(forme locale)}$$
+<p>Le flux sortant d'une surface <b>fermée</b> (surface de Gauss) ne dépend que de la charge <b>enfermée</b>. Équivalent à Coulomb : aucune physique nouvelle, une reformulation plus maniable.</p></div>
+<div class="card why"><span class="tag">Pourquoi c'est la même physique que Coulomb ?</span><p>Applique Gauss à une charge ponctuelle avec une sphère de rayon $r$ : $E(r)\times4\pi r^2=q/\varepsilon_0$ ⇒ $E=\frac{q}{4\pi\varepsilon_0r^2}$. <b>Le $4\pi$ de Coulomb est l'aire de la sphère unité.</b> Le flux se conserve et se répartit sur une aire qui croît en $r^2$.</p></div>
+<div class="card why"><span class="tag">Pourquoi les charges extérieures ne comptent pas ?</span><p>Une charge à l'extérieur envoie des lignes de champ qui <b>entrent</b> dans la surface puis en <b>ressortent</b> : flux net nul. Attention, elles modifient bien $\vec E$ en chaque point de la surface ! C'est pour ça qu'il faut la symétrie pour sortir $E$ de l'intégrale.</p></div>
+<div class="card meth"><span class="tag">Méthode — appliquer Gauss (5 étapes, toujours les mêmes)</span>
+<ol><li><b>Symétries et invariances</b> → direction de $\vec E$ et variable(s).</li>
+<li><b>Surface de Gauss</b> : fermée, passant par M, épousant les symétries (sphère, cylindre, boîte).</li>
+<li><b>Flux</b> : $\Phi=E\times S_{utile}$ (les faces où $\vec E$ est tangent comptent pour 0).</li>
+<li><b>$Q_{int}$</b> : <b>uniquement</b> les charges à l'intérieur.</li>
+<li><b>Égaler</b> et isoler $E$.</li></ol></div>
+<figure class="anim" data-anim="gauss" data-badge><figcaption><b>Manipule :</b> change la taille de la surface de Gauss et la géométrie. Le flux total est le même (mêmes lignes) ; c'est l'aire utile qui décide de la décroissance : $r^2$ → $1/r^2$, $r$ → $1/r$, constante → $E$ constant.</figcaption></figure>
+<div class="grid2">
+<div class="card ex"><span class="tag">Application 1 — fil infini λ</span>
+<ol><li>$\vec E=E(r)\vec e_r$.</li><li>Cylindre coaxial, rayon $r$, hauteur $h$.</li><li>Disques : $\vec E$ ∥ à la surface ⇒ 0. Latéral : $\Phi=E(r)\,2\pi rh$.</li><li>$Q_{int}=\lambda h$.</li><li>$\boxed{E(r)=\dfrac{\lambda}{2\pi\varepsilon_0r}}$ — en $1/r$.</li></ol>
+<p class="small">$h$ se simplifie : un fil infini n'a pas de longueur caractéristique. Résultat réutilisé pour le <a href="ch2.html#condensateur">coaxial</a>.</p></div>
+<div class="card ex"><span class="tag">Application 2 — plan infini σ</span>
+<ol><li>$\vec E=E(z)\vec e_z$, $E(-z)=-E(z)$.</li><li>Cylindre traversant le plan, section $S$, de $-z$ à $+z$.</li><li>Latéral : 0. Deux faces : $\Phi=2E(z)S$.</li><li>$Q_{int}=\sigma S$.</li><li>$\boxed{E=\dfrac{\sigma}{2\varepsilon_0}}$ — indépendant de la distance !</li></ol>
+<p class="small">L'éloignement augmente la portion de plan « vue », ce qui compense. Réutilisé pour le <a href="ch2.html#condensateur">condensateur plan</a>.</p></div>
+</div>
+<div class="tablewrap"><table>
+<tr><th>Source</th><th>Dimension</th><th>Champ</th><th>Surface de Gauss</th></tr>
+<tr><td>Charge ponctuelle</td><td>0D</td><td>$E\propto1/r^2$</td><td>sphère, aire ∝ $r^2$</td></tr>
+<tr><td>Fil infini</td><td>1D</td><td>$E\propto1/r$</td><td>cylindre, aire latérale ∝ $r$</td></tr>
+<tr><td>Plan infini</td><td>2D</td><td>$E$ = cste</td><td>boîte, aire ∝ $r^0$</td></tr>
+</table></div>
+<p><b>La loi de décroissance est fixée par la croissance de l'aire de la surface de Gauss.</b> Sphère pleine uniformément chargée : voir <a href="td1.html#exo4">TD1 ex. 4</a> (dedans $E=\rho r/3\varepsilon_0$, dehors comme une charge ponctuelle).</p>
+
+<h2 id="div"><span class="h2num">1.9</span>Divergence &amp; 1ʳᵉ équation de Maxwell</h2>
+<p>Gauss est une loi <b>globale</b> (une surface étendue, une charge totale). La physique moderne préfère les lois <b>locales</b>, valables en un point : une onde est une perturbation qui se transmet <b>de proche en proche</b>, donc l'équation d'onde ne s'écrit qu'en local (objectif de la Partie B).</p>
+<div class="card why"><span class="tag">Construction : le flux ramené à un point</span>
+<p>Pavé élémentaire $\mathrm dx\,\mathrm dy\,\mathrm dz$ autour de M. Sur les deux faces ⟂ à $Ox$ (aire $\mathrm dy\,\mathrm dz$) : ce qui sort à droite moins ce qui entre à gauche :</p>
+$$\mathrm d\Phi_x=\big[A_x(x+\mathrm dx)-A_x(x)\big]\mathrm dy\,\mathrm dz=\frac{\partial A_x}{\partial x}\,\mathrm dV$$
+<p>Idem pour $y$ et $z$, puis on somme : $\mathrm d\Phi=\left(\frac{\partial A_x}{\partial x}+\frac{\partial A_y}{\partial y}+\frac{\partial A_z}{\partial z}\right)\mathrm dV$.</p></div>
+<div class="card def"><span class="tag">Définition — divergence</span>
+$$\mathrm{div}\,\vec A=\frac{\mathrm d\Phi}{\mathrm dV}=\frac{\partial A_x}{\partial x}+\frac{\partial A_y}{\partial y}+\frac{\partial A_z}{\partial z}$$
+<p>Flux sortant <b>par unité de volume</b>. Un <b>scalaire</b>. $[\mathrm{div}\vec A]=[\vec A]\cdot\mathrm m^{-1}$. Mesure la présence d'une <b>source</b> : $>0$ le champ diverge, $<0$ il converge, $0$ il traverse sans être produit.</p></div>
+<div class="card ex"><span class="tag">Analogie hydraulique</span><p>Robinet : il sort plus qu'il n'entre, div > 0 (source). Bonde : div < 0 (puits). Point quelconque du courant : autant entre que sort, div = 0. <b>En électrostatique, les sources sont les charges +, les puits les charges −.</b></p></div>
+<figure class="anim tall" data-anim="divrot" data-badge><figcaption><b>Manipule :</b> glisse la roue. Le <b>cadre</b> mesure la divergence (vert = source, rouge = puits, gris = 0) ; la <b>roue</b> mesure le rotationnel (elle tourne sur elle-même si rot ≠ 0). Teste « Source » : div > 0 <b>seulement dans la zone chargée</b>, nulle à l'extérieur alors que les flèches s'écartent ! Puis « Vortex » : les lignes tournent mais la roue ne tourne pas hors du cœur (rot = 0) — c'est le champ $B$ d'un fil (Ch. 3).</figcaption></figure>
+<div class="card def"><span class="tag">Théorème d'Ostrogradski (Green-Ostrogradski)</span>
+$$\oiint_S\vec A\cdot\mathrm d\vec S=\iiint_V\mathrm{div}\,\vec A\,\mathrm dV$$
+<p><b>Principe :</b> on découpe V en pavés ; chacun laisse sortir $\mathrm{div}\vec A\,\mathrm dV$. Les faces intérieures se compensent deux à deux (ce qui sort d'un pavé entre dans son voisin). Il ne reste que la surface extérieure.</p></div>
+<figure class="anim short" data-anim="stokes" data-badge><figcaption><b>Regarde :</b> assemble les cellules. Les contributions des bords intérieurs s'annulent, il ne reste que le pourtour. Même idée pour Ostrogradski (flux) et Stokes (circulation).</figcaption></figure>
+<div class="card meth"><span class="tag">Méthode — passer de la forme intégrale à la forme locale</span>
+<ol><li>Départ : $\oiint_S\vec E\cdot\mathrm d\vec S=Q_{int}/\varepsilon_0$ pour une surface fermée quelconque.</li>
+<li>Gauche : Ostrogradski ⇒ $\iiint_V\mathrm{div}\vec E\,\mathrm dV$.</li>
+<li>Droite : $Q_{int}=\iiint_V\rho\,\mathrm dV$ ⇒ $\frac{Q_{int}}{\varepsilon_0}=\iiint_V\frac{\rho}{\varepsilon_0}\mathrm dV$.</li>
+<li>Égaler : $\iiint_V\left(\mathrm{div}\vec E-\frac{\rho}{\varepsilon_0}\right)\mathrm dV=0$.</li>
+<li><b>Argument final :</b> vrai <b>quel que soit</b> le volume V ; une fonction continue d'intégrale nulle sur tout volume est nulle partout.</li></ol>
+<div class="callout-big">1ʳᵉ équation de Maxwell (Maxwell-Gauss) : $\mathrm{div}\,\vec E=\dfrac{\rho}{\varepsilon_0}$</div></div>
+<div class="card ex"><span class="tag">Lecture physique</span><p>« <b>Les charges électriques sont les sources du champ électrique.</b> » ρ > 0 : les lignes y <b>naissent</b>. ρ < 0 : elles y <b>aboutissent</b>. Vide (ρ = 0) : elles traversent sans commencer ni finir. Au Ch. 3 : $\mathrm{div}\vec B=0$ — aucune source de champ magnétique.</p></div>
+
+<h2 id="rot"><span class="h2num">1.10</span>Rotationnel &amp; 2ᵉ équation de Maxwell (statique)</h2>
+<div class="card why"><span class="tag">Construction : la circulation ramenée à un point</span>
+<p>Même démarche, avec une circulation sur un petit rectangle $\mathrm dx\times\mathrm dy$ du plan $xOy$ parcouru dans le sens trigo ($\vec e_z$ vers nous). En regroupant les côtés opposés :</p>
+$$\mathrm d\mathcal C=\underbrace{\big[A_y(x+\mathrm dx)-A_y(x)\big]\mathrm dy}_{\text{côtés verticaux}}-\underbrace{\big[A_x(y+\mathrm dy)-A_x(y)\big]\mathrm dx}_{\text{côtés horizontaux}}=\left(\frac{\partial A_y}{\partial x}-\frac{\partial A_x}{\partial y}\right)\mathrm dx\,\mathrm dy$$
+<p>Le <b>signe −</b> vient de ce que les côtés horizontaux sont parcourus en sens opposés. La parenthèse = circulation par unité de surface autour de $\vec e_z$ = composante $z$ du rotationnel.</p></div>
+<div class="card def"><span class="tag">Définition — rotationnel</span>
+$$\overrightarrow{\mathrm{rot}}\,\vec A=\begin{pmatrix}\dfrac{\partial A_z}{\partial y}-\dfrac{\partial A_y}{\partial z}\\[2mm]\dfrac{\partial A_x}{\partial z}-\dfrac{\partial A_z}{\partial x}\\[2mm]\dfrac{\partial A_y}{\partial x}-\dfrac{\partial A_x}{\partial y}\end{pmatrix}$$
+<p>Un <b>vecteur</b> (il faut préciser l'axe de rotation), orienté par la main droite ; sa norme mesure l'intensité de la rotation locale. <span class="small muted">Moyen mnémotechnique : c'est « $\vec\nabla\wedge\vec A$ » avec l'astuce du produit vectoriel.</span></p></div>
+<div class="card ex"><span class="tag">Analogie de la roue à aubes</span><p>Petite roue dans un courant : si elle <b>tourne sur elle-même</b>, rot ≠ 0 (son axe donne la direction du rot). Si elle est <b>entraînée sans tourner</b>, rot = 0.</p>
+<p><b>Deux cas limites (testables ci-dessus) :</b> des lignes qui tournent globalement peuvent avoir rot = 0 (vortex en 1/r) ; des lignes droites peuvent avoir rot ≠ 0 si la norme varie transversalement (rivière plus rapide au milieu : la roue près de la berge tourne). <b>Le rotationnel est une propriété locale</b>, distincte de l'allure des lignes.</p></div>
+<div class="card def"><span class="tag">Théorème de Stokes</span>
+$$\oint_\Gamma\vec A\cdot\mathrm d\vec\ell=\iint_S\overrightarrow{\mathrm{rot}}\,\vec A\cdot\mathrm d\vec S\quad(S\text{ s'appuie sur }\Gamma)$$
+<p>Même principe qu'Ostrogradski : les côtés intérieurs sont parcourus deux fois en sens opposés et se compensent ; seul le pourtour subsiste.</p></div>
+<div class="card meth"><span class="tag">Méthode — obtenir la 2ᵉ équation locale</span>
+<ol><li>$\vec E=-\vec\nabla V$ ⇒ $\vec E\cdot\mathrm d\vec\ell=-\mathrm dV$. Un contour <b>fermé</b> ramène au même potentiel : $\oint\vec E\cdot\mathrm d\vec\ell=-(V_{final}-V_{initial})=0$. (En énergie : faire le tour d'un circuit ne consomme aucune énergie.)</li>
+<li>Stokes : $\iint_S\overrightarrow{\mathrm{rot}}\vec E\cdot\mathrm d\vec S=0$.</li>
+<li>Vrai pour <b>toute</b> surface ⇒ l'intégrande est nul.</li></ol>
+<div class="callout-big">2ᵉ équation de Maxwell (Maxwell-Faraday, statique) : $\overrightarrow{\mathrm{rot}}\,\vec E=\vec 0$</div></div>
+<div class="card trap"><span class="tag">⚠ Seulement en STATIQUE</span><p>Dès que des charges bougent et que $\vec B$ varie, $\overrightarrow{\mathrm{rot}}\vec E=-\partial\vec B/\partial t\neq\vec0$ (Ch. 4). Le champ n'est alors plus conservatif.</p></div>
+
+<h2 id="energie"><span class="h2num">1.11</span>Stockage de l'énergie</h2>
+<div class="card def"><span class="tag">Densité volumique d'énergie électrique</span>
+$$u_E=\frac12\varepsilon_0E^2\qquad[u_E]=\mathrm{J\,m^{-3}}$$
+<p>L'énergie n'est <b>pas stockée dans les charges</b> mais <b>dans le champ</b>, donc dans l'espace lui-même. Admis ici ; vérifié au Ch. 2 sur le condensateur plan.</p></div>
+
+<h2 id="retenir" data-nomaster>À retenir</h2>
+<div class="card key"><span class="tag">À retenir — Chapitre 1</span>
+<ul><li>Une charge crée un champ $\vec E$ ; une charge $q'$ placée dans ce champ subit $\vec F=q'\vec E$. Les champs s'additionnent.</li>
+<li>$\vec E=-\vec\nabla V$ : le champ descend le potentiel. $W_{A\to B}=q(V_A-V_B)$ ; une tension = énergie par unité de charge.</li>
+<li>Gauss : $\oiint\vec E\cdot\mathrm d\vec S=Q_{int}/\varepsilon_0$, exploitable <b>après</b> l'analyse des symétries (fil : $1/r$ ; plan : uniforme ; point : $1/r^2$).</li>
+<li>Formes locales : $\mathrm{div}\vec E=\rho/\varepsilon_0$ et, en statique, $\overrightarrow{\mathrm{rot}}\vec E=\vec0$.</li>
+<li>L'énergie est stockée dans le champ : $u_E=\frac12\varepsilon_0E^2$.</li></ul></div>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ch1"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ch1"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=th%C3%A9or%C3%A8me+de+Gauss+%C3%A9lectrostatique+explication">▶ Théorème de Gauss</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=divergence+and+curl+3blue1brown">▶ Divergence &amp; rotationnel (3Blue1Brown)</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=potentiel+%C3%A9lectrique+champ+gradient+explication">▶ Potentiel et champ</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=sym%C3%A9tries+invariances+champ+%C3%A9lectrique+principe+de+Curie">▶ Symétries & principe de Curie</a></p>
+
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

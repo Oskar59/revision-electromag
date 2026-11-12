@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch. 5 — Équations de Maxwell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ch5">
+<article class="content">
+
+<div class="kicker">Chapitre 5</div>
+<h1>Équations de Maxwell &amp; naissance de l'onde</h1>
+<p class="lead">Un paradoxe montre que le théorème d'Ampère est incomplet. En le corrigeant, Maxwell ferme la boucle : <b>un $\vec E$ qui varie crée un $\vec B$ qui varie, qui crée un $\vec E$…</b> La perturbation se détache de sa source et se propage à $c=1/\sqrt{\varepsilon_0\mu_0}$ : c'est la lumière.</p>
+
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list">
+<li>exposer le paradoxe du condensateur</li><li>définir le courant de déplacement et vérifier $i_D=i$</li>
+<li>écrire les 4 équations (intégrales et locales)</li><li>établir les équations de la ligne LC</li>
+<li>en déduire l'équation de d'Alembert et $v=1/\sqrt{\mathcal{LC}}$</li><li>établir $\partial_zE=-\partial_tB$ et $\partial_zB=-\varepsilon_0\mu_0\partial_tE$</li>
+<li>obtenir $c=1/\sqrt{\varepsilon_0\mu_0}$</li><li>expliquer pourquoi sans $i_D$ pas de lumière</li>
+</ul></div>
+
+<h2 id="paradoxe"><span class="h2num">5.1</span>Théorème d'Ampère, volume 2 : le paradoxe</h2>
+<p>On charge un condensateur et on applique Ampère à un contour Γ entourant le fil d'alimentation : $\oint_\Gamma\vec B\cdot\mathrm d\vec\ell=\mu_0i_{enlacé}$, où $i_{enlacé}$ traverse <b>une surface s'appuyant sur Γ</b>. Mais laquelle ?</p>
+<div class="grid2">
+<div class="card def"><span class="tag">(a) Surface plate S₁</span><p>Le fil <b>perce</b> S₁ : $i_{enlacé}=i$.</p></div>
+<div class="card trap"><span class="tag">(b) Surface « en sac » S₂</span><p>S₂ se referme <b>entre les armatures</b> : aucune charge ne la traverse ⇒ $i_{enlacé}=0$.</p></div>
+</div>
+<p><b>Même contour, même circulation, deux résultats différents : contradiction logique.</b> Le théorème sous la forme du Ch. 3 est faux en régime variable.</p>
+
+<h2 id="deplacement"><span class="h2num">5.2</span>Le courant de déplacement</h2>
+<div class="card def"><span class="tag">Définition — courant de déplacement (Maxwell, 1861)</span>
+<p>Entre les armatures, aucune charge ne bouge… mais <b>le champ électrique croît</b>. Maxwell postule que ce champ variable joue, vis-à-vis de $\vec B$, <b>le même rôle qu'un courant</b> :</p>
+$$\boxed{i_D=\varepsilon_0\frac{\mathrm d\Phi_E}{\mathrm dt}}$$</div>
+<figure class="anim tall" data-anim="displacement" data-badge><figcaption><b>Compare :</b> avec S₁ le fil traverse la surface (courant de conduction $i$). Avec S₂ aucun électron ne passe, mais $\vec E$ croît entre les armatures : $i_D=\varepsilon_0\,\mathrm d\Phi_E/\mathrm dt$ vaut exactement $i$ à chaque instant. Et $\vec B$ existe bien autour de l'espace entre armatures.</figcaption></figure>
+<div class="card why"><span class="tag">Vérification quantitative — le paradoxe est levé</span>
+<p>Condensateur plan : $E=\frac{Q}{\varepsilon_0S}$, donc à travers S₂ : $\Phi_E=ES=\frac{Q}{\varepsilon_0}$ et</p>
+$$i_D=\varepsilon_0\frac{\mathrm d\Phi_E}{\mathrm dt}=\varepsilon_0\cdot\frac{1}{\varepsilon_0}\frac{\mathrm dQ}{\mathrm dt}=\frac{\mathrm dQ}{\mathrm dt}=i$$
+<p><b>Le courant de déplacement à travers S₂ égale le courant réel à travers S₁.</b> Les deux surfaces donnent le même résultat.</p></div>
+<div class="card why"><span class="tag">Pourquoi c'est LA seule correction possible (pour aller plus loin)</span><p>Mathématiquement, $\mathrm{div}(\overrightarrow{\mathrm{rot}}\,\vec B)=0$ toujours. Avec Ampère seul, ça impose $\mathrm{div}\,\vec j=0$ : impossible quand des charges s'accumulent ($\mathrm{div}\vec j=-\partial\rho/\partial t\neq0$). En ajoutant $\mu_0\varepsilon_0\partial_t\vec E$ : $\mathrm{div}\vec j+\varepsilon_0\partial_t(\mathrm{div}\vec E)=\mathrm{div}\vec j+\partial_t\rho=0$ — c'est exactement la <b>conservation de la charge</b> (Ch. 2). La correction est imposée.</p></div>
+
+<h2 id="ampmax"><span class="h2num">5.3</span>Ampère-Maxwell &amp; les 4 équations</h2>
+<div class="card def"><span class="tag">Définition — théorème d'Ampère-Maxwell</span>
+$$\oint_\Gamma\vec B\cdot\mathrm d\vec\ell=\mu_0i_{enlacé}+\mu_0i_D=\mu_0i_{enlacé}+\mu_0\varepsilon_0\frac{\mathrm d\Phi_E}{\mathrm dt}\qquad\Longleftrightarrow\qquad\boxed{\overrightarrow{\mathrm{rot}}\,\vec B=\mu_0\vec j+\mu_0\varepsilon_0\frac{\partial\vec E}{\partial t}}$$</div>
+<div class="card key" id="maxwell"><span class="tag">Les équations de Maxwell</span>
+<div class="tablewrap"><table>
+<tr><th>Nom</th><th>Forme intégrale</th><th>Forme locale</th><th>En mots</th></tr>
+<tr><td><b>Maxwell-Gauss</b></td><td>$\oiint_S\vec E\cdot\mathrm d\vec S=\dfrac{Q_{int}}{\varepsilon_0}$</td><td>$\mathrm{div}\,\vec E=\dfrac{\rho}{\varepsilon_0}$</td><td>les charges sont les sources de E</td></tr>
+<tr><td><b>Maxwell-flux</b></td><td>$\oiint_S\vec B\cdot\mathrm d\vec S=0$</td><td>$\mathrm{div}\,\vec B=0$</td><td>pas de monopôle, lignes de B fermées</td></tr>
+<tr><td><b>Maxwell-Faraday</b></td><td>$\oint_\Gamma\vec E\cdot\mathrm d\vec\ell=-\dfrac{\mathrm d\Phi_B}{\mathrm dt}$</td><td>$\overrightarrow{\mathrm{rot}}\,\vec E=-\dfrac{\partial\vec B}{\partial t}$</td><td>un B variable fait tourner E</td></tr>
+<tr><td><b>Maxwell-Ampère</b></td><td>$\oint_\Gamma\vec B\cdot\mathrm d\vec\ell=\mu_0i+\mu_0\varepsilon_0\dfrac{\mathrm d\Phi_E}{\mathrm dt}$</td><td>$\overrightarrow{\mathrm{rot}}\,\vec B=\mu_0\vec j+\mu_0\varepsilon_0\dfrac{\partial\vec E}{\partial t}$</td><td>courants ET E variable font tourner B</td></tr>
+</table></div></div>
+<div class="card rem"><span class="tag">Pourquoi exactement quatre ?</span>
+<div class="tablewrap"><table><tr><th></th><th>Flux (surface fermée)</th><th>Circulation (contour fermé)</th></tr>
+<tr><td>$\vec E$</td><td>Gauss : les charges</td><td>Faraday : un $\vec B$ variable</td></tr>
+<tr><td>$\vec B$</td><td>« pas de monopôle » : rien</td><td>Ampère-Maxwell : les courants <b>et</b> un $\vec E$ variable</td></tr></table></div>
+<p><b>Deux champs × deux questions = quatre équations.</b> Chaque chapitre a rempli une case ; la dernière (courant de déplacement) vient d'être établie. Le principe de superposition du Ch. 1 découle de la <b>linéarité</b> de ces équations.</p></div>
+
+<h2 id="ligne"><span class="h2num">5.4</span>Application : le câble coaxial comme ligne LC</h2>
+<p>Un câble coaxial = une succession de cellules LC. On le suppose infiniment long et on étudie une petite cellule de longueur $\mathrm dz$ : inductance série $\mathcal L\,\mathrm dz$, capacité parallèle $\mathcal C\,\mathrm dz$.</p>
+<div class="card def"><span class="tag">Grandeurs linéiques</span><p>$\mathcal L=L/\ell$ (H/m) et $\mathcal C=C/\ell$ (F/m) : inductance et capacité <b>par unité de longueur</b> (Ch. 2 et 3). La tension $V(z,t)$ entre âme et blindage et le courant $I(z,t)$ dans l'âme dépendent maintenant de la position $z$.</p></div>
+<div class="steps" data-start="Établir les équations de la ligne">
+<div class="step"><h4>Loi des mailles</h4><p>La tension d'entrée se partage entre la bobine et la sortie : $V(z,t)=\mathcal L\,\mathrm dz\,\dfrac{\partial I}{\partial t}+V(z+\mathrm dz,t)$. Développement au 1er ordre : $V(z+\mathrm dz)-V(z)=\dfrac{\partial V}{\partial z}\mathrm dz$ ⇒
+$$\boxed{\frac{\partial V}{\partial z}=-\mathcal L\frac{\partial I}{\partial t}}$$</p></div>
+<div class="step"><h4>Loi des nœuds</h4><p>En $z+\mathrm dz$, le courant se partage entre la sortie et le condensateur, qui reçoit $i_C=\mathcal C\,\mathrm dz\,\partial V/\partial t$ (Ch. 2) : $I(z,t)=I(z+\mathrm dz,t)+\mathcal C\,\mathrm dz\,\dfrac{\partial V}{\partial t}$ ⇒
+$$\boxed{\frac{\partial I}{\partial z}=-\mathcal C\frac{\partial V}{\partial t}}$$</p></div>
+<div class="step"><h4>Élimination de I</h4><p>On dérive la 1ʳᵉ par rapport à $z$, on échange l'ordre des dérivations, puis on utilise la 2ᵉ :
+$$\frac{\partial^2V}{\partial z^2}=-\mathcal L\frac{\partial}{\partial t}\left(\frac{\partial I}{\partial z}\right)=\mathcal{LC}\,\frac{\partial^2V}{\partial t^2}$$</p></div>
+<div class="step"><h4>Équation de d'Alembert</h4><p>$$\boxed{\frac{\partial^2V}{\partial z^2}=\frac{1}{v^2}\frac{\partial^2V}{\partial t^2}}\qquad\text{avec}\qquad\boxed{v=\frac{1}{\sqrt{\mathcal{LC}}}}$$
+Vérification dimensionnelle : $[\mathcal{LC}]=\mathrm{H\,m^{-1}\cdot F\,m^{-1}}=\mathrm{s^2\,m^{-2}}$ ⇒ $v$ est une vitesse ✓.</p></div>
+</div>
+<figure class="anim tall" data-anim="line" data-badge><figcaption><b>Manipule :</b> envoie une impulsion. Elle avance sans se déformer à $v=1/\sqrt{\mathcal{LC}}$. Augmente $\mathcal L$ ou $\mathcal C$ : elle ralentit (plus d'« inertie » magnétique, plus de charge à stocker à chaque cellule).</figcaption></figure>
+<div class="card why"><span class="tag">Et pour un vrai coaxial ?</span><p>Ch. 3 : $\mathcal{LC}=\varepsilon_0\mu_0$ dans le vide ⇒ $v=1/\sqrt{\varepsilon_0\mu_0}=c$ ! Avec un isolant : $\mathcal C\to\varepsilon_r\mathcal C$ ⇒ $v=c/\sqrt{\varepsilon_r}$. RG-58 (polyéthylène, $\varepsilon_r=2{,}25$) : $v=c/1{,}5\approx0{,}66\,c$ — c'est le « 0,7 c » du Ch. 2. <b>Avec seulement les lois des composants, on retrouve d'Alembert.</b> Refaisons-le avec les équations de Maxwell.</p></div>
+
+<h2 id="onde"><span class="h2num">5.5</span>Naissance de l'onde électromagnétique</h2>
+<p>Loin de toute source ($\rho=0$, $\vec j=\vec0$), il reste :</p>
+$$\text{(Faraday)}\ \oint\vec E\cdot\mathrm d\vec\ell=-\frac{\mathrm d\Phi_B}{\mathrm dt}\qquad\qquad\text{(Ampère-Maxwell)}\ \oint\vec B\cdot\mathrm d\vec\ell=\mu_0\varepsilon_0\frac{\mathrm d\Phi_E}{\mathrm dt}$$
+<div class="card rem"><span class="tag">Un couplage en boucle fermée</span>
+<div class="callout-big">$\vec E$ qui varie &nbsp;—(Ampère-Maxwell : crée)→&nbsp; $\vec B$ qui varie &nbsp;—(Faraday : crée)→&nbsp; $\vec E$ qui varie …</div>
+<p><b>Sans charge ni courant</b>, la perturbation s'entretient elle-même : elle se détache de sa source et se propage de façon autonome. <b>Il faut les DEUX relations.</b> Sans le courant de déplacement, la seconde disparaîtrait, la boucle serait ouverte et rien ne se propagerait. Le terme introduit pour un paradoxe de condensateur conditionne l'existence de la lumière.</p></div>
+<p>Cas le plus simple : $\vec E=E(z,t)\,\vec e_x$ et $\vec B=B(z,t)\,\vec e_y$ (dépendent seulement de $z$ et $t$).</p>
+<div class="steps" data-start="Faire le calcul complet (à savoir refaire en TD !)">
+<div class="step"><h4>Faraday sur Γ₁ (plan $x,z$), rectangle $a\times\mathrm dz$, $\vec n=+\vec e_y$</h4><p>$\vec E\parallel\vec e_x$ : seuls les côtés parallèles à $\vec e_x$ contribuent. Parcours (main droite autour de $\vec e_y$) : on monte en $z+\mathrm dz$, on descend en $z$ :
+$$\oint\vec E\cdot\mathrm d\vec\ell=E(z+\mathrm dz)\,a-E(z)\,a=\frac{\partial E}{\partial z}\,a\,\mathrm dz$$
+Flux de $\vec B$ (∥ à $\vec n$) : $\Phi_B=B\,a\,\mathrm dz$. Faraday : $\dfrac{\partial E}{\partial z}a\,\mathrm dz=-\dfrac{\partial B}{\partial t}a\,\mathrm dz$ ⇒
+$$\boxed{\frac{\partial E}{\partial z}=-\frac{\partial B}{\partial t}}$$</p></div>
+<div class="step"><h4>Ampère-Maxwell sur Γ₂ (plan $y,z$), rectangle $b\times\mathrm dz$, $\vec n=+\vec e_x$</h4><p>$\vec B\parallel\vec e_y$ : seuls les côtés ∥ à $\vec e_y$ contribuent. Parcours (main droite autour de $\vec e_x$) : on monte en $z$, on descend en $z+\mathrm dz$ :
+$$\oint\vec B\cdot\mathrm d\vec\ell=B(z)\,b-B(z+\mathrm dz)\,b=-\frac{\partial B}{\partial z}\,b\,\mathrm dz$$
+Flux de $\vec E$ : $\Phi_E=E\,b\,\mathrm dz$. Ampère-Maxwell : $-\dfrac{\partial B}{\partial z}b\,\mathrm dz=\mu_0\varepsilon_0\dfrac{\partial E}{\partial t}b\,\mathrm dz$ ⇒
+$$\boxed{\frac{\partial B}{\partial z}=-\varepsilon_0\mu_0\frac{\partial E}{\partial t}}$$
+<span class="small muted">Le sens de parcours apparent diffère entre Γ₁ et Γ₂ car $(\vec e_z,\vec e_x)$ et $(\vec e_z,\vec e_y)$ n'ont pas la même orientation dans le plan de la figure.</span></p></div>
+<div class="step"><h4>Même résultat avec les formes locales (vérif rapide)</h4><p>Pour $\vec E=E\vec e_x$ : $\overrightarrow{\mathrm{rot}}\vec E=\dfrac{\partial E}{\partial z}\vec e_y$ (2ᵉ composante $\partial_zA_x$) $=-\dfrac{\partial B}{\partial t}\vec e_y$ ✓. Pour $\vec B=B\vec e_y$ : $\overrightarrow{\mathrm{rot}}\vec B=-\dfrac{\partial B}{\partial z}\vec e_x$ (1ʳᵉ composante $-\partial_zA_y$ : <b>le moins vient de là</b>) $=\mu_0\varepsilon_0\dfrac{\partial E}{\partial t}\vec e_x$ ✓.</p></div>
+<div class="step"><h4>Découplage : dériver et croiser</h4><p>On dérive la 1ʳᵉ par rapport à $z$, la 2ᵉ par rapport à $t$ ; les dérivées croisées commutent :
+$$\frac{\partial^2E}{\partial z^2}=-\frac{\partial}{\partial z}\left(\frac{\partial B}{\partial t}\right)=-\frac{\partial}{\partial t}\left(\frac{\partial B}{\partial z}\right)=\varepsilon_0\mu_0\frac{\partial^2E}{\partial t^2}$$</p></div>
+<div class="step"><h4>Équation de d'Alembert</h4><p>$$\boxed{\frac{\partial^2E}{\partial z^2}-\varepsilon_0\mu_0\frac{\partial^2E}{\partial t^2}=0}\qquad\text{c'est-à-dire}\qquad\frac{\partial^2E}{\partial z^2}=\frac{1}{c^2}\frac{\partial^2E}{\partial t^2},\quad c=\frac{1}{\sqrt{\varepsilon_0\mu_0}}$$
+AN : $c=1/\sqrt{8{,}854\times10^{-12}\times4\pi\times10^{-7}}\approx2{,}998\times10^8$ m/s. <b>La vitesse de la lumière sort des constantes de l'électricité et du magnétisme.</b> Un calcul identique donne la même équation pour B : les deux champs se propagent ensemble.</p></div>
+</div>
+<figure class="anim tall" data-anim="emwave" data-badge><figcaption><b>Regarde :</b> $\vec E$ (orange, selon x) et $\vec B$ (bleu, selon y), en phase, perpendiculaires entre eux et à la direction de propagation z : l'onde EM est <b>transversale</b>.</figcaption></figure>
+<div class="card rem"><span class="tag">Aperçu de la Partie B</span><p>Toute fonction $f(z-ct)$ est solution de d'Alembert : un profil qui avance à la vitesse $c$ sans se déformer. Avec $\partial_zE=-\partial_tB$, si $E=f(z-ct)$ alors $B=f(z-ct)/c$ : <b>$E/B=c$</b>, en phase. Onde sinusoïdale : $E=E_0\cos(\omega t-kz)$ avec $\omega=kc$. → En route pour la Partie B (F. Allein).</p></div>
+
+<h2 id="retenir" data-nomaster>À retenir</h2>
+<div class="card key"><span class="tag">À retenir — Chapitre 5</span>
+<ul><li>Paradoxe d'Ampère (condensateur en charge, surfaces S₁ / S₂) ⇒ Ampère est incomplet en régime variable.</li>
+<li>Courant de déplacement $i_D=\varepsilon_0\,\mathrm d\Phi_E/\mathrm dt$ ; $\overrightarrow{\mathrm{rot}}\vec B=\mu_0\vec j+\mu_0\varepsilon_0\partial_t\vec E$.</li>
+<li>Les 4 équations : 2 champs × (flux, circulation).</li>
+<li>Ligne LC : $\partial_zV=-\mathcal L\partial_tI$, $\partial_zI=-\mathcal C\partial_tV$ ⇒ d'Alembert, $v=1/\sqrt{\mathcal{LC}}$.</li>
+<li>Vide : $\partial_zE=-\partial_tB$, $\partial_zB=-\varepsilon_0\mu_0\partial_tE$ ⇒ d'Alembert, $c=1/\sqrt{\varepsilon_0\mu_0}$. E ⟂ B ⟂ propagation.</li></ul></div>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ch5"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ch5"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=courant+de+d%C3%A9placement+Maxwell+condensateur">▶ Courant de déplacement</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=%C3%A9quations+de+Maxwell+explication+intuitive">▶ Les équations de Maxwell</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=onde+%C3%A9lectromagn%C3%A9tique+propagation+animation">▶ Onde EM animée</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=%C3%A9quation+de+d%27Alembert+ligne+de+transmission">▶ Ligne de transmission</a></p>
+
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

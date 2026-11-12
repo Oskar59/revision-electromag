@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Formulaire — Électromag</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="formulaire">
+<article class="content">
+<div class="kicker">Mémo</div>
+<h1>Formulaire complet</h1>
+<p class="lead">Toutes les formules de la Partie A avec leurs unités. Tape un mot (« gauss », « capacité », « coax », « énergie »…) pour filtrer.</p>
+<input class="searchbox" data-filter=".frow" placeholder="Rechercher une formule…" autocomplete="off">
+
+<div class="fgroup"><h2 id="f0" data-nomaster>Constantes &amp; outils (Ch. 0)</h2><div class="fbox">
+<div class="frow" data-k="constantes epsilon0 mu0 c e charge elementaire"><div class="fname">Constantes</div><div>$e=1{,}602\times10^{-19}$ C ; $\varepsilon_0=8{,}854\times10^{-12}$ F/m ; $\frac1{4\pi\varepsilon_0}\approx9\times10^9$ SI ; $\mu_0=4\pi\times10^{-7}$ H/m ; $c=1/\sqrt{\varepsilon_0\mu_0}\approx3\times10^8$ m/s</div></div>
+<div class="frow" data-k="produit scalaire projection"><div class="fname">Produit scalaire</div><div>$\vec u\cdot\vec v=\|u\|\|v\|\cos\theta=u_xv_x+u_yv_y+u_zv_z$</div></div>
+<div class="frow" data-k="produit vectoriel main droite"><div class="fname">Produit vectoriel</div><div>$\vec u\wedge\vec v=(u_yv_z-u_zv_y,\ u_zv_x-u_xv_z,\ u_xv_y-u_yv_x)$, $\|\vec u\wedge\vec v\|=\|u\|\|v\|\sin\theta$</div></div>
+<div class="frow" data-k="coordonnees cylindriques dl dV volume"><div class="fname">Cylindriques<small>fil, coax, solénoïde</small></div><div>$\mathrm d\vec\ell=\mathrm dr\,\vec e_r+r\,\mathrm d\theta\,\vec e_\theta+\mathrm dz\,\vec e_z$ ; $\mathrm dV=r\,\mathrm dr\,\mathrm d\theta\,\mathrm dz$ ; aire latérale $2\pi rh$</div></div>
+<div class="frow" data-k="coordonnees spheriques dl dV volume surface sphere"><div class="fname">Sphériques<small>charge, sphère</small></div><div>$\mathrm d\vec\ell=\mathrm dr\,\vec e_r+r\,\mathrm d\theta\,\vec e_\theta+r\sin\theta\,\mathrm d\varphi\,\vec e_\varphi$ ; $\mathrm dV=r^2\sin\theta\,\mathrm dr\,\mathrm d\theta\,\mathrm d\varphi$ ; aire $4\pi r^2$ ; coquille $4\pi r^2\mathrm dr$</div></div>
+<div class="frow" data-k="premier ordre developpement derivee"><div class="fname">1er ordre</div><div>$f(x+\mathrm dx)\simeq f(x)+f'(x)\,\mathrm dx$</div></div>
+<div class="frow" data-k="gradient"><div class="fname">Gradient</div><div>$\vec\nabla f=(\partial_xf,\partial_yf,\partial_zf)$ ; $\mathrm df=\vec\nabla f\cdot\mathrm d\vec\ell$ ; ⟂ aux surfaces de niveau</div></div>
+<div class="frow" data-k="divergence"><div class="fname">Divergence</div><div>$\mathrm{div}\vec A=\partial_xA_x+\partial_yA_y+\partial_zA_z$ (flux sortant par unité de volume)</div></div>
+<div class="frow" data-k="rotationnel"><div class="fname">Rotationnel</div><div>$\overrightarrow{\mathrm{rot}}\vec A=(\partial_yA_z-\partial_zA_y,\ \partial_zA_x-\partial_xA_z,\ \partial_xA_y-\partial_yA_x)$</div></div>
+<div class="frow" data-k="ostrogradski green flux divergence theoreme"><div class="fname">Ostrogradski</div><div>$\oiint_S\vec A\cdot\mathrm d\vec S=\iiint_V\mathrm{div}\vec A\,\mathrm dV$</div></div>
+<div class="frow" data-k="stokes circulation rotationnel theoreme"><div class="fname">Stokes</div><div>$\oint_\Gamma\vec A\cdot\mathrm d\vec\ell=\iint_S\overrightarrow{\mathrm{rot}}\vec A\cdot\mathrm d\vec S$</div></div>
+</div></div>
+
+<div class="fgroup"><h2 id="f1" data-nomaster>Électrostatique (Ch. 1)</h2><div class="fbox">
+<div class="frow" data-k="densite lineique surfacique volumique charge dq"><div class="fname">Densités</div><div>$\mathrm dq=\lambda\,\mathrm d\ell$ (C/m) $=\sigma\,\mathrm dS$ (C/m²) $=\rho\,\mathrm dV$ (C/m³)</div></div>
+<div class="frow" data-k="coulomb force"><div class="fname">Loi de Coulomb</div><div>$\vec F_{1\to2}=\frac{1}{4\pi\varepsilon_0}\frac{q_1q_2}{r^2}\vec u_{1\to2}$</div></div>
+<div class="frow" data-k="champ charge ponctuelle force"><div class="fname">Champ d'une charge</div><div>$\vec E=\frac{1}{4\pi\varepsilon_0}\frac{q}{r^2}\vec e_r$ (V/m) ; $\vec F=q'\vec E$</div></div>
+<div class="frow" data-k="superposition integrale champ"><div class="fname">Superposition</div><div>$\vec E(M)=\int\frac{1}{4\pi\varepsilon_0}\frac{\mathrm dq}{PM^2}\vec u_{P\to M}$ ; $V(M)=\int\frac{1}{4\pi\varepsilon_0}\frac{\mathrm dq}{PM}$</div></div>
+<div class="frow" data-k="anneau axe champ potentiel"><div class="fname">Anneau (sur l'axe)</div><div>$E(z)=\frac{1}{4\pi\varepsilon_0}\frac{Qz}{(R^2+z^2)^{3/2}}$ ; $V(z)=\frac{1}{4\pi\varepsilon_0}\frac{Q}{\sqrt{R^2+z^2}}$</div></div>
+<div class="frow" data-k="potentiel gradient circulation"><div class="fname">Potentiel</div><div>$\vec E=-\vec\nabla V$ ; $\mathrm dV=-\vec E\cdot\mathrm d\vec\ell$ ; $\int_A^B\vec E\cdot\mathrm d\vec\ell=V_A-V_B$ ; charge : $V=\frac{q}{4\pi\varepsilon_0r}$</div></div>
+<div class="frow" data-k="travail energie potentielle tension electron volt"><div class="fname">Énergie, tension</div><div>$W_{A\to B}=q(V_A-V_B)$ ; $E_p=qV$ ; $1\ \mathrm{eV}=1{,}602\times10^{-19}$ J</div></div>
+<div class="frow" data-k="gauss theoreme flux"><div class="fname">Théorème de Gauss</div><div>$\oiint\vec E\cdot\mathrm d\vec S=\frac{Q_{int}}{\varepsilon_0}$ ⟺ $\mathrm{div}\vec E=\frac{\rho}{\varepsilon_0}$</div></div>
+<div class="frow" data-k="fil infini champ gauss"><div class="fname">Fil infini λ</div><div>$E=\frac{\lambda}{2\pi\varepsilon_0r}$</div></div>
+<div class="frow" data-k="plan infini champ gauss"><div class="fname">Plan infini σ</div><div>$E=\frac{\sigma}{2\varepsilon_0}$ (de chaque côté, sens opposés) ; 2 plans ±σ : $\frac{\sigma}{\varepsilon_0}$ entre, 0 dehors</div></div>
+<div class="frow" data-k="sphere uniforme champ potentiel boule"><div class="fname">Boule uniforme ρ</div><div>$E=\frac{\rho r}{3\varepsilon_0}$ ($r\lt R$) ; $E=\frac{Q}{4\pi\varepsilon_0r^2}$ ($r>R$) ; $V=\frac{\rho(3R^2-r^2)}{6\varepsilon_0}$ dedans, $\frac{\rho R^3}{3\varepsilon_0r}$ dehors</div></div>
+<div class="frow" data-k="rotationnel statique faraday conservatif"><div class="fname">Statique</div><div>$\overrightarrow{\mathrm{rot}}\vec E=\vec0$ ; $\oint\vec E\cdot\mathrm d\vec\ell=0$</div></div>
+<div class="frow" data-k="energie densite electrique"><div class="fname">Densité d'énergie</div><div>$u_E=\frac12\varepsilon_0E^2$ (J/m³)</div></div>
+</div></div>
+
+<div class="fgroup"><h2 id="f2" data-nomaster>Conducteurs, condensateurs, courant (Ch. 2)</h2><div class="fbox">
+<div class="frow" data-k="conducteur equilibre champ interieur"><div class="fname">Conducteur à l'équilibre</div><div>$\vec E_{int}=\vec0$, $\rho_{int}=0$, $V$ = cste</div></div>
+<div class="frow" data-k="theoreme de coulomb surface conducteur"><div class="fname">Théorème de Coulomb</div><div>$\vec E=\frac{\sigma}{\varepsilon_0}\vec n$ (juste à l'extérieur)</div></div>
+<div class="frow" data-k="capacite condensateur definition"><div class="fname">Capacité</div><div>$Q=CU$ (F) ; $i=C\frac{\mathrm du}{\mathrm dt}$ ; $W=\frac12CU^2=\frac{Q^2}{2C}$</div></div>
+<div class="frow" data-k="capacite plan condensateur"><div class="fname">C plan</div><div>$C=\frac{\varepsilon_0S}{e}$ (isolant : $\varepsilon_0\to\varepsilon_r\varepsilon_0$)</div></div>
+<div class="frow" data-k="capacite coaxial coax cable"><div class="fname">C coaxial</div><div>$\frac C\ell=\frac{2\pi\varepsilon_0}{\ln(b/a)}$</div></div>
+<div class="frow" data-k="capacite spherique spheres concentriques"><div class="fname">C sphérique</div><div>$C=\frac{4\pi\varepsilon_0R_1R_2}{R_2-R_1}$ ; sphère seule $4\pi\varepsilon_0R$</div></div>
+<div class="frow" data-k="courant densite intensite derive"><div class="fname">Courant</div><div>$i=\frac{\mathrm dq}{\mathrm dt}$ ; $\vec j=nq\vec v_d$ (A/m²) ; $i=\iint\vec j\cdot\mathrm d\vec S$</div></div>
+<div class="frow" data-k="conservation charge noeuds"><div class="fname">Conservation</div><div>$\oiint\vec j\cdot\mathrm d\vec S=-\frac{\mathrm dQ_{int}}{\mathrm dt}$ ; $\mathrm{div}\vec j+\partial_t\rho=0$</div></div>
+<div class="frow" data-k="ohm locale drude conductivite"><div class="fname">Ohm local / Drude</div><div>$\vec j=\sigma\vec E$ ; $\sigma=\frac{ne^2\tau}{m}$ ; $\rho_r=1/\sigma$</div></div>
+<div class="frow" data-k="resistance ohm joule puissance"><div class="fname">Résistance</div><div>$U=Ri$ ; $R=\frac{\rho_rL}{S}$ ; $P=Ui$ ; Joule $Ri^2$</div></div>
+<div class="frow" data-k="couronne fendue resistance"><div class="fname">Couronne fendue (TD2)</div><div>$R=\frac{2\pi\rho}{e\ln(R_2/R_1)}$</div></div>
+</div></div>
+
+<div class="fgroup"><h2 id="f3" data-nomaster>Magnétostatique (Ch. 3)</h2><div class="fbox">
+<div class="frow" data-k="lorentz force"><div class="fname">Lorentz</div><div>$\vec F=q(\vec E+\vec v\wedge\vec B)$ ; force magnétique : travail nul</div></div>
+<div class="frow" data-k="laplace force fil"><div class="fname">Laplace</div><div>$\mathrm d\vec F=i\,\mathrm d\vec\ell\wedge\vec B$ ; $F=i\ell B\sin\alpha$</div></div>
+<div class="frow" data-k="larmor rayon cyclotron"><div class="fname">Rayon de Larmor</div><div>$R=\frac{mv}{|q|B}$ ; $T=\frac{2\pi m}{|q|B}$</div></div>
+<div class="frow" data-k="moment magnetique boucle"><div class="fname">Moment magnétique</div><div>$\vec m=iS\vec n$ (A·m²) ; couple $\vec m\wedge\vec B$</div></div>
+<div class="frow" data-k="flux b div monopole maxwell"><div class="fname">Maxwell-flux</div><div>$\oiint\vec B\cdot\mathrm d\vec S=0$ ⟺ $\mathrm{div}\vec B=0$</div></div>
+<div class="frow" data-k="ampere theoreme circulation"><div class="fname">Ampère (statique)</div><div>$\oint\vec B\cdot\mathrm d\vec\ell=\mu_0i_{enl}$ ⟺ $\overrightarrow{\mathrm{rot}}\vec B=\mu_0\vec j$</div></div>
+<div class="frow" data-k="fil infini champ magnetique"><div class="fname">B fil infini</div><div>$B=\frac{\mu_0i}{2\pi r}$, orthoradial</div></div>
+<div class="frow" data-k="solenoide champ magnetique"><div class="fname">B solénoïde</div><div>$B=\mu_0ni$ dedans (uniforme, axial), 0 dehors</div></div>
+<div class="frow" data-k="coaxial coax champ magnetique"><div class="fname">B coaxial</div><div>$\frac{\mu_0i}{2\pi r}$ entre a et b ; 0 dehors</div></div>
+<div class="frow" data-k="inductance propre definition"><div class="fname">Inductance</div><div>$\Phi=Li$ (H)</div></div>
+<div class="frow" data-k="inductance solenoide"><div class="fname">L solénoïde</div><div>$L=\mu_0n^2\ell S=\frac{\mu_0N^2S}{\ell}$</div></div>
+<div class="frow" data-k="inductance coaxial coax"><div class="fname">L coaxial</div><div>$\frac L\ell=\frac{\mu_0}{2\pi}\ln\frac ba$ ; $\frac L\ell\cdot\frac C\ell=\varepsilon_0\mu_0=\frac1{c^2}$</div></div>
+<div class="frow" data-k="symetrie pseudo vecteur b e plan"><div class="fname">Symétries</div><div>Plan de sym. : $\vec E$ contenu, $\vec B$ ⟂. Plan d'antisym. : $\vec E$ ⟂, $\vec B$ contenu.</div></div>
+</div></div>
+
+<div class="fgroup"><h2 id="f4" data-nomaster>Induction (Ch. 4)</h2><div class="fbox">
+<div class="frow" data-k="flux magnetique"><div class="fname">Flux</div><div>$\Phi=\iint\vec B\cdot\vec n\,\mathrm dS$ (Wb = T·m²)</div></div>
+<div class="frow" data-k="faraday fem lenz"><div class="fname">Faraday</div><div>$e=-\frac{\mathrm d\Phi}{\mathrm dt}$ ; $i=\frac eR$</div></div>
+<div class="frow" data-k="fem circuit mobile lorentz"><div class="fname">Circuit mobile</div><div>$e=\oint(\vec v\wedge\vec B)\cdot\mathrm d\vec\ell$</div></div>
+<div class="frow" data-k="maxwell faraday rotationnel"><div class="fname">Maxwell-Faraday</div><div>$\oint\vec E\cdot\mathrm d\vec\ell=-\frac{\mathrm d\Phi_B}{\mathrm dt}$ ⟺ $\overrightarrow{\mathrm{rot}}\vec E=-\frac{\partial\vec B}{\partial t}$</div></div>
+<div class="frow" data-k="rails laplace barre"><div class="fname">Rails de Laplace</div><div>$e=-B\ell v$ ; $i=\frac{B\ell v}{R}$ ; $F=\frac{B^2\ell^2v}{R}$ ; $\tau=\frac{mR}{B^2\ell^2}$</div></div>
+<div class="frow" data-k="auto induction bobine"><div class="fname">Auto-induction</div><div>$e=-L\frac{\mathrm di}{\mathrm dt}$ ; $u_L=L\frac{\mathrm di}{\mathrm dt}$ ; $W=\frac12Li^2$</div></div>
+<div class="frow" data-k="mutuelle transformateur"><div class="fname">Mutuelle</div><div>$\Phi_2=Mi_1$ ; $e_2=-M\frac{\mathrm di_1}{\mathrm dt}$</div></div>
+<div class="frow" data-k="energie magnetique densite"><div class="fname">Densité d'énergie</div><div>$u_B=\frac{B^2}{2\mu_0}$</div></div>
+<div class="frow" data-k="lc oscillateur pulsation"><div class="fname">Oscillateur LC</div><div>$\ddot q+\frac{q}{LC}=0$ ; $\omega_0=\frac1{\sqrt{LC}}$</div></div>
+</div></div>
+
+<div class="fgroup"><h2 id="f5" data-nomaster>Maxwell &amp; propagation (Ch. 5)</h2><div class="fbox">
+<div class="frow" data-k="courant deplacement"><div class="fname">Courant de déplacement</div><div>$i_D=\varepsilon_0\frac{\mathrm d\Phi_E}{\mathrm dt}$</div></div>
+<div class="frow" data-k="maxwell ampere"><div class="fname">Maxwell-Ampère</div><div>$\oint\vec B\cdot\mathrm d\vec\ell=\mu_0i+\mu_0\varepsilon_0\frac{\mathrm d\Phi_E}{\mathrm dt}$ ⟺ $\overrightarrow{\mathrm{rot}}\vec B=\mu_0\vec j+\mu_0\varepsilon_0\frac{\partial\vec E}{\partial t}$</div></div>
+<div class="frow" data-k="equations de maxwell quatre"><div class="fname">Les 4 équations</div><div>$\mathrm{div}\vec E=\frac\rho{\varepsilon_0}$ ; $\mathrm{div}\vec B=0$ ; $\overrightarrow{\mathrm{rot}}\vec E=-\partial_t\vec B$ ; $\overrightarrow{\mathrm{rot}}\vec B=\mu_0\vec j+\mu_0\varepsilon_0\partial_t\vec E$</div></div>
+<div class="frow" data-k="ligne lc telegraphiste coax"><div class="fname">Ligne LC</div><div>$\partial_zV=-\mathcal L\partial_tI$ ; $\partial_zI=-\mathcal C\partial_tV$ ; $v=\frac{1}{\sqrt{\mathcal{LC}}}$</div></div>
+<div class="frow" data-k="dalembert propagation onde equation"><div class="fname">D'Alembert</div><div>$\frac{\partial^2f}{\partial z^2}=\frac1{v^2}\frac{\partial^2f}{\partial t^2}$</div></div>
+<div class="frow" data-k="onde plane em vide"><div class="fname">Onde plane (vide)</div><div>$\partial_zE=-\partial_tB$ ; $\partial_zB=-\varepsilon_0\mu_0\partial_tE$ ; $c=\frac{1}{\sqrt{\varepsilon_0\mu_0}}$ ; $E/B=c$</div></div>
+</div></div>
+
+<div class="fgroup"><h2 id="f6" data-nomaster>TD 2 — câble à fuite</h2><div class="fbox">
+<div class="frow" data-k="cable coaxial fuite isolant resistance"><div class="fname">Isolant (tranche dx)</div><div>$R_f=\frac{\rho\ln(R_2/R_1)}{2\pi\,\mathrm dx}$</div></div>
+<div class="frow" data-k="cable fuite equations differentielles"><div class="fname">Équations</div><div>$V_1'=-\rho_1i$ ; $V_2'=\rho_2i$ ; $i'=-\frac{2\pi}{\rho\ln(R_2/R_1)}(V_1-V_2)$ ; $U=U_0e^{-x/\delta}$, $\delta=\sqrt{\frac{\rho\ln(R_2/R_1)}{2\pi(\rho_1+\rho_2)}}$</div></div>
+</div></div>
+
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

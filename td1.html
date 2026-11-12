@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TD 1 — Électrostatique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="td1">
+<article class="content">
+
+<div class="kicker">Travaux dirigés</div>
+<h1>TD 1 — Électrostatique : champ, Gauss, potentiel</h1>
+<p class="lead">Pour chaque exercice : l'énoncé, <b>le réflexe</b> (ce qui dans l'énoncé doit déclencher la méthode), des indices, puis la correction <b>étape par étape</b>. Joue le jeu : cherche 5 minutes avant de révéler chaque étape.</p>
+<div class="card meth"><span class="tag">Ce que ce TD entraîne</span>
+<p><span class="pill e">Coulomb &amp; ordres de grandeur</span><span class="pill e">somme vectorielle de forces</span><span class="pill a">symétries → forme de E</span><span class="pill a">développement au 1er ordre</span><span class="pill e">Gauss sphère / plan</span><span class="pill a">ρ(r) non uniforme</span><span class="pill e">potentiel par morceaux + continuité</span><span class="pill e">superposition de plans</span></p></div>
+
+<!-- ================= EXO 1 ================= -->
+<section class="exo" id="exo1"><header><h2 id="e1">Exercice 1 — Rapport des forces électrique et gravitationnelle</h2><span class="time">10 min</span></header><div class="body">
+<div class="statement">Évaluer le rapport de la force électrique $F_e$ et de la force gravitationnelle $F_G$ agissant sur l'électron d'un atome d'hydrogène.<br><span class="small">Données : $a_0\sim10^{-10}$ m ; $G=6{,}67\times10^{-11}$ kg⁻¹m³s⁻² ; $m_e=9\times10^{-31}$ kg ; $m_p=1{,}67\times10^{-27}$ kg ; $e=1{,}6\times10^{-19}$ C ; $\frac{1}{4\pi\varepsilon_0}=9\times10^9$ m F⁻¹.</span></div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> « rapport de deux forces » + deux lois en $1/r^2$ ⇒ <b>écrire le rapport littéral d'abord</b> : la distance va se simplifier. Puis AN en puissances de 10, puis <b>une phrase de conclusion physique</b>.</div></div>
+<details class="hint"><summary>Indice</summary><div class="inner"><p>Les deux interactions entre l'électron et le proton : Coulomb ($\propto e^2/a_0^2$) et Newton ($\propto m_em_p/a_0^2$).</p></div></details>
+<div class="steps">
+<div class="step"><h4>Écrire les deux forces</h4><p>Électron et proton séparés de $a_0$ ; deux forces centrales en $1/r^2$ :
+$$F_e=\frac{1}{4\pi\varepsilon_0}\frac{e^2}{a_0^2}\qquad F_G=G\frac{m_em_p}{a_0^2}$$</p></div>
+<div class="step"><h4>Le rapport élimine la distance</h4><p>$$\frac{F_e}{F_G}=\frac{e^2}{4\pi\varepsilon_0\,G\,m_em_p}$$ Indépendant de $a_0$ : il vaut autant dans l'atome que pour deux particules à 1 m.</p></div>
+<div class="step"><h4>Application numérique</h4><p>$$\frac{F_e}{F_G}=\frac{9\times10^9\times(1{,}6\times10^{-19})^2}{6{,}67\times10^{-11}\times9\times10^{-31}\times1{,}67\times10^{-27}}=\frac{2{,}30\times10^{-28}}{1{,}00\times10^{-67}}\approx2{,}3\times10^{39}$$ En valeurs absolues : $F_e\simeq2{,}3\times10^{-8}$ N, $F_G\simeq1{,}0\times10^{-47}$ N.</p></div>
+<div class="step"><h4>Conclusion physique (ça rapporte des points !)</h4><p>La gravitation est totalement négligeable à l'échelle atomique : la structure des atomes, molécules et solides est fixée par l'interaction électromagnétique seule. La gravitation ne domine à grande échelle que parce que la matière est <b>neutre en moyenne</b> (les contributions électriques s'annulent) alors que les masses, toujours positives, s'additionnent. <span class="muted small">(Le titre de l'énoncé annonce 10⁴⁰ ; seul l'ordre de grandeur 10³⁹–10⁴⁰ compte.)</span></p></div>
+</div>
+<div class="card trap"><span class="tag">⚠ Pièges</span><p>Oublier de mettre $e$ au carré ; mal gérer les puissances de 10 (fais-les à part : $10^{9-38}=10^{-29}$, $10^{-11-31-27}=10^{-69}$, rapport $10^{40}$, puis les mantisses $2{,}3/1{,}0$… ≈ $0{,}23\times10^{40}$).</p></div>
+</div></section>
+
+<!-- ================= EXO 2 ================= -->
+<section class="exo" id="exo2"><header><h2 id="e2">Exercice 2 — Forces dans un triangle équilatéral</h2><span class="time">15 min</span></header><div class="body">
+<div class="statement">Trois particules aux sommets d'un triangle équilatéral de côté $\ell$ : deux portent $+q$, la troisième $-q$. Déterminer la norme de la résultante des forces exercées sur une des charges $+q$ par les deux autres.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> « résultante de forces » ⇒ <b>faire un schéma</b>, flécher chaque force (répulsive = s'éloigne, attractive = vers l'autre), calculer les normes, puis sommer <b>vectoriellement</b> (angle entre les forces, ou composantes dans un repère).</div></div>
+<svg viewBox="0 0 320 230" style="max-width:360px;display:block;margin:6px auto">
+<polygon points="60,190 240,190 150,34" fill="none" stroke="var(--ink3)" stroke-width="1.5"/>
+<circle cx="60" cy="190" r="13" fill="var(--qp)"/><text x="60" y="195" text-anchor="middle" fill="#fff" font-weight="800">A</text>
+<circle cx="240" cy="190" r="13" fill="var(--qp)"/><text x="240" y="195" text-anchor="middle" fill="#fff" font-weight="800">B</text>
+<circle cx="150" cy="34" r="13" fill="var(--qn)"/><text x="150" y="39" text-anchor="middle" fill="#fff" font-weight="800">C</text>
+<g stroke="var(--e)" stroke-width="3" fill="var(--e)"><line x1="60" y1="190" x2="5" y2="190"/><polygon points="5,190 15,185 15,195"/><line x1="60" y1="190" x2="88" y2="141"/><polygon points="88,141 87,153 79,148"/><line x1="60" y1="190" x2="33" y2="143" stroke="var(--ok)"/><polygon points="33,143 34,155 42,150" fill="var(--ok)"/></g>
+<text x="2" y="212" fill="var(--e)" font-size="12" font-weight="700">F_B→A</text><text x="92" y="140" fill="var(--e)" font-size="12" font-weight="700">F_C→A</text><text x="2" y="138" fill="var(--ok)" font-size="12" font-weight="700">F_tot</text>
+<text x="150" y="215" text-anchor="middle" fill="var(--ink2)" font-size="13">ℓ</text></svg>
+<details class="hint"><summary>Indice 1</summary><div class="inner"><p>Les deux forces ont la même norme : mêmes distances, mêmes $|q|$.</p></div></details>
+<details class="hint"><summary>Indice 2</summary><div class="inner"><p>L'angle entre $\vec F_{B\to A}$ (qui s'éloigne de B) et $\vec F_{C\to A}$ (qui va vers C) n'est pas 60°… dessine-le.</p></div></details>
+<div class="steps">
+<div class="step"><h4>Normes</h4><p>A, B : $+q$ ; C : $-q$. Trois distances = $\ell$ : $F=\dfrac{1}{4\pi\varepsilon_0}\dfrac{q^2}{\ell^2}$ pour les deux forces.</p></div>
+<div class="step"><h4>Directions</h4><p>$\vec F_{B\to A}$ : répulsive, de B vers A (vers l'extérieur). $\vec F_{C\to A}$ : attractive, de A vers C. L'angle entre ces deux directions vaut $180°-60°=120°$.</p></div>
+<div class="step"><h4>Somme de deux vecteurs de même norme</h4><p>Pour deux vecteurs de norme $F$ faisant un angle α : $\|\vec F_{tot}\|=2F\cos(\alpha/2)$. Avec α = 120° : $2F\cos60°=F$ :
+$$\boxed{\|\vec F_{tot}\|=\frac{1}{4\pi\varepsilon_0}\frac{q^2}{\ell^2}}$$
+La résultante a exactement la norme d'une force isolée ; elle est portée par la bissectrice de l'angle entre les deux forces (à 120° de l'axe AB), c'est-à-dire <b>parallèle à (BC), orientée de B vers C</b>.</p>
+<p class="small muted">⚠ Le corrigé distribué dit « portée par la médiatrice de [BC] issue de A » : c'est incohérent avec son propre calcul vectoriel ci-dessous, qui donne bien la direction $(-\tfrac12,\tfrac{\sqrt3}2)$, celle de $\overrightarrow{BC}$. Fie-toi au calcul (et demande confirmation en TD).</p></div>
+<div class="step"><h4>Vérification par composantes</h4><p>$A=(0,0)$, $B=(\ell,0)$, $C=(\ell/2,\ell\sqrt3/2)$. $\vec F_{B\to A}=F(-1,0)$ ; $\vec F_{C\to A}=F(\tfrac12,\tfrac{\sqrt3}2)$ ; $\vec F_{tot}=F(-\tfrac12,\tfrac{\sqrt3}{2})$ de norme $F\sqrt{\tfrac14+\tfrac34}=F$ ✓.</p></div>
+</div>
+<div class="card rem"><span class="tag">À retenir</span><p>$\|\vec F_1+\vec F_2\|=2F\cos(\alpha/2)$ pour deux forces de même norme : α = 0 → 2F, α = 120° → F, α = 180° → 0. Toujours dessiner avant de calculer.</p></div>
+</div></section>
+
+<!-- ================= EXO 3 ================= -->
+<section class="exo" id="exo3"><header><h2 id="e3">Exercice 3 — Anneau chargé : champ au voisinage de l'axe</h2><span class="time">30 min</span></header><div class="body">
+<div class="statement">Cerceau d'axe $Oz$, rayon $a$, charge $Q$ uniforme. Sur l'axe, en M de cote $z$ : $\vec E=E_0(z)\vec u_z$ (expression de $E_0$ inutile). On cherche $\vec E$ en un point P $(r,\theta,z)$ avec $r\ll a$ ; en général $\vec E(P)=E_r\vec u_r+E_\theta\vec u_\theta+E_z\vec u_z$.
+<ol><li>Montrer, par des arguments de symétrie très précis, qu'en P on a $E_\theta=0$.</li>
+<li>Montrer que $E_r$ et $E_z$ ne dépendent que de $r$ et $z$.</li>
+<li>Montrer qu'au voisinage de l'axe le flux de $\vec E$ est conservatif. Que dire de sa circulation sur un contour fermé ?</li>
+<li>Avec $r/a$ et $\mathrm dz/a$ infiniment petits du 1er ordre, calculer le flux à travers le cylindre (rayon $r$, de $z$ à $z+\mathrm dz$) et en déduire $E_r(r,z)$ en fonction de $E_0(z)$ et/ou de sa dérivée.</li></ol></div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexes :</b> Q1 « montrer qu'une composante est nulle » ⇒ <b>plan de symétrie passant par P</b>. Q2 « ne dépend que de » ⇒ <b>invariance</b>. Q3 « flux conservatif » ⇒ <b>div E = ρ/ε₀ avec ρ = 0</b> ; « circulation » ⇒ <b>rot E = 0 + Stokes</b>. Q4 « petit cylindre + infiniment petits » ⇒ <b>bilan de flux sur les 3 faces + développement au 1er ordre</b>.</div></div>
+<details class="hint"><summary>Indice Q1</summary><div class="inner"><p>Considère le plan Π contenant l'axe $Oz$ et le point P. Découpe l'anneau en paires d'éléments symétriques par rapport à Π.</p></div></details>
+<details class="hint"><summary>Indice Q4</summary><div class="inner"><p>Trois faces : latérale (normale $\vec u_r$, aire $2\pi r\,\mathrm dz$), haut et bas (normales $\pm\vec u_z$, aire $\pi r^2$). Sur les bases, remplace $E_z(r,z)$ par $E_0(z)$ : l'écart est d'ordre $r^2$.</p></div></details>
+<div class="steps">
+<div class="step"><h4>Q1 — Plan de symétrie</h4><p>Soit Π le plan contenant $Oz$ et P. L'anneau se découpe en paires d'éléments $\mathrm dq$ <b>symétriques par rapport à Π</b>, à égale distance de P : leurs champs élémentaires en P ont même norme et sont symétriques l'un de l'autre par rapport à Π. Les composantes <b>orthoradiales</b> (⟂ à Π) sont opposées et se compensent ; les composantes radiale et axiale (dans Π) s'ajoutent. En sommant sur toutes les paires : $\boxed{E_\theta(r,\theta,z)=0}$.</p>
+<p class="small">Cas particulier du résultat général : un vrai vecteur appartient à tout plan de symétrie passant par le point. Ici Π est engendré par $\vec u_r$ et $\vec u_z$, et $\vec u_\theta$ lui est ⟂.</p></div>
+<div class="step"><h4>Q2 — Invariance</h4><p>La distribution est invariante par toute rotation autour de $Oz$. Une grandeur exprimée dans la base <b>locale</b> $(\vec u_r,\vec u_\theta,\vec u_z)$, qui tourne avec le point, ne peut pas dépendre de θ : $\vec E(P)=E_r(r,z)\vec u_r+E_z(r,z)\vec u_z$.</p>
+<p class="small">L'invariance porte sur les composantes dans la base locale, pas sur les composantes cartésiennes (qui, elles, dépendent de θ).</p></div>
+<div class="step"><h4>Q3 — Flux et circulation</h4><p>Près de l'axe, loin de l'anneau (en $r=a$), il n'y a aucune charge : ρ = 0. Maxwell-Gauss : $\mathrm{div}\vec E=\rho/\varepsilon_0=0$ ⇒ le flux à travers toute surface fermée de cette région est nul (Ostrogradski) : <b>flux conservatif</b>.</p>
+<p>En statique $\vec E=-\vec\nabla V$ ⇒ $\overrightarrow{\mathrm{rot}}\vec E=\vec0$ ⇒ (Stokes) la <b>circulation sur tout contour fermé est nulle</b> : champ à circulation conservative.</p></div>
+<div class="step"><h4>Q4 — Flux à travers le petit cylindre</h4><p><b>Latéral</b> (normale $\vec u_r$, aire $2\pi r\,\mathrm dz$) : $\Phi_{lat}=E_r(r,z)\times2\pi r\,\mathrm dz$.</p>
+<p><b>Bases</b> (normales $+\vec u_z$ en haut, $-\vec u_z$ en bas, aire $\pi r^2$) : $\Phi_{sup}+\Phi_{inf}=\pi r^2\big[E_z(r,z+\mathrm dz)-E_z(r,z)\big]$. Ce crochet est déjà d'ordre 1 en $\mathrm dz$ ; on peut y remplacer $E_z(r,z)$ par sa valeur sur l'axe $E_0(z)$ (écart d'ordre $r^2$, négligeable) :
+$$\Phi_{sup}+\Phi_{inf}=\pi r^2\frac{\mathrm dE_0}{\mathrm dz}\mathrm dz$$</p></div>
+<div class="step"><h4>Q4 — Flux total nul (Q3) ⇒ $E_r$</h4><p>$$2\pi r\,\mathrm dz\,E_r(r,z)+\pi r^2\frac{\mathrm dE_0}{\mathrm dz}\mathrm dz=0\quad\Rightarrow\quad\boxed{E_r(r,z)=-\frac r2\frac{\mathrm dE_0}{\mathrm dz}}$$</p></div>
+<div class="step"><h4>Vérification de cohérence</h4><p>Pour $Q>0$ et $z>0$ (au-delà du max), $E_0$ décroît en s'éloignant ⇒ $\mathrm dE_0/\mathrm dz\lt0$ ⇒ $E_r>0$ : les lignes de champ <b>s'écartent</b> de l'axe ✓. Sur l'axe, $r=0$ ⇒ $E_r=0$, imposé par la symétrie de révolution ✓.</p></div>
+</div>
+<div class="card why"><span class="tag">Pourquoi cette astuce marche</span><p>Le flux qui « manque » entre le bas et le haut du cylindre (parce que $E_z$ varie avec $z$) doit sortir par le côté, puisque rien ne peut se créer dans une région sans charge. C'est exactement l'idée de la divergence.</p></div>
+</div></section>
+
+<!-- ================= EXO 4 ================= -->
+<section class="exo" id="exo4"><header><h2 id="e4">Exercice 4 — Sphère uniformément chargée</h2><span class="time">20 min</span></header><div class="body">
+<div class="statement">Sphère de centre O, rayon R, densité volumique ρ constante. Calculer le champ et le potentiel en tout point M à la distance $r$ de O.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> symétrie sphérique ⇒ <b>Gauss avec une sphère de rayon r</b>, en séparant <b>deux zones</b> (r &lt; R et r &gt; R). Puis potentiel par $E_r=-\mathrm dV/\mathrm dr$ zone par zone, en fixant les constantes par la <b>référence</b> ($V(\infty)=0$) et la <b>continuité</b> en $r=R$.</div></div>
+<figure class="anim tall" data-anim="sphereEV" data-badge><figcaption><b>Visualise :</b> déplace la sphère de Gauss. E croît linéairement dedans, décroît en $1/r^2$ dehors, continu en R. V est maximal au centre (tangente horizontale, car E(0) = 0). Bascule sur « Exo 5 » pour comparer.</figcaption></figure>
+<div class="steps">
+<div class="step"><h4>Symétries et invariances</h4><p>Invariance par toute rotation autour de O ⇒ ne dépend que de $r$. Tout plan contenant O et M est plan de symétrie ⇒ $\vec E$ appartient à leur intersection, la droite (OM) : $\vec E(M)=E(r)\vec u_r$.</p></div>
+<div class="step"><h4>Gauss</h4><p>Surface : sphère de centre O, rayon $r$, sur laquelle $E(r)$ est uniforme et normal : $\oiint\vec E\cdot\mathrm d\vec S=E(r)\times4\pi r^2=Q_{int}/\varepsilon_0$.</p></div>
+<div class="step"><h4>Intérieur (r ≤ R)</h4><p>$Q_{int}=\rho\,\frac43\pi r^3$ ⇒ $\boxed{\vec E=\dfrac{\rho r}{3\varepsilon_0}\vec u_r}$</p></div>
+<div class="step"><h4>Extérieur (r ≥ R)</h4><p>$Q=\rho\frac43\pi R^3$ ⇒ $\boxed{\vec E=\dfrac{\rho R^3}{3\varepsilon_0r^2}\vec u_r=\dfrac{Q}{4\pi\varepsilon_0r^2}\vec u_r}$. Dehors, la sphère se comporte comme une charge ponctuelle Q en O. Les deux expressions coïncident en R : champ continu (pas de charge surfacique).</p></div>
+<div class="step"><h4>Potentiel extérieur</h4><p>Référence $V(\infty)=0$ et $E_r=-\mathrm dV/\mathrm dr$ : $V(r)=\displaystyle\int_r^\infty\frac{\rho R^3}{3\varepsilon_0r'^2}\mathrm dr'=\boxed{\frac{\rho R^3}{3\varepsilon_0r}}$</p></div>
+<div class="step"><h4>Potentiel intérieur</h4><p>On intègre de $r$ à R et on ajoute $V(R)=\frac{\rho R^2}{3\varepsilon_0}$ :
+$$V(r)=V(R)+\int_r^R\frac{\rho r'}{3\varepsilon_0}\mathrm dr'=\frac{\rho R^2}{3\varepsilon_0}+\frac{\rho(R^2-r^2)}{6\varepsilon_0}=\boxed{\frac{\rho(3R^2-r^2)}{6\varepsilon_0}}$$</p></div>
+<div class="step"><h4>Vérifications</h4><p>Continuité en R ✓. Au centre $V(0)=\frac{\rho R^2}{2\varepsilon_0}=\frac32V(R)$ : valeur finie et maximale, cohérente avec un champ nul en O.</p></div>
+</div>
+</div></section>
+
+<!-- ================= EXO 5 ================= -->
+<section class="exo" id="exo5"><header><h2 id="e5">Exercice 5 — Sphère à densité volumique variable</h2><span class="time">25 min</span></header><div class="body">
+<div class="statement">Sphère de rayon R, centre O, densité $\rho=\rho_0\frac rR$ ($\rho_0>0$).
+<ol><li>Volume entre les sphères de rayons $r$ et $r+\mathrm dr$ ?</li><li>Charge élémentaire $\mathrm dq$ entre les deux sphères ?</li><li>Montrer que la charge dans la sphère de rayon $r\le R$ vaut $q(r)=\frac{\pi\rho_0}{R}r^4$.</li><li>Champ en tout point M à la distance $r$.</li><li>Potentiel en tout point en prenant <b>O pour origine</b> ; exprimer la continuité en $r=R$.</li><li>Représenter $V(r)$.</li></ol></div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> ρ dépend de $r$ ⇒ on <b>ne peut pas</b> faire « ρ × volume ». On découpe en <b>coquilles</b> $\mathrm dV=4\pi r^2\mathrm dr$ où ρ est uniforme, on intègre pour $q(r)$, puis Gauss comme à l'exo 4. Attention à la <b>référence</b> imposée : V(O) = 0.</div></div>
+<div class="steps">
+<div class="step"><h4>Q1 — Volume de la coquille</h4><p>Aire $4\pi r^2$ × épaisseur $\mathrm dr$ : $\boxed{\mathrm dV=4\pi r^2\mathrm dr}$ (au 1er ordre, termes en $\mathrm dr^2$, $\mathrm dr^3$ négligés).</p></div>
+<div class="step"><h4>Q2 — Charge de la coquille</h4><p>ρ est uniforme sur la coquille (ne dépend que de $r$) : $\mathrm dq=\rho_0\frac rR\times4\pi r^2\mathrm dr=\boxed{\frac{4\pi\rho_0}{R}r^3\,\mathrm dr}$</p></div>
+<div class="step"><h4>Q3 — Somme des coquilles</h4><p>$q(r)=\displaystyle\int_0^r\frac{4\pi\rho_0}{R}r'^3\mathrm dr'=\frac{4\pi\rho_0}{R}\cdot\frac{r^4}{4}=\boxed{\frac{\pi\rho_0}{R}r^4}$. Charge totale : $Q=q(R)=\pi\rho_0R^3$.</p></div>
+<div class="step"><h4>Q4 — Champ (mêmes symétries qu'à l'exo 4)</h4><p>$\vec E=E(r)\vec u_r$, Gauss : $E\cdot4\pi r^2=Q_{int}/\varepsilon_0$.<br>
+$r\le R$ : $Q_{int}=q(r)$ ⇒ $\boxed{\vec E=\dfrac{\rho_0r^2}{4\varepsilon_0R}\vec u_r}$ ; &nbsp; $r\ge R$ : $Q_{int}=\pi\rho_0R^3$ ⇒ $\boxed{\vec E=\dfrac{\rho_0R^3}{4\varepsilon_0r^2}\vec u_r}$.<br>
+Continu en R. Nul en 0, croît en $r^2$ (plus vite que le cas homogène : la charge est concentrée en périphérie).</p></div>
+<div class="step"><h4>Q5 — Potentiel intérieur (V(0) = 0)</h4><p>$V(r)=-\displaystyle\int_0^rE(r')\mathrm dr'=-\int_0^r\frac{\rho_0r'^2}{4\varepsilon_0R}\mathrm dr'=\boxed{-\frac{\rho_0r^3}{12\varepsilon_0R}}$ ; en particulier $V(R)=-\frac{\rho_0R^2}{12\varepsilon_0}$.</p></div>
+<div class="step"><h4>Q5 — Potentiel extérieur (continuité en R)</h4><p>$V(r)=V(R)-\displaystyle\int_R^r\frac{\rho_0R^3}{4\varepsilon_0r'^2}\mathrm dr'=-\frac{\rho_0R^2}{12\varepsilon_0}-\frac{\rho_0R^3}{4\varepsilon_0}\left(\frac1R-\frac1r\right)$ ⇒ $\boxed{V(r)=\frac{\rho_0R^3}{4\varepsilon_0r}-\frac{\rho_0R^2}{3\varepsilon_0}}$<br>
+Vérif en R : $\frac{\rho_0R^2}{4\varepsilon_0}-\frac{\rho_0R^2}{3\varepsilon_0}=-\frac{\rho_0R^2}{12\varepsilon_0}$ ✓.<br>
+V ne tend pas vers 0 à l'infini mais vers $-\frac{\rho_0R^2}{3\varepsilon_0}$ : conséquence du choix de référence en O. Seules les différences de potentiel ont un sens physique.</p></div>
+<div class="step"><h4>Q6 — Allure de V(r)</h4><p>V décroît de façon monotone (car $E_r>0$ partout) ; tangente horizontale en 0 (E = 0) ; décroissance en $-r^3$ dedans, puis asymptote horizontale $-\frac{\rho_0R^2}{3\varepsilon_0}$. → Voir l'animation de l'exo 4 en mode « Exo 5 ».</p></div>
+</div>
+<div class="card trap"><span class="tag">⚠ Pièges</span><p>Écrire $Q=\rho\times\frac43\pi R^3$ alors que ρ varie ; oublier de raccorder V en R ; croire que V(∞) doit être 0 alors que l'énoncé impose V(O) = 0.</p></div>
+</div></section>
+
+<!-- ================= EXO 6 ================= -->
+<section class="exo" id="exo6"><header><h2 id="e6">Exercice 6 — Plans infinis chargés</h2><span class="time">20 min</span></header><div class="body">
+<div class="statement">Calculer le champ créé par (a) un plan infini uniformément chargé σ > 0 ; (b) deux plans infinis parallèles $+\sigma$ et $-\sigma$. En déduire les potentiels.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> plan infini ⇒ <b>boîte de Gauss traversant le plan</b> (2 faces utiles). Plusieurs plans ⇒ <b>superposition</b> zone par zone. Distribution infinie ⇒ <b>pas de référence à l'infini</b> : on la prend sur un plan.</div></div>
+<figure class="anim" data-anim="planes" data-badge><figcaption>Champ et potentiel pour un plan puis deux plans : le champ est confiné entre les plans, V y est linéaire.</figcaption></figure>
+<div class="steps">
+<div class="step"><h4>(a) Symétries</h4><p>Plan $z=0$. Invariance par translation ∥ au plan ⇒ dépend de $z$ seul. Tout plan ⟂ au plan chargé est plan de symétrie ⇒ $\vec E$ porté par $\vec u_z$. Le plan chargé est lui-même plan de symétrie ⇒ $E_z(-z)=-E_z(z)$ : champ <b>impair</b>.</p></div>
+<div class="step"><h4>(a) Gauss</h4><p>Cylindre d'axe $Oz$, section S, bases en $-z$ et $+z$. Latéral : 0 ($\vec E\perp\vec u_r$). Chaque base : $E(z)S$. $$2E(z)S=\frac{\sigma S}{\varepsilon_0}\Rightarrow\vec E=\frac{\sigma}{2\varepsilon_0}\vec u_z\ (z>0),\quad\vec E=-\frac{\sigma}{2\varepsilon_0}\vec u_z\ (z\lt0)$$ Uniforme de chaque côté ; discontinuité σ/ε₀ à la traversée (relation de passage).</p></div>
+<div class="step"><h4>(a) Potentiel</h4><p>$E_z=-\mathrm dV/\mathrm dz$, origine sur le plan : $V(z)=-\dfrac{\sigma}{2\varepsilon_0}|z|$. Continu mais anguleux. Pas d'origine à l'infini possible (distribution infinie, V diverge).</p></div>
+<div class="step"><h4>(b) Superposition</h4><p>$+\sigma$ en $z=0$, $-\sigma$ en $z=d$. Le champ du plan −σ est l'opposé de celui d'un plan +σ.<br>
+$z\lt0$ : $-\frac{\sigma}{2\varepsilon_0}+\frac{\sigma}{2\varepsilon_0}=0$ ; &nbsp; $0\lt z\lt d$ : $+\frac{\sigma}{2\varepsilon_0}+\frac{\sigma}{2\varepsilon_0}=\frac{\sigma}{\varepsilon_0}$ ; &nbsp; $z>d$ : $+\frac{\sigma}{2\varepsilon_0}-\frac{\sigma}{2\varepsilon_0}=0$.<br>
+$\vec E=\frac{\sigma}{\varepsilon_0}\vec u_z$ entre les plans, $\vec 0$ dehors : <b>modèle du condensateur plan</b>.</p></div>
+<div class="step"><h4>(b) Potentiel</h4><p>Origine sur le plan positif : $V=0$ ($z\le0$) ; $V=-\frac{\sigma}{\varepsilon_0}z$ ($0\le z\le d$) ; $V=-\frac{\sigma d}{\varepsilon_0}$ ($z\ge d$). Tension entre armatures : $\boxed{U=V(0)-V(d)=\frac{\sigma d}{\varepsilon_0}}$. V constant dehors puisque E y est nul. (Avec $\sigma=Q/S$ : $C=Q/U=\varepsilon_0S/d$ — voir Ch. 2.)</p></div>
+</div>
+</div></section>
+
+<h2 id="bilan" data-nomaster>Bilan du TD 1 : les patterns</h2>
+<div class="decision">
+<div class="row"><div class="if">« Rapport de deux forces en 1/r² »</div><div class="arrow">→</div><div>Rapport littéral (r se simplifie) → AN → conclusion physique.</div></div>
+<div class="row"><div class="if">« Résultante de forces »</div><div class="arrow">→</div><div>Schéma + sens de chaque force → normes → somme vectorielle ($2F\cos\frac\alpha2$ ou composantes).</div></div>
+<div class="row"><div class="if">« Montrer que $E_\theta$ = 0 »</div><div class="arrow">→</div><div>Plan de symétrie passant par le point (paires d'éléments symétriques).</div></div>
+<div class="row"><div class="if">« Ne dépend que de r et z »</div><div class="arrow">→</div><div>Invariance (rotation, translation) — sur les composantes en base locale.</div></div>
+<div class="row"><div class="if">« Flux conservatif / région sans charge »</div><div class="arrow">→</div><div>$\mathrm{div}\vec E=0$ ⇒ flux nul sur toute surface fermée.</div></div>
+<div class="row"><div class="if">« Petit cylindre, infiniment petits »</div><div class="arrow">→</div><div>Bilan de flux face par face + développement au 1er ordre.</div></div>
+<div class="row"><div class="if">« Sphère / boule chargée »</div><div class="arrow">→</div><div>Gauss sphérique, 2 zones ; V par intégration + référence + continuité.</div></div>
+<div class="row"><div class="if">« ρ(r) non uniforme »</div><div class="arrow">→</div><div>Coquilles $\mathrm dq=\rho(r)4\pi r^2\mathrm dr$, intégrer.</div></div>
+<div class="row"><div class="if">« Plusieurs plans »</div><div class="arrow">→</div><div>Gauss pour un plan (σ/2ε₀) puis superposition zone par zone.</div></div>
+</div>
+
+<h2 id="quiz" data-nomaster>Quiz méthode TD 1</h2>
+<div class="quiz" data-quiz="td1"></div>
+<h2 id="flash" data-nomaster>Flashcards méthodes</h2>
+<div class="flash" data-cards="td1"></div>
+
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

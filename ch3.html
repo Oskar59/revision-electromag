@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch. 3 — Magnétostatique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ch3">
+<article class="content">
+
+<div class="kicker">Chapitre 3</div>
+<h1>Magnétostatique</h1>
+<p class="lead">Charges immobiles → champ $\vec E$. Charges <b>en mouvement</b> (courants) → champ $\vec B$. « Statique » : $\vec B$ ne dépend pas du temps. On réutilise exactement les outils du Ch. 1 (flux, circulation, div, rot, symétries) — avec une différence de taille dans les symétries.</p>
+
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list">
+<li>orienter $\vec B$ autour d'un fil (main droite)</li><li>utiliser $q\vec v\wedge\vec B$ et $i\,\mathrm d\vec\ell\wedge\vec B$</li>
+<li>démontrer $R=mv/|q|B$</li><li>expliquer $\mathrm{div}\vec B=0$</li>
+<li>appliquer les règles de symétrie <b>inversées</b> de $\vec B$</li><li>appliquer Ampère (fil, solénoïde, coax)</li>
+<li>calculer une inductance en 3 étapes</li><li>relier les grandeurs électriques ↔ magnétiques</li>
+</ul></div>
+
+<h2 id="oersted"><span class="h2num">3.1</span>L'expérience d'Ørsted (1820)</h2>
+<p>Une boussole placée près d'un fil est déviée dès qu'un courant passe, et revient quand on coupe. Deux conséquences :</p>
+<ul><li>Un courant produit le même effet qu'un aimant : il existe un champ $\vec B$ créé par les <b>charges en mouvement</b>.</li>
+<li>Électricité et magnétisme sont <b>un même phénomène</b> (unification complète : Maxwell, Ch. 5).</li></ul>
+<figure class="anim" data-anim="oersted" data-badge><figcaption><b>Manipule :</b> change l'intensité et son signe (⊙ sortant / ⊗ entrant). Les aiguilles s'alignent sur $\vec B_{fil}+\vec B_{terre}$. $\vec B$ tourne autour du fil : <b>pouce = courant, doigts = $\vec B$</b>. Près du fil il domine, loin il s'efface (en $1/r$).</figcaption></figure>
+
+<h2 id="origine"><span class="h2num">3.2</span>D'où vient le magnétisme ? <span class="pill">culture — hors programme</span></h2>
+<div class="card def"><span class="tag">Moment magnétique</span>
+$$\vec m=iS\,\vec n\qquad[m]=\mathrm{A\,m^2}$$
+<p>Boucle plane parcourue par $i$, de surface $S$, normale orientée par la main droite à partir du sens du courant. C'est la « source élémentaire » de $\vec B$, comme $q$ pour $\vec E$. Le champ créé est orienté dans le sens de $\vec m$.</p></div>
+<div class="grid2">
+<div class="card rem"><span class="tag">L'électron orbital (image classique)</span><p>Un électron qui « tourne » autour du noyau = un petit courant $i=\frac{ev}{2\pi r}$ ⇒ $m=iS=\frac{evr}{2}$. Charge négative ⇒ $\vec m$ opposé au moment cinétique $\vec L=m_evr$.</p></div>
+<div class="card rem"><span class="tag">Le spin</span><p>Moment cinétique <b>intrinsèque</b> de l'électron ($\|\vec S\|=\hbar/2$), même immobile, sans rotation d'aucune sorte. Moment magnétique total = orbital + spin.</p></div>
+</div>
+<div class="card why"><span class="tag">Pourquoi la plupart des corps ne sont pas aimantés ?</span><p><b>Principe de Pauli</b> : sur une orbitale, deux électrons ont des spins opposés ⇒ moments antiparallèles, somme nulle. Couches complètes ⇒ moment total nul. Seuls les atomes à <b>couches incomplètes</b> (fer, cobalt, nickel, terres rares) ont un moment notable.</p>
+<div class="tablewrap"><table><tr><th>Type</th><th>Comportement</th><th>Exemples</th></tr>
+<tr><td>Diamagnétique</td><td>légèrement repoussé, les lignes évitent le matériau</td><td>cuivre, or, eau, air</td></tr>
+<tr><td>Paramagnétique</td><td>légèrement attiré, moments alignés seulement sous champ</td><td>aluminium, oxygène, platine</td></tr>
+<tr><td>Ferromagnétique</td><td>fortement attiré (domaines), l'aimantation persiste</td><td>fer, cobalt, nickel</td></tr></table></div></div>
+<div class="card ex"><span class="tag">Hypothèse d'Ampère (1820) — bilan</span><p>Un aimant = un ensemble de boucles de courant alignées. À l'intérieur, deux boucles voisines ont des courants opposés sur leur frontière commune et se compensent ; il reste un <b>courant de surface</b> qui fait le tour du barreau. <b>Un aimant se comporte comme un solénoïde.</b> Origine unique de $\vec B$ : des <b>charges en mouvement</b>.</p></div>
+
+<h2 id="lorentz"><span class="h2num">3.3</span>Force de Lorentz</h2>
+<div class="card def"><span class="tag">Définition — force de Lorentz</span>
+$$\boxed{\vec F=q\left(\vec E+\vec v\wedge\vec B\right)}\qquad[\vec B]=\mathrm T$$
+<p>Cette relation <b>définit</b> $\vec B$ : c'est la partie de la force qui dépend de la vitesse.</p></div>
+<div class="card why"><span class="tag">La force magnétique ne travaille jamais — pourquoi ?</span>
+$$\mathrm dW=\vec F\cdot\vec v\,\mathrm dt=q(\vec v\wedge\vec B)\cdot\vec v\,\mathrm dt=0$$
+<p>$\vec v\wedge\vec B$ est <b>par construction</b> ⟂ à $\vec v$. Un champ magnétique ne change pas l'énergie cinétique : il <b>courbe</b> seulement la trajectoire. Un aimant ne transfère aucune énergie à une particule chargée.</p></div>
+<figure class="anim" data-anim="larmor" data-badge><figcaption><b>Manipule :</b> la force (orange) est toujours ⟂ à la vitesse (violet) : mouvement circulaire uniforme. Double v → rayon double, mais le tour prend <b>le même temps</b>. Change le signe de q ou le sens de B : le sens de rotation s'inverse.</figcaption></figure>
+<div class="card ex"><span class="tag">Rayon de Larmor — démonstration</span>
+<p>PFD : $m\vec a=q\vec v\wedge\vec B$. L'accélération se décompose en tangentielle $\frac{\mathrm dv}{\mathrm dt}$ (nulle : la force ne travaille pas, $v$ = cste) et centripète $\frac{v^2}{R}$. Norme de la force : $|q|vB$ (car $\vec v\perp\vec B$). Donc $|q|vB=\frac{mv^2}{R}$ :</p>
+$$\boxed{R=\frac{mv}{|q|B}}$$
+<p>Principe des <b>cyclotrons</b> et des <b>spectromètres de masse</b> (séparer des isotopes via $m$) ; piégeage du vent solaire par le champ terrestre (aurores polaires).</p></div>
+
+<h2 id="laplace"><span class="h2num">3.4</span>Force de Laplace</h2>
+<div class="card def"><span class="tag">Définition — force de Laplace</span>
+$$\boxed{\mathrm d\vec F=i\,\mathrm d\vec\ell\wedge\vec B}\qquad\text{segment rectiligne dans }\vec B\text{ uniforme : }\vec F=i\,\vec\ell\wedge\vec B,\ \ F=i\ell B\sin\alpha$$
+<p>$\mathrm d\vec\ell$ orienté dans le sens du courant. Fil ⟂ au champ : $F=i\ell B$, direction ⟂ au plan (fil, champ), sens par la main droite.</p></div>
+<div class="card why"><span class="tag">Ce n'est pas une loi nouvelle</span><p>L'élément de fil (section $S$) contient $nS\,\mathrm d\ell$ porteurs, chacun subit $q\vec v_d\wedge\vec B$ :</p>
+$$\mathrm d\vec F=nS\,\mathrm d\ell\,q\vec v_d\wedge\vec B=(nqv_dS)\,\mathrm d\vec\ell\wedge\vec B=i\,\mathrm d\vec\ell\wedge\vec B$$
+<p>en utilisant $i=jS=nqv_dS$ et $v_d\mathrm d\vec\ell=\mathrm d\ell\,\vec v_d$ (vecteurs parallèles). <b>Laplace = Lorentz sommée sur les porteurs.</b></p></div>
+
+<h2 id="divb"><span class="h2num">3.5</span>Le flux de B est toujours nul (3ᵉ équation)</h2>
+<div class="card def"><span class="tag">Définition — conservation du flux magnétique</span>
+$$\oiint_S\vec B\cdot\mathrm d\vec S=0\qquad\Longleftrightarrow\qquad\mathrm{div}\,\vec B=0$$
+<p><b>Il n'existe pas de charge magnétique isolée (monopôle).</b> Couper un aimant donne deux aimants complets. Conséquence géométrique : les lignes de $\vec B$ n'ont ni origine ni fin, <b>elles se referment sur elles-mêmes</b> (alors que celles de $\vec E$ partent des + et finissent sur les −).</p></div>
+<div class="card meth"><span class="tag">Méthode — forme locale (comme au Ch. 1, membre de droite nul)</span><ol><li>$\oiint_S\vec B\cdot\mathrm d\vec S=0$ pour toute surface fermée.</li><li>Ostrogradski : $\iiint_V\mathrm{div}\vec B\,\mathrm dV=0$.</li><li>Aucune grandeur ne joue pour $\vec B$ le rôle de ρ.</li><li>Vrai quel que soit V ⇒ $\mathrm{div}\vec B=0$ partout.</li></ol>
+<div class="callout-big">3ᵉ équation de Maxwell (Maxwell-flux) : $\mathrm{div}\,\vec B=0$</div></div>
+<div class="card trap"><span class="tag">⚠ Piège classique : $\vec B$ est un PSEUDO-vecteur</span>
+<p>Ses règles de symétrie sont <b>inversées</b> par rapport à $\vec E$ :</p>
+<div class="tablewrap"><table><tr><th></th><th>Plan de symétrie</th><th>Plan d'antisymétrie</th></tr>
+<tr><td>$\vec E$ (vrai vecteur)</td><td><b>contenu</b> dans le plan</td><td><b>perpendiculaire</b> au plan</td></tr>
+<tr><td>$\vec B$ (pseudo-vecteur)</td><td><b>perpendiculaire</b> au plan</td><td><b>contenu</b> dans le plan</td></tr></table></div>
+<p><b>Pourquoi ?</b> $\vec B$ est défini par un produit vectoriel ($q\vec v\wedge\vec B$) : dans un miroir, la main droite devient une main gauche, ce qui retourne le sens de tout produit vectoriel. (Les plans de symétrie s'entendent ici pour la <b>distribution de courants</b>.)</p></div>
+
+<h2 id="ampere"><span class="h2num">3.6</span>Théorème d'Ampère (4ᵉ équation, statique)</h2>
+<div class="card def"><span class="tag">Définition — théorème d'Ampère</span>
+$$\boxed{\oint_\Gamma\vec B\cdot\mathrm d\vec\ell=\mu_0\,i_{enlacé}}\qquad\text{(forme locale : }\overrightarrow{\mathrm{rot}}\,\vec B=\mu_0\vec j),\qquad\mu_0=4\pi\times10^{-7}\ \mathrm{H\,m^{-1}}$$
+<p>La circulation de $\vec B$ sur un contour fermé orienté = $\mu_0$ × le courant qui <b>traverse</b> (enlace) le contour. Sens positif du courant lié au sens de parcours par la <b>main droite</b> (doigts = parcours, pouce = courant compté positivement).</p></div>
+<div class="card meth"><span class="tag">Méthode — forme locale</span><ol><li>$\oint_\Gamma\vec B\cdot\mathrm d\vec\ell=\mu_0i_{enl}$ pour un contour quelconque.</li><li>Stokes : $\iint_S\overrightarrow{\mathrm{rot}}\vec B\cdot\mathrm d\vec S$.</li><li>$i_{enl}=\iint_S\vec j\cdot\mathrm d\vec S$ (flux de $\vec j$ à travers la même surface).</li><li>$\iint_S(\overrightarrow{\mathrm{rot}}\vec B-\mu_0\vec j)\cdot\mathrm d\vec S=0$.</li><li>Pour toute surface ET <b>toute orientation</b> de $\mathrm d\vec S$ : un produit scalaire nul quelle que soit la direction du second vecteur impose la nullité du premier (on conclut sur le <b>vecteur</b>, pas une seule composante).</li></ol>
+<div class="callout-big">4ᵉ équation (Maxwell-Ampère, statique) : $\overrightarrow{\mathrm{rot}}\,\vec B=\mu_0\,\vec j$</div></div>
+<div class="card ex"><span class="tag">Lecture physique</span><p>« <b>Les courants font tourner le champ magnétique.</b> » Là où $\vec j\neq\vec0$, $\vec B$ tourne autour de la direction du courant (la roue à aubes tourne, axe = $\vec j$). Hors des conducteurs, $\overrightarrow{\mathrm{rot}}\vec B=\vec0$ bien que les lignes soient des cercles : le champ du fil ($\propto1/r$) a un rot nul partout hors du fil — c'est le « vortex » de l'<a href="ch1.html#div">animation du Ch. 1</a>.</p></div>
+<div class="card meth"><span class="tag">Méthode — appliquer Ampère (les 5 mêmes étapes que Gauss)</span>
+<ol><li><b>Symétries et invariances</b> → direction de $\vec B$ et variables, avec les <b>règles inversées</b>.</li>
+<li><b>Contour d'Ampère</b> : courbe fermée passant par M, épousant les symétries (typiquement une <b>ligne de champ</b>).</li>
+<li><b>Circulation</b> : $\oint\vec B\cdot\mathrm d\vec\ell=B\times\mathcal L$ si $\vec B$ est tangent et uniforme le long du contour.</li>
+<li><b>$i_{enlacé}$</b> : le courant <b>à travers</b> une surface s'appuyant sur le contour (avec son signe).</li>
+<li><b>Égaler</b> et isoler $B$.</li></ol></div>
+<div class="card ex"><span class="tag">Application 1 — fil rectiligne infini</span>
+<ol><li>Invariances $z$, $\theta$ ⇒ $B(r)$. Tout plan contenant le fil est plan de symétrie <b>des courants</b> ⇒ $\vec B$ ⟂ à ce plan ⇒ <b>orthoradial</b> : $\vec B=B(r)\vec e_\theta$. Lignes = cercles.</li>
+<li>Contour : cercle de rayon $r$ centré sur le fil (une ligne de champ).</li><li>$\oint\vec B\cdot\mathrm d\vec\ell=B(r)\,2\pi r$.</li><li>$i_{enl}=i$.</li>
+<li>$\boxed{B(r)=\dfrac{\mu_0i}{2\pi r}}$</li></ol>
+<p>Comparer avec le fil chargé $E=\frac{\lambda}{2\pi\varepsilon_0r}$ : même $1/r$, même $2\pi r$ (périmètre) ; $\varepsilon_0$ au dénominateur, $\mu_0$ au numérateur. <b>Ce parallélisme conduit à $c=1/\sqrt{\varepsilon_0\mu_0}$.</b></p></div>
+<figure class="anim" data-anim="ampere" data-badge><figcaption><b>Manipule :</b> déplace les fils et le centre du contour, change son rayon. $\vec B$ sur le contour (flèches) dépend de <b>tous</b> les fils, mais la circulation calculée ne dépend que des fils <b>à l'intérieur</b> (⊙ +, ⊗ −). C'est toute la puissance du théorème.</figcaption></figure>
+<div class="card ex"><span class="tag">Application 2 — solénoïde infini ($n$ spires/m, courant $i$)</span>
+<ol><li>Invariant par translation le long de l'axe et rotation autour. Tout plan ⟂ à l'axe est plan de symétrie des courants ⇒ $\vec B$ ⟂ à ce plan ⇒ <b>axial</b>, norme fonction de la distance à l'axe.</li>
+<li>Champ extérieur : un rectangle entièrement extérieur n'enlace rien ⇒ $B_{ext}$ uniforme ; il doit s'annuler à l'infini ⇒ $B_{ext}=0$.</li>
+<li>Contour : rectangle ABCD à cheval sur la paroi, longueur $L$ ∥ à l'axe ; AB intérieur, CD extérieur.</li>
+<li>Circulation : AB → $B_{int}L$ ; BC, DA (⟂ à l'axe) → $\vec B\perp\mathrm d\vec\ell$ ⇒ 0 ; CD → $B_{ext}=0$. Total : $B_{int}L$.</li>
+<li>Courant enlacé : $nL$ spires traversent le rectangle ⇒ $i_{enl}=nLi$.</li>
+<li>$B_{int}L=\mu_0nLi$ ⇒ $\boxed{B=\mu_0ni}$ — <b>uniforme</b> : ne dépend ni de la position ni du rayon ($L$ se simplifie comme $h$ chez Gauss).</li></ol></div>
+<figure class="anim" data-anim="solenoid" data-badge><figcaption><b>Manipule :</b> glisse le rectangle. À cheval sur la rangée du haut : seul le côté AB (intérieur) contribue, et il enlace $k$ spires ⊙. Entièrement dedans ou dehors : circulation nulle et aucun courant enlacé.</figcaption></figure>
+<div class="card ex"><span class="tag">Fil rouge (épisode 2a) — champ dans le câble coaxial</span><p>L'âme porte $+i$ (aller), le blindage $-i$ (retour). Contour : cercle de rayon $r$.</p>
+<ul><li>Entre les conducteurs ($a\lt r\lt b$) : $i_{enl}=+i$ ⇒ $B=\frac{\mu_0i}{2\pi r}$.</li><li>À l'extérieur ($r\gt b$) : $i_{enl}=i+(-i)=0$ ⇒ $\boxed{B=0}$.</li></ul>
+<p><b>Ça justifie la structure du coax</b> : le champ est confiné entre âme et blindage ; le câble ne rayonne pas et n'est pas perturbé par l'extérieur. Le blindage annule le champ extérieur par compensation exacte du courant.</p></div>
+
+<h2 id="inductance"><span class="h2num">3.7</span>Inductance</h2>
+<div class="card def"><span class="tag">Définition — inductance propre</span>
+$$\boxed{\Phi=Li}\qquad[L]=\mathrm H=\mathrm{Wb\,A^{-1}}$$
+<p>Un circuit parcouru par $i$ crée $\vec B$, donc un flux <b>à travers lui-même</b>, proportionnel à $i$. $L$ ne dépend que de la géométrie, comme C et R.</p></div>
+<div class="card meth"><span class="tag">Méthode — calculer une inductance (miroir de la capacité)</span>
+<ol><li><b>Poser un courant $i$</b>, calculer $\vec B$ par <b>Ampère</b>.</li><li><b>Flux propre</b> $\Phi=\iint\vec B\cdot\mathrm d\vec S$ à travers le circuit.</li><li><b>Identifier</b> $L=\Phi/i$ ($i$ se simplifie).</li></ol>
+<p class="small">Le couple (Ampère, flux de B) remplace le couple (Gauss, circulation de E) du calcul de C.</p></div>
+<div class="card ex"><span class="tag">Solénoïde (longueur ℓ, section S, N spires, $n=N/\ell$)</span>
+<ol><li>$B=\mu_0ni$ uniforme à l'intérieur.</li><li>Chaque spire est traversée par $BS$ ; il y en a N ⇒ $\Phi=NBS=N\mu_0niS$.</li><li>$\boxed{L=\dfrac\Phi i=\mu_0n^2\ell S=\dfrac{\mu_0N^2S}{\ell}}$</li></ol>
+<p><b>Pourquoi $N^2$ ?</b> Chaque spire <b>crée</b> du champ (un facteur N) et chaque spire <b>reçoit</b> le champ de toutes les autres (un autre facteur N). Doubler les spires quadruple L.</p></div>
+<div class="card ex"><span class="tag">Fil rouge (épisode 2b) — inductance du câble coaxial</span>
+<p>Le circuit = âme (aller) + blindage (retour) ; la surface qui s'y appuie est le rectangle $\ell\times(b-a)$ dans un plan méridien.</p>
+<ol><li>$B(r)=\frac{\mu_0i}{2\pi r}$ pour $a\lt r\lt b$.</li>
+<li>B non uniforme ⇒ bandes $\mathrm dS=\ell\,\mathrm dr$ : $\Phi=\displaystyle\int_a^b\frac{\mu_0i}{2\pi r}\ell\,\mathrm dr=\frac{\mu_0i\ell}{2\pi}\ln\frac ba$.</li>
+<li>$\boxed{\dfrac L\ell=\dfrac{\mu_0}{2\pi}\ln\dfrac ba}$ — AN RG-58 ($b/a=3{,}33$) : $\approx241$ nH/m (constructeur ~250 nH/m ✓).</li></ol></div>
+<div class="card why"><span class="tag">Le résultat magique</span>
+$$\frac L\ell\cdot\frac C\ell=\frac{\mu_0}{2\pi}\ln\frac ba\cdot\frac{2\pi\varepsilon_0}{\ln(b/a)}=\varepsilon_0\mu_0=\frac{1}{c^2}$$
+<p>Les ln se simplifient : la géométrie disparaît. On verra au Ch. 5 qu'un signal se propage sur la ligne à $v=1/\sqrt{\mathcal{LC}}$ … donc à la vitesse de la lumière dans le vide (à $c/\sqrt{\varepsilon_r}$ avec un isolant).</p></div>
+<div class="card rem"><span class="tag">Correspondance électrique ↔ magnétique</span>
+<div class="tablewrap"><table><tr><th></th><th>Électrique</th><th>Magnétique</th></tr>
+<tr><td>Source</td><td>charge $q$ (immobile)</td><td>courant $i$ (charges en mouvement)</td></tr>
+<tr><td>Champ</td><td>$\vec E$ (V/m)</td><td>$\vec B$ (T)</td></tr>
+<tr><td>Théorème</td><td>Gauss (flux)</td><td>Ampère (circulation)</td></tr>
+<tr><td>Constante</td><td>$\varepsilon_0$</td><td>$\mu_0$</td></tr>
+<tr><td>Composant</td><td>condensateur $C=\varepsilon_0S/e$</td><td>bobine $L=\mu_0n^2\ell S$</td></tr>
+<tr><td>Loi</td><td>$Q=CU$</td><td>$\Phi=Li$</td></tr>
+<tr><td>Énergie</td><td>$\frac12CU^2$</td><td>$\frac12Li^2$ (Ch. 4)</td></tr>
+<tr><td>Densité d'énergie</td><td>$\frac12\varepsilon_0E^2$</td><td>$B^2/2\mu_0$ (Ch. 4)</td></tr></table></div>
+<p>Chaque ligne a son équivalent. Il reste à <b>coupler</b> les deux colonnes : Ch. 4 et 5 — et ce couplage produit une onde.</p></div>
+
+<h2 id="retenir" data-nomaster>À retenir</h2>
+<div class="card key"><span class="tag">À retenir — Chapitre 3</span>
+<ul><li>$\vec B$ est défini par Lorentz $\vec F=q(\vec E+\vec v\wedge\vec B)$ ; la force magnétique ne travaille pas. Sur un fil : $\mathrm d\vec F=i\,\mathrm d\vec\ell\wedge\vec B$.</li>
+<li>Une boucle de courant a un moment $\vec m=iS\vec n$ et subit le couple $\vec m\wedge\vec B$.</li>
+<li>$\oiint\vec B\cdot\mathrm d\vec S=0$ : pas de charge magnétique, lignes de champ fermées.</li>
+<li>Ampère : $\oint\vec B\cdot\mathrm d\vec\ell=\mu_0i_{enl}$, avec les règles de symétrie <b>inversées</b> du pseudo-vecteur (fil : $\mu_0i/2\pi r$ ; solénoïde : $\mu_0ni$).</li>
+<li>Inductance : $\Phi=Li$, fixée par la géométrie. Pour le coaxial, $(L/\ell)(C/\ell)=1/c^2$ dans le vide.</li>
+<li>Le magnétisme des aimants provient des moments des électrons (orbital et spin).</li></ul></div>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ch3"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ch3"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=exp%C3%A9rience+d%27Oersted">▶ Expérience d'Ørsted</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=th%C3%A9or%C3%A8me+d%27Amp%C3%A8re+sol%C3%A9no%C3%AFde+explication">▶ Ampère & solénoïde</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=force+de+Lorentz+cyclotron+rayon">▶ Lorentz & cyclotron</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=diamagn%C3%A9tisme+paramagn%C3%A9tisme+ferromagn%C3%A9tisme">▶ Dia / para / ferro</a></p>
+
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

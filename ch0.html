@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch. 0 — Le langage de la physique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ch0">
+<article class="content">
+
+<div class="kicker">Chapitre 0</div>
+<h1>Le langage de la physique</h1>
+<p class="lead">« Partir au front en tongs, ce n'est pas une bonne idée. » Ce chapitre, ce sont tes outils : sans eux, Gauss, Ampère et Maxwell restent illisibles. Avec eux, ils deviennent des phrases simples.</p>
+
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list">
+<li>vérifier l'homogénéité d'une formule</li><li>calculer et interpréter $\vec u\cdot\vec v$ et $\vec u\wedge\vec v$</li>
+<li>choisir le bon système de coordonnées</li><li>écrire $\mathrm d\vec\ell$, $\mathrm dS$, $\mathrm dV$ en cyl./sph.</li>
+<li>dériver partiellement, développer au 1er ordre</li><li>expliquer ce qu'est un gradient</li>
+<li>distinguer flux et circulation</li><li>(préparer div et rot, vus au Ch. 1)</li>
+</ul></div>
+
+<h2 id="dims"><span class="h2num">0.1</span>Dimensions &amp; homogénéité</h2>
+<p><b>L'idée :</b> une équation physique compare des choses de même nature. On ne peut pas égaler des mètres et des secondes. Vérifier les dimensions, c'est le détecteur d'erreurs le plus rentable de tout le cours : il ne demande <i>aucune</i> compréhension de la physique du problème.</p>
+<div class="card meth"><span class="tag">Méthode — vérifier l'homogénéité</span>
+<p>Remplace chaque grandeur par sa dimension (M masse, L longueur, T temps, I intensité) en utilisant des <b>lois simples que tu connais</b> comme « dictionnaire ». Les deux membres doivent donner la même chose.</p></div>
+<div class="card ex"><span class="tag">Exemple travaillé (du cours) — $\omega_0 = 1/\sqrt{LC}$</span>
+<p>Dictionnaire : bobine $U=L\,\frac{\mathrm di}{\mathrm dt}$ ⇒ $[L]=\frac{[U]\,\mathrm T}{\mathrm I}$. Condensateur $Q=CU$ et $Q=it$ ⇒ $[C]=\frac{\mathrm{I\,T}}{[U]}$.</p>
+$$[LC]=\frac{[U]\mathrm T}{\mathrm I}\cdot\frac{\mathrm{I\,T}}{[U]}=\mathrm T^2\quad\Rightarrow\quad\left[\tfrac{1}{\sqrt{LC}}\right]=\mathrm T^{-1}\ \text{: une pulsation ✓}$$
+<p>Remarque : on n'a jamais eu besoin de savoir <i>ce que sont</i> L et C. C'est la force de la méthode.</p></div>
+<div class="tablewrap"><table>
+<tr><th>Grandeur</th><th>Unité SI</th><th>« Dictionnaire » pour retrouver</th></tr>
+<tr><td>Charge $q$</td><td>C = A·s</td><td>$i=\mathrm dq/\mathrm dt$</td></tr>
+<tr><td>Champ $E$</td><td>V·m⁻¹ = N·C⁻¹</td><td>$F=qE$ ou $E=-\mathrm dV/\mathrm dx$</td></tr>
+<tr><td>Potentiel / tension</td><td>V = J·C⁻¹</td><td>$W=qU$</td></tr>
+<tr><td>$\varepsilon_0$</td><td>F·m⁻¹</td><td>$C=\varepsilon_0S/e$</td></tr>
+<tr><td>Champ $B$</td><td>T</td><td>$F=qvB$ ⇒ T = N·s·C⁻¹·m⁻¹</td></tr>
+<tr><td>$\mu_0$</td><td>H·m⁻¹</td><td>$B=\mu_0 ni$, $L=\mu_0N^2S/\ell$</td></tr>
+<tr><td>Flux magnétique</td><td>Wb = T·m²</td><td>$\Phi=BS$, $e=-\mathrm d\Phi/\mathrm dt$ ⇒ Wb = V·s</td></tr>
+<tr><td>Résistivité $\rho_r$</td><td>Ω·m</td><td>$R=\rho_rL/S$</td></tr>
+</table></div>
+<div class="card trap"><span class="tag">⚠ Piège : les préfixes</span><p>nC = 10⁻⁹ C, µ = 10⁻⁶, mm² = 10⁻⁶ m², cm² = 10⁻⁴ m², pF = 10⁻¹² F. Convertis <b>tout</b> en SI avant d'appliquer. Exemple : un fil de 1 mm² a $S=10^{-6}$ m², pas $10^{-3}$.</p></div>
+
+<h2 id="vec"><span class="h2num">0.2</span>Vecteurs &amp; produit scalaire</h2>
+<p>Un vecteur, c'est une <b>norme</b> (positive, avec une unité), une <b>direction</b> et un <b>sens</b>. Dans une base orthonormée directe :</p>
+$$\vec u=u_x\vec e_x+u_y\vec e_y+u_z\vec e_z,\qquad \|\vec u\|=\sqrt{u_x^2+u_y^2+u_z^2}.$$
+<div class="card def"><span class="tag">Définition — produit scalaire</span>
+$$\vec u\cdot\vec v=\|\vec u\|\,\|\vec v\|\cos\theta=u_xv_x+u_yv_y+u_zv_z\qquad\text{(c'est un NOMBRE)}$$
+<p>Il mesure la <b>projection</b> de l'un sur l'autre : nul si ⟂, maximal si colinéaires de même sens, négatif si « opposés ».</p></div>
+<figure class="anim" data-anim="dot" data-badge><figcaption><b>Manipule :</b> glisse la pointe de $\vec u$. Le segment coloré est la projection $\|\vec u\|\cos\theta$. Trouve la position où le produit scalaire s'annule.</figcaption></figure>
+<div class="card why"><span class="tag">Pourquoi c'est central en EM ?</span>
+<p>Le cours pose sans arrêt la question « <i>quelle part du champ va dans telle direction ?</i> » :</p>
+<ul><li><b>Flux</b> $\vec E\cdot\mathrm d\vec S$ : la part de $\vec E$ qui <b>traverse</b> la surface (selon la normale).</li>
+<li><b>Circulation</b> $\vec B\cdot\mathrm d\vec\ell$ : la part de $\vec B$ qui <b>suit</b> le chemin.</li>
+<li><b>Travail</b> $\vec F\cdot\mathrm d\vec\ell$ : la part de la force qui fait avancer.</li></ul>
+<p>Dans Gauss et Ampère, tout l'art consiste à choisir une surface/un contour où ce produit scalaire est soit <b>0</b> (perpendiculaire), soit <b>$E\,\mathrm dS$</b> (colinéaire) : le calcul devient trivial.</p></div>
+
+<h2 id="cross"><span class="h2num">0.3</span>Produit vectoriel</h2>
+<div class="card def"><span class="tag">Définition — produit vectoriel</span>
+$$\vec u\wedge\vec v=\begin{pmatrix}u_yv_z-u_zv_y\\u_zv_x-u_xv_z\\u_xv_y-u_yv_x\end{pmatrix},\qquad \|\vec u\wedge\vec v\|=\|\vec u\|\|\vec v\|\sin\theta\quad\text{(c'est un VECTEUR)}$$
+<p>⟂ au plan $(\vec u,\vec v)$, orienté par la <b>main droite</b> ; sa norme est l'<b>aire du parallélogramme</b> ; nul si colinéaires.</p></div>
+<div class="grid2">
+<div class="card meth"><span class="tag">L'astuce de calcul</span>
+<ol><li>Écris $\vec u$ et $\vec v$ en colonnes.</li><li><b>Barre la 1ʳᵉ ligne</b> ($x$).</li><li><b>Recopie les deux premières lignes</b> en dessous.</li><li>Produits en croix dans l'ordre : lignes $(y,z)$ → composante $x$ ; $(z,x)$ → $y$ ; $(x,y)$ → $z$.</li></ol></div>
+<div class="card ex"><span class="tag">Exemple</span>
+$$\begin{vmatrix}1\\2\\3\end{vmatrix}\wedge\begin{vmatrix}4\\5\\6\end{vmatrix}=\begin{vmatrix}2\times6-3\times5\\3\times4-6\times1\\1\times5-2\times4\end{vmatrix}=\begin{vmatrix}-3\\6\\-3\end{vmatrix}$$
+<p class="small muted">Vérif rapide : le résultat doit être ⟂ aux deux. $(-3)(1)+6(2)+(-3)(3)=0$ ✓</p></div>
+</div>
+<figure class="anim" data-anim="cross" data-badge><figcaption><b>Manipule :</b> glisse $\vec u$ et $\vec v$. L'aire colorée = $\|\vec u\wedge\vec v\|$. Passe $\vec v$ de l'autre côté de $\vec u$ : le vecteur résultat passe de « sortant » ⊙ à « entrant » ⊗. L'ordre compte : $\vec v\wedge\vec u=-\vec u\wedge\vec v$.</figcaption></figure>
+<div class="card rem"><span class="tag">Règle de la main droite (version qui marche toujours)</span>
+<p><b>Index</b> = 1ᵉʳ vecteur, <b>majeur</b> = 2ᵉ vecteur, <b>pouce</b> = produit vectoriel. Base directe : $\vec e_x\wedge\vec e_y=\vec e_z$, $\vec e_y\wedge\vec e_z=\vec e_x$, $\vec e_z\wedge\vec e_x=\vec e_y$ (ordre circulaire $x\to y\to z\to x$). Sur un schéma : ⊙ = vers toi, ⊗ = s'éloigne (on voit l'empennage de la flèche).</p></div>
+<div class="card why"><span class="tag">Où le retrouve-t-on ?</span><p>Force de Lorentz $q\vec v\wedge\vec B$, force de Laplace $i\,\mathrm d\vec\ell\wedge\vec B$, moment d'une boucle. C'est parce que $\vec B$ est défini par un produit vectoriel qu'il est un <b>pseudo-vecteur</b> (ses règles de symétrie sont inversées, Ch. 3).</p></div>
+
+<h2 id="champs"><span class="h2num">0.4</span>Champs scalaires et vectoriels</h2>
+<div class="card def"><span class="tag">Définition — champ</span><p>Une grandeur définie <b>en tout point de l'espace</b> (et éventuellement à tout instant). <b>Scalaire</b> : un nombre par point ($T(M)$, $V(M)$). <b>Vectoriel</b> : une flèche par point ($\vec E(M)$, $\vec B(M)$).</p></div>
+<div class="card ex"><span class="tag">Exemple — la carte météo</span><p>Carte des températures = champ scalaire $T(x,y)$. Carte des vents = champ vectoriel $\vec v(x,y)$. En EM : le <b>potentiel $V$</b> est scalaire, le <b>champ $\vec E$</b> est vectoriel. Ils contiennent la <b>même information</b> ($\vec E=-\vec\nabla V$) mais le scalaire demande moins de calculs : un nombre au lieu de trois composantes.</p></div>
+
+<h2 id="coords"><span class="h2num">0.5</span>Systèmes de coordonnées</h2>
+<div class="tablewrap"><table>
+<tr><th>Système</th><th>Coordonnées</th><th>$\mathrm d\vec\ell$</th><th>$\mathrm dV$</th><th>Adapté à</th></tr>
+<tr><td>Cartésien</td><td>$(x,y,z)$</td><td>$\mathrm dx\,\vec e_x+\mathrm dy\,\vec e_y+\mathrm dz\,\vec e_z$</td><td>$\mathrm dx\,\mathrm dy\,\mathrm dz$</td><td>plan chargé, condensateur plan</td></tr>
+<tr><td>Cylindrique</td><td>$(r,\theta,z)$, $r$ = distance à un <b>axe</b></td><td>$\mathrm dr\,\vec e_r+r\,\mathrm d\theta\,\vec e_\theta+\mathrm dz\,\vec e_z$</td><td>$r\,\mathrm dr\,\mathrm d\theta\,\mathrm dz$</td><td><b>fil, câble coaxial, solénoïde</b></td></tr>
+<tr><td>Sphérique</td><td>$(r,\theta,\varphi)$, $r$ = distance à un <b>point</b></td><td>$\mathrm dr\,\vec e_r+r\,\mathrm d\theta\,\vec e_\theta+r\sin\theta\,\mathrm d\varphi\,\vec e_\varphi$</td><td>$r^2\sin\theta\,\mathrm dr\,\mathrm d\theta\,\mathrm d\varphi$</td><td><b>charge ponctuelle, sphère</b></td></tr>
+</table></div>
+<div class="grid2">
+<div class="card def"><span class="tag">Surfaces élémentaires utiles</span>
+<ul><li>plan $z$ = cste : $\mathrm dS=\mathrm dx\,\mathrm dy$</li>
+<li>cylindre $r$ = cste : $\mathrm dS=r\,\mathrm d\theta\,\mathrm dz$ → aire latérale <b>$2\pi rh$</b></li>
+<li>disque $z$ = cste : $\mathrm dS=r\,\mathrm dr\,\mathrm d\theta$ → aire <b>$\pi r^2$</b></li>
+<li>sphère $r$ = cste : $\mathrm dS=r^2\sin\theta\,\mathrm d\theta\,\mathrm d\varphi$ → aire <b>$4\pi r^2$</b></li>
+<li>coquille sphérique : $\mathrm dV=4\pi r^2\,\mathrm dr$ ; coquille cylindrique : $\mathrm dV=2\pi rh\,\mathrm dr$</li></ul></div>
+<div class="card why"><span class="tag">Pourquoi « $r\,\mathrm d\theta$ » ?</span>
+<svg viewBox="0 0 260 150" style="width:100%;max-width:300px"><path d="M30 130 L230 130" stroke="var(--ink3)"/><path d="M30 130 L200 40" stroke="var(--ink3)"/><path d="M30 130 L215 75" stroke="var(--ink3)"/><path d="M200 40 A190 190 0 0 1 215 75" stroke="var(--e)" stroke-width="4" fill="none"/><text x="222" y="58" fill="var(--e)" font-size="14" font-weight="700">r dθ</text><path d="M75 106 A50 50 0 0 1 78 116" stroke="var(--accent)" fill="none"/><text x="86" y="104" fill="var(--ink2)" font-size="13">dθ</text><text x="105" y="80" fill="var(--ink2)" font-size="13">r</text></svg>
+<p>Un angle $\mathrm d\theta$ vu à la distance $r$ découpe un arc de longueur $r\,\mathrm d\theta$. Un tour complet : $\int_0^{2\pi}r\,\mathrm d\theta=2\pi r$, le périmètre. <b>C'est le calcul de toute application du théorème d'Ampère.</b></p></div>
+</div>
+<div class="card trap"><span class="tag">⚠ Piège classique</span><p><b>Le choix des coordonnées conditionne la difficulté.</b> Un problème à symétrie cylindrique traité en cartésien donne des intégrales horribles ; en cylindrique, trois lignes. Règle : <b>prends le système qui possède les symétries du problème</b>. Et attention, la base locale $(\vec e_r,\vec e_\theta)$ <b>dépend du point</b> : on ne peut pas sortir $\vec e_r$ d'une intégrale sans précaution (c'est pour ça qu'on projette avant d'intégrer).</p></div>
+
+<h2 id="deriv"><span class="h2num">0.6</span>Dérivées partielles &amp; premier ordre</h2>
+<div class="card def"><span class="tag">Définition — dérivée partielle</span>
+$$\frac{\partial f}{\partial x}(x,y,z)=\lim_{h\to0}\frac{f(x+h,y,z)-f(x,y,z)}{h}$$
+<p>La pente de $f$ quand on bouge <b>uniquement</b> selon $x$, les autres variables tenues fixes. Le « d rond » $\partial$ signale qu'il existe d'autres variables. (Le $h$ peut être vu comme un petit élément de longueur $\mathrm dx\to0$.)</p></div>
+<div class="card def"><span class="tag">Définition — développement au premier ordre</span>
+$$f(x+\mathrm dx)\simeq f(x)+f'(x)\,\mathrm dx\qquad\text{et}\qquad f(x+\mathrm dx,y,z)-f(x,y,z)\simeq\frac{\partial f}{\partial x}\mathrm dx$$
+<p>« La courbe se confond avec sa tangente sur un intervalle assez court. » On néglige les termes en $\mathrm dx^2$.</p></div>
+<div class="card why"><span class="tag">Pourquoi c'est l'outil n°1 des démonstrations ?</span>
+<p>Presque toutes les démonstrations du cours suivent le même schéma : on découpe un <b>petit morceau</b> (pavé $\mathrm dx\,\mathrm dy\,\mathrm dz$, rectangle, tranche de câble $\mathrm dz$), on écrit ce qui entre d'un côté et ce qui sort de l'autre, et la <b>différence</b> s'écrit avec ce développement : $A(x+\mathrm dx)-A(x)=\frac{\partial A}{\partial x}\mathrm dx$. C'est ainsi qu'on obtient la divergence, le rotationnel, l'équation de la ligne LC (Ch. 5) et le champ près de l'axe de l'anneau (TD1 ex. 3).</p></div>
+<div class="card rem"><span class="tag">Primitives à avoir en tête</span>
+$$\int\frac{\mathrm dr}{r^2}=-\frac1r\ \ (\Rightarrow V\propto 1/r\text{ pour une charge})\qquad\int\frac{\mathrm dr}{r}=\ln r\ \ (\Rightarrow\text{coaxial, fil, couronne})$$</div>
+
+<h2 id="grad"><span class="h2num">0.7</span>Le gradient</h2>
+<div class="card def"><span class="tag">Définition — gradient</span>
+$$\vec\nabla f=\frac{\partial f}{\partial x}\vec e_x+\frac{\partial f}{\partial y}\vec e_y+\frac{\partial f}{\partial z}\vec e_z\qquad\text{avec}\qquad\mathrm df=\vec\nabla f\cdot\mathrm d\vec\ell$$
+<p>Il indique la direction de <b>croissance maximale</b> de $f$ ; sa norme est la pente dans cette direction. La variation de $f$ lors d'un petit déplacement est la <b>projection</b> du gradient sur ce déplacement.</p></div>
+<div class="card ex"><span class="tag">Concrètement — perdu dans le brouillard</span><p>Tu es sur une montagne dans un brouillard total ; tu sens la pente avec tes pieds. Le <b>gradient</b> = la direction de la montée la plus raide. La <b>descente de gradient</b> (machine learning) = faire un pas dans la direction $-\vec\nabla f$. En électrostatique, $\vec E=-\vec\nabla V$ : <b>le champ électrique, c'est la descente de gradient du potentiel</b>.</p></div>
+<figure class="anim tall" data-anim="gradient" data-badge><figcaption><b>Manipule :</b> survole la carte. Les bandes sombres sont des lignes de niveau ($f$ = cste). La grosse flèche est toujours <b>perpendiculaire</b> au tiret (direction de la ligne de niveau). Passe en mode « −grad » avec « Deux charges ± » : tu obtiens exactement le champ $\vec E$ d'un dipôle à partir de son potentiel.</figcaption></figure>
+<div class="card why"><span class="tag">Pourquoi le gradient est ⟂ aux lignes de niveau ? (démo en 1 ligne)</span><p>Si on se déplace <b>le long</b> d'une ligne de niveau, $f$ ne change pas : $\mathrm df=\vec\nabla f\cdot\mathrm d\vec\ell=0$ pour tout déplacement tangent. Un produit scalaire nul ⇒ perpendiculaires. Conséquence au Ch. 1 : <b>les lignes de champ $\vec E$ coupent les équipotentielles à angle droit</b>.</p></div>
+
+<h2 id="fluxcirc"><span class="h2num">0.8</span>Flux et circulation</h2>
+<div class="grid2">
+<div class="card def"><span class="tag">Flux : ce qui TRAVERSE</span>
+$$\Phi=\iint_S\vec A\cdot\mathrm d\vec S=\iint_S\vec A\cdot\vec n\,\mathrm dS$$
+<p>Maximal si $\vec A\parallel\vec n$, <b>nul si $\vec A$ est tangent</b>. Surface fermée : on note $\oiint$ et $\vec n$ pointe <b>vers l'extérieur</b> : le flux compte ce qui <b>sort</b>.</p></div>
+<div class="card def"><span class="tag">Circulation : ce qui TOURNE</span>
+$$\mathcal C=\int_\Gamma\vec A\cdot\mathrm d\vec\ell$$
+<p>La composante du champ <b>le long</b> du chemin, cumulée. Contour fermé : $\oint$ ; mesure la tendance du champ à tourner autour. Maximale si $\vec A\parallel\mathrm d\vec\ell$, nulle si $\vec A\perp$ contour.</p></div>
+</div>
+<figure class="anim" data-anim="flux" data-badge><figcaption><b>Manipule :</b> tourne la surface (vue de profil). Le nombre de lignes interceptées est proportionnel à $S\cos\theta$. À 90° : flux nul. Au-delà : le champ traverse « à l'envers » de $\vec n$, flux négatif.</figcaption></figure>
+<div class="card why"><span class="tag">Pourquoi deux notions ?</span><p>Parce qu'un champ de vecteurs a deux « comportements » possibles autour d'un point : il peut <b>jaillir/converger</b> (mesuré par le flux → divergence) ou <b>tourner</b> (mesuré par la circulation → rotationnel). Les 4 équations de Maxwell sont exactement : le flux de $\vec E$, le flux de $\vec B$, la circulation de $\vec E$, la circulation de $\vec B$.</p></div>
+<div class="card rem"><span class="tag">Et les symétries ?</span><p>Le dernier point du « À retenir » du Ch. 0 — <i>« Symétries et invariances fixent la forme d'un champ avant tout calcul »</i> — est détaillé avec la méthode complète au <a href="ch1.html#sym">Ch. 1, § Symétries</a>.</p></div>
+
+<h2 id="retenir" data-nomaster>À retenir</h2>
+<div class="card key"><span class="tag">À retenir — Chapitre 0</span>
+<ul><li>Toute formule est homogène : vérifier les dimensions <b>avant</b> toute application numérique, en SI.</li>
+<li>Produit scalaire : un <b>nombre</b> (projection). Produit vectoriel : un <b>vecteur ⟂</b> (main droite, aire).</li>
+<li>Dérivée partielle, $f(x+\mathrm dx)\simeq f(x)+f'(x)\mathrm dx$, primitives de $1/r^2$ et $1/r$.</li>
+<li>Choisir les coordonnées selon les symétries ; la base locale $\vec e_r,\vec e_\theta$ dépend du point.</li>
+<li>Gradient : direction de plus forte croissance, ⟂ aux surfaces de niveau.</li>
+<li>Flux (à travers une surface orientée) et circulation (le long d'un contour) ; divergence et rotationnel en sont les versions locales (Ch. 1).</li></ul></div>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ch0"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ch0"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=produit+vectoriel+r%C3%A8gle+de+la+main+droite">▶ Produit vectoriel &amp; main droite</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=gradient+intuition+lignes+de+niveau">▶ Gradient : intuition</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=coordonn%C3%A9es+cylindriques+sph%C3%A9riques+%C3%A9l%C3%A9ment+de+volume">▶ Coordonnées cyl./sph.</a></p>
+
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

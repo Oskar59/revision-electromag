@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TD 2 — Conducteurs, condensateurs, courant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="td2">
+<article class="content">
+
+<div class="kicker">Travaux dirigés</div>
+<h1>TD 2 — Conducteurs, condensateurs et conduction</h1>
+<p class="lead">La feuille fournie n'a pas de corrigé : voici une correction complète, rédigée comme on l'attend en partiel, avec pour chaque exercice le réflexe à avoir et les pièges.</p>
+<div class="card rem"><span class="tag">Note</span><p>Ces corrigés sont rédigés à partir du cours ; compare-les avec la correction faite en séance et signale toute différence de notation à ton chargé de TD.</p></div>
+<div class="card meth"><span class="tag">Ce que ce TD entraîne</span>
+<p><span class="pill e">influence &amp; mise à la terre</span><span class="pill e">capacité en 3–4 étapes</span><span class="pill a">modèle microscopique → loi locale</span><span class="pill a">résistance : série / parallèle</span><span class="pill e">bilan sur une tranche dx → équation différentielle</span></p></div>
+
+<!-- ================= EXO 1 ================= -->
+<section class="exo" id="exo1"><header><h2 id="e1">Exercice 1 — Influence électrostatique et écran</h2><span class="time">20 min</span></header><div class="body">
+<div class="statement">Cinq schémas successifs. Initialement A est un conducteur chargé $Q>0$, B est neutre (étape 1). En 1 et 5, un écran supprime l'influence. Étape 3 : B relié à la Terre ; étape 4 : liaison coupée ; étape 5 : écran remis et A relié à la Terre. Dessiner, en répartition et en signe, les charges de A et B à chaque étape.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexes :</b> (1) un conducteur <b>isolé conserve sa charge totale</b> ; (2) sous influence, ses charges se <b>redistribuent</b> (− face à un corps +) ; (3) relié à la Terre, son <b>potentiel</b> est fixé (0), c'est sa <b>charge</b> qui s'ajuste — elle n'est pas forcément nulle ! (4) l'écran supprime l'influence : chaque corps est « seul ».</div></div>
+<figure class="anim" data-anim="influence" data-badge><figcaption>Clique sur les étapes 1 → 5 et lis l'explication sous le schéma.</figcaption></figure>
+<div class="steps">
+<div class="step"><h4>Étape 1 (écran)</h4><p>Pas d'influence. A porte $Q>0$ répartie <b>uniformément</b> sur sa surface (sphère isolée). B : neutre, aucune charge.</p></div>
+<div class="step"><h4>Étape 2 (écran retiré)</h4><p>Le champ de A attire les électrons libres de B sur sa face en regard (−) ; la face opposée, dépeuplée, devient + : <b>B reste globalement neutre</b> (conservation). Les charges de A, attirées par les − de B, se <b>concentrent du côté de B</b>.</p></div>
+<div class="step"><h4>Étape 3 (B à la Terre)</h4><p>Le potentiel de B est fixé à 0. Les charges + de la face éloignée « s'écoulent » vers la Terre (en réalité des électrons montent de la Terre). Il reste sur B une <b>charge nette négative</b>, localisée face à A. A est inchangé.</p></div>
+<div class="step"><h4>Étape 4 (liaison coupée)</h4><p>B est de nouveau isolé : il <b>conserve sa charge négative</b>. Tant que A est là, la répartition ne change pas (toujours face à A).</p></div>
+<div class="step"><h4>Étape 5 (écran + A à la Terre)</h4><p>Plus d'influence. A relié à la Terre, sans influence : son potentiel nul impose une charge nulle ⇒ <b>A se décharge complètement</b>. B garde sa charge négative, désormais répartie <b>uniformément</b> (il est « seul »).</p></div>
+</div>
+<div class="card trap"><span class="tag">⚠ Le piège n°1</span><p>« Relié à la Terre ⇒ neutre » est FAUX en présence d'influence (étape 3). La Terre fixe le potentiel, pas la charge. C'est le principe de l'<b>électrisation par influence</b> : on charge B sans jamais le toucher avec A.</p></div>
+</div></section>
+
+<!-- ================= EXO 2 ================= -->
+<section class="exo" id="exo2"><header><h2 id="e2">Exercice 2 — Calcul de condensateurs</h2><span class="time">30 min</span></header><div class="body">
+<div class="statement">Méthode générale : (i) $\vec E$ entre les armatures (Gauss) ; (ii) circulation $\int_1^2\vec E\cdot\mathrm d\vec\ell=V_1-V_2$ ; (iii) en déduire $\sigma=f(V_1-V_2)$ ; (iv) intégrer sur une armature : $Q=f(V_1-V_2)$ ⇒ C.<br>Calculer la capacité de : 1. plaques parallèles carrées de côté ℓ séparées de $e$ (sans effets de bord) ; 2. sphères concentriques $R_1\lt R_2$.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> « capacité » ⇒ <b>la méthode est imposée, déroule-la</b>. Choisir la surface de Gauss selon la symétrie (boîte / sphère), intégrer <b>de l'armature 1 à l'armature 2</b>, vérifier que Q (ou σ) se simplifie, puis tester des <b>cas limites</b>.</div></div>
+<h3>1. Condensateur plan</h3>
+<div class="steps">
+<div class="step"><h4>(i) Champ</h4><p>Armature 1 : $+\sigma$, armature 2 : $-\sigma$. Sans effets de bord (ℓ ≫ e), chaque plaque ≈ plan infini ; par superposition (TD1 ex. 6) ou théorème de Coulomb : $\vec E=\frac{\sigma}{\varepsilon_0}\vec u$ uniforme entre les plaques (de 1 vers 2), nul dehors.</p></div>
+<div class="step"><h4>(ii) Circulation</h4><p>$V_1-V_2=\displaystyle\int_0^e\frac{\sigma}{\varepsilon_0}\mathrm dz=\frac{\sigma e}{\varepsilon_0}$</p></div>
+<div class="step"><h4>(iii) σ en fonction de la tension</h4><p>$\sigma=\dfrac{\varepsilon_0(V_1-V_2)}{e}$</p></div>
+<div class="step"><h4>(iv) Charge et capacité</h4><p>σ uniforme : $Q=\sigma\ell^2=\dfrac{\varepsilon_0\ell^2}{e}(V_1-V_2)$ ⇒ $\boxed{C=\dfrac{\varepsilon_0\ell^2}{e}}$</p></div>
+</div>
+<h3>2. Sphères concentriques</h3>
+<div class="steps">
+<div class="step"><h4>(i) Champ entre les armatures</h4><p>Charge $Q$ sur la sphère intérieure (rayon $R_1$), $-Q$ sur la face interne de l'extérieure. Symétrie sphérique ⇒ $\vec E=E(r)\vec u_r$. Gauss sur une sphère de rayon $R_1\lt r\lt R_2$ : $E\cdot4\pi r^2=Q/\varepsilon_0$ ⇒ $E=\dfrac{Q}{4\pi\varepsilon_0r^2}$.</p></div>
+<div class="step"><h4>(ii) Circulation radiale de $R_1$ à $R_2$</h4><p>$V_1-V_2=\displaystyle\int_{R_1}^{R_2}\frac{Q}{4\pi\varepsilon_0r^2}\mathrm dr=\frac{Q}{4\pi\varepsilon_0}\left(\frac{1}{R_1}-\frac{1}{R_2}\right)=\frac{Q}{4\pi\varepsilon_0}\frac{R_2-R_1}{R_1R_2}$</p></div>
+<div class="step"><h4>(iii) σ sur l'armature interne</h4><p>$\sigma_1=\dfrac{Q}{4\pi R_1^2}=\dfrac{\varepsilon_0R_2}{R_1(R_2-R_1)}(V_1-V_2)$</p></div>
+<div class="step"><h4>(iv) Capacité</h4><p>$Q=\sigma_1\cdot4\pi R_1^2$ ⇒ $\boxed{C=\dfrac{4\pi\varepsilon_0R_1R_2}{R_2-R_1}}$</p></div>
+<div class="step"><h4>Vérifications par cas limites</h4><p><b>$R_2\to\infty$</b> : $C\to4\pi\varepsilon_0R_1$, capacité d'une sphère isolée ✓. <b>$R_2=R_1+e$ avec $e\ll R_1$</b> : $C\approx\dfrac{4\pi\varepsilon_0R_1^2}{e}=\dfrac{\varepsilon_0S}{e}$ : on retrouve le condensateur plan de surface $S=4\pi R^2$ ✓ (vu de près, la sphère est plate).</p></div>
+</div>
+<div class="card trap"><span class="tag">⚠ Pièges</span><p>Intégrer dans le mauvais sens (V₂ − V₁ négatif → C négative !). Mettre $Q_{int}$ = charge des deux armatures (pour $R_1\lt r\lt R_2$, seule l'armature intérieure est enfermée). Oublier que C ne doit dépendre ni de Q ni de U.</p></div>
+</div></section>
+
+<!-- ================= EXO 3 ================= -->
+<section class="exo" id="exo3"><header><h2 id="e3">Exercice 3 — Modèle de Drude et loi d'Ohm locale</h2><span class="time">20 min</span></header><div class="body">
+<div class="statement">En partant du modèle de Drude et de la seconde loi de Newton, montrer que la conductivité statique $\gamma_0$ du métal est définie par $\vec j(M)=\gamma_0\vec E(M)$ et vaut $\gamma_0=\dfrac{ne^2\tau}{m}$.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> « modèle microscopique → loi macroscopique » ⇒ (1) <b>bilan des forces</b> sur UN électron, (2) <b>PFD</b>, (3) <b>régime permanent</b> (vitesse limite), (4) passer à $\vec j=n q\vec v$.</div></div>
+<div class="steps">
+<div class="step"><h4>Système et forces</h4><p>Un électron de conduction (masse $m$, charge $-e$) dans le métal soumis à $\vec E$ : force électrique $-e\vec E$ ; collisions avec le réseau modélisées par une force de frottement $-\dfrac{m}{\tau}\vec v$ ($\tau$ : temps moyen entre deux collisions). Poids négligeable.</p></div>
+<div class="step"><h4>PFD</h4><p>$$m\frac{\mathrm d\vec v}{\mathrm dt}=-e\vec E-\frac{m}{\tau}\vec v$$</p></div>
+<div class="step"><h4>Résolution (pour comprendre le « statique »)</h4><p>Pour $\vec E$ constant, avec $\vec v(0)=\vec 0$ : $\vec v(t)=-\dfrac{e\tau}{m}\vec E\left(1-e^{-t/\tau}\right)$. Comme $\tau\sim10^{-14}$ s, le régime permanent est atteint quasi instantanément.</p></div>
+<div class="step"><h4>Régime permanent</h4><p>$\dfrac{\mathrm d\vec v}{\mathrm dt}=\vec0$ ⇒ vitesse limite (de dérive) $\vec v_d=-\dfrac{e\tau}{m}\vec E$ : opposée à $\vec E$ (charge négative).</p></div>
+<div class="step"><h4>Densité de courant</h4><p>$n$ électrons par unité de volume : $\vec j=n(-e)\vec v_d=\dfrac{ne^2\tau}{m}\vec E$. On identifie la loi d'Ohm locale $\vec j=\gamma_0\vec E$ avec $\boxed{\gamma_0=\dfrac{ne^2\tau}{m}}$.</p></div>
+<div class="step"><h4>Ordre de grandeur et unité</h4><p>Cuivre : $n=8{,}5\times10^{28}$ m⁻³, $\tau\approx2{,}5\times10^{-14}$ s ⇒ $\gamma_0\approx\dfrac{8{,}5\times10^{28}\times(1{,}6\times10^{-19})^2\times2{,}5\times10^{-14}}{9{,}1\times10^{-31}}\approx6\times10^7$ S/m (valeur mesurée : 5,96×10⁷ S/m ✓). Unité : $\mathrm{m^{-3}\,C^2\,s\,kg^{-1}}=\mathrm{A\,V^{-1}\,m^{-1}}=\mathrm{S\,m^{-1}}$.</p></div>
+</div>
+<figure class="anim" data-anim="drude" data-badge><figcaption>La simulation du cours : agitation thermique + collisions + petite dérive opposée à $\vec E$.</figcaption></figure>
+<div class="card why"><span class="tag">Interprétation</span><p>La loi d'Ohm est une loi de <b>vitesse limite</b> (comme une bille qui tombe dans du miel) : la force motrice est équilibrée par le frottement. γ₀ augmente avec le nombre de porteurs $n$ et avec τ (moins de collisions). Quand la température monte, les vibrations du réseau multiplient les collisions : τ diminue, la résistivité augmente.</p></div>
+</div></section>
+
+<!-- ================= EXO 4 ================= -->
+<section class="exo" id="exo4"><header><h2 id="e4">Exercice 4 — Résistance d'une couronne fendue</h2><span class="time">20 min</span></header><div class="body">
+<div class="statement">Couronne de rayon intérieur $R_1$, extérieur $R_2$, épaisseur $e$ (selon $Oz$), fendue selon un plan contenant l'axe. Une face de la coupure est au potentiel $V_1$, l'autre à $V_2$. Résistivité ρ. Calculer la résistance de la couronne.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> géométrie non rectangulaire ⇒ <b>découper en tubes de courant élémentaires</b> où $R=\rho L/S$ s'applique, puis se demander : les tranches sont-elles traversées <b>successivement</b> (série, on somme dR) ou <b>côte à côte</b> entre les mêmes équipotentielles (parallèle, on somme les conductances) ?</div></div>
+<figure class="anim" data-anim="couronne" data-badge><figcaption>Le courant fait le tour (lignes orthoradiales). Un anneau de rayon $r$ et largeur $\mathrm dr$ est un fil de longueur $2\pi r$ ; tous les anneaux relient les deux mêmes faces ⇒ en parallèle.</figcaption></figure>
+<details class="hint"><summary>Indice</summary><div class="inner"><p>Quelle est la forme des lignes de courant ? Les anneaux élémentaires de rayon $r$ ont-ils la même tension à leurs bornes ?</p></div></details>
+<div class="steps">
+<div class="step"><h4>Lignes de courant et équipotentielles</h4><p>Le courant va d'une face de la fente à l'autre en faisant le tour : lignes de courant = <b>cercles</b> (orthoradiales, $\vec j=j(r)\vec u_\theta$). Équipotentielles = demi-plans $\theta$ = cste (les deux faces de la fente en sont).</p></div>
+<div class="step"><h4>Tube élémentaire</h4><p>Anneau de rayon $r$, largeur $\mathrm dr$, épaisseur $e$ : un « fil » de longueur $2\pi r$ et de section $e\,\mathrm dr$ :
+$$\mathrm dR=\rho\frac{2\pi r}{e\,\mathrm dr}\qquad\text{soit une conductance}\qquad\mathrm dG=\frac{1}{\mathrm dR}=\frac{e\,\mathrm dr}{2\pi\rho r}$$</p></div>
+<div class="step"><h4>Association : PARALLÈLE</h4><p>Tous les anneaux relient les deux mêmes faces (mêmes potentiels $V_1$ et $V_2$) : ils sont en parallèle, <b>les conductances s'ajoutent</b> :
+$$\frac1R=\int_{R_1}^{R_2}\frac{e\,\mathrm dr}{2\pi\rho r}=\frac{e}{2\pi\rho}\ln\frac{R_2}{R_1}\qquad\Rightarrow\qquad\boxed{R=\frac{2\pi\rho}{e\ln(R_2/R_1)}}$$</p></div>
+<div class="step"><h4>Méthode alternative (par le champ)</h4><p>Par symétrie V ne dépend que de θ ; dans le conducteur ohmique en régime permanent ($\mathrm{div}\vec j=0$), V varie linéairement avec θ : $V(\theta)=V_1+(V_2-V_1)\frac{\theta}{2\pi}$. Donc $E_\theta=-\frac1r\frac{\mathrm dV}{\mathrm d\theta}=\frac{V_1-V_2}{2\pi r}$, $j=E/\rho$ et
+$$I=\int_{R_1}^{R_2}j\,e\,\mathrm dr=\frac{e(V_1-V_2)}{2\pi\rho}\ln\frac{R_2}{R_1}\ \Rightarrow\ R=\frac{V_1-V_2}{I}\ \text{(même résultat)}$$</p></div>
+<div class="step"><h4>Vérification par cas limite</h4><p>Couronne fine : $R_2=R_1+a$, $a\ll R_1$ ⇒ $\ln(R_2/R_1)\approx a/R_1$ ⇒ $R\approx\dfrac{\rho\,2\pi R_1}{e\,a}=\rho\dfrac{L}{S}$ avec $L=2\pi R_1$ et $S=ea$ : c'est un fil ✓.</p></div>
+</div>
+<div class="card trap"><span class="tag">⚠ Piège</span><p>Additionner les $\mathrm dR$ (série) alors que les anneaux sont en parallèle : on obtiendrait une résistance qui croît avec le nombre d'anneaux, ce qui est absurde (ajouter de la matière en parallèle doit <b>diminuer</b> R).</p></div>
+</div></section>
+
+<!-- ================= EXO 5 ================= -->
+<section class="exo" id="exo5"><header><h2 id="e5">Exercice 5 — Câble coaxial avec courant de fuite</h2><span class="time">45 min</span></header><div class="body">
+<div class="statement">Âme : cylindre de rayon $R_1$, résistance $\rho_1$ par unité de longueur. Armature externe (rayons $R_2$, $R_3$) : résistance $\rho_2$ par unité de longueur. Isolant (imparfait) de résistivité ρ entre $R_1$ et $R_2$. En $x=0$ : âme à $V_1$, armature à $V_2$ ; en $x$ : $V_1(x)$, $V_2(x)$. Courants de même amplitude et sens opposés dans l'âme et l'armature (lignes ∥ à $Ox$) ; dans l'isolant, courant ⟂ à $Ox$. $i(x)$, $i_0$ : intensités dans l'âme en $x$ et 0.
+<ol><li>Résistance de l'isolant pour une section $\mathrm dx$.</li><li>Courant de fuite $\mathrm di_f$ dans la tranche, en fonction de $i(x)$ et $i(x+\mathrm dx)$.</li><li>Trois équations différentielles en $V_1$, $V_2$, $i$ ; en déduire $V_1(x)$, $V_2(x)$, $i(x)$.</li></ol></div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> « tranche $\mathrm dx$ » + grandeurs qui dépendent de $x$ ⇒ <b>bilan local</b> : loi d'Ohm le long de chaque conducteur, loi des nœuds pour le courant qui fuit, loi d'Ohm à travers l'isolant ⇒ système d'EDO ⇒ on combine pour <b>une seule</b> équation du 2ᵈ ordre. C'est exactement la démarche de la ligne LC du Ch. 5 (avec des R au lieu de L et C).</div></div>
+<figure class="anim" data-anim="coaxleak" data-badge><figcaption>Le courant de fuite (flèches orange) est d'autant plus fort que la tension entre âme et armature est grande ; la tension diminue donc le long du câble, en exponentielle de longueur caractéristique δ.</figcaption></figure>
+<div class="steps">
+<div class="step"><h4>Q1 — Résistance de l'isolant (tranche dx)</h4><p>Le courant de fuite est <b>radial</b>, de l'âme vers l'armature. On découpe l'isolant en coquilles cylindriques de rayon $r$, épaisseur $\mathrm dr$, longueur $\mathrm dx$ : longueur parcourue $\mathrm dr$, section $2\pi r\,\mathrm dx$. Ces coquilles sont traversées <b>successivement</b> ⇒ <b>série</b> :
+$$R_f=\int_{R_1}^{R_2}\rho\frac{\mathrm dr}{2\pi r\,\mathrm dx}=\boxed{\frac{\rho\ln(R_2/R_1)}{2\pi\,\mathrm dx}}$$
+On note $g=\dfrac{2\pi}{\rho\ln(R_2/R_1)}$ la conductance de fuite par unité de longueur : $1/R_f=g\,\mathrm dx$ (plus la tranche est longue, plus elle fuit).</p></div>
+<div class="step"><h4>Q2 — Courant de fuite (loi des nœuds)</h4><p>Conservation de la charge sur la tranche d'âme : ce qui entre en $x$ ressort en $x+\mathrm dx$ ou fuit dans l'isolant :
+$$i(x)=i(x+\mathrm dx)+\mathrm di_f\quad\Rightarrow\quad\boxed{\mathrm di_f=i(x)-i(x+\mathrm dx)=-\frac{\mathrm di}{\mathrm dx}\mathrm dx}$$</p></div>
+<div class="step"><h4>Q3 — Équation 1 : Ohm dans l'âme</h4><p>Le tronçon d'âme $\mathrm dx$ a la résistance $\rho_1\mathrm dx$, parcourue par $i$ dans le sens $+x$ : $V_1(x)-V_1(x+\mathrm dx)=\rho_1\mathrm dx\,i(x)$ ⇒ $\boxed{\dfrac{\mathrm dV_1}{\mathrm dx}=-\rho_1i}$</p></div>
+<div class="step"><h4>Q3 — Équation 2 : Ohm dans l'armature</h4><p>Le courant y circule dans le sens $-x$ (retour) : le potentiel décroît dans le sens $-x$, donc croît avec $x$ : $V_2(x+\mathrm dx)-V_2(x)=\rho_2\mathrm dx\,i$ ⇒ $\boxed{\dfrac{\mathrm dV_2}{\mathrm dx}=+\rho_2i}$</p></div>
+<div class="step"><h4>Q3 — Équation 3 : Ohm dans l'isolant</h4><p>$\mathrm di_f=\dfrac{V_1-V_2}{R_f}=g(V_1-V_2)\,\mathrm dx$ et (Q2) $\mathrm di_f=-\dfrac{\mathrm di}{\mathrm dx}\mathrm dx$ ⇒ $\boxed{\dfrac{\mathrm di}{\mathrm dx}=-\dfrac{2\pi}{\rho\ln(R_2/R_1)}(V_1-V_2)}$</p></div>
+<div class="step"><h4>Combinaison : une seule EDO pour U = V₁ − V₂</h4><p>(1) − (2) : $\dfrac{\mathrm dU}{\mathrm dx}=-(\rho_1+\rho_2)\,i$. On dérive et on injecte (3) :
+$$\frac{\mathrm d^2U}{\mathrm dx^2}=-(\rho_1+\rho_2)\frac{\mathrm di}{\mathrm dx}=(\rho_1+\rho_2)\,g\,U\quad\Rightarrow\quad\boxed{\frac{\mathrm d^2U}{\mathrm dx^2}=\frac{U}{\delta^2}},\quad\delta=\sqrt{\frac{\rho\ln(R_2/R_1)}{2\pi(\rho_1+\rho_2)}}$$
+δ est une longueur (vérifie : ρ en Ω·m, ρ₁+ρ₂ en Ω/m ⇒ δ² en m²) ✓.</p></div>
+<div class="step"><h4>Solution générale</h4><p>$U(x)=A\,e^{-x/\delta}+B\,e^{x/\delta}$ et $i(x)=-\dfrac{1}{\rho_1+\rho_2}\dfrac{\mathrm dU}{\mathrm dx}=\dfrac{A\,e^{-x/\delta}-B\,e^{x/\delta}}{(\rho_1+\rho_2)\delta}$.<br>
+<b>Câble très long (semi-infini)</b> : U doit rester borné ⇒ $B=0$, et $U(0)=V_1-V_2\equiv U_0$ ⇒ $A=U_0$ :
+$$U(x)=U_0\,e^{-x/\delta},\qquad i(x)=i_0\,e^{-x/\delta}\ \ \text{avec}\ \ i_0=\frac{U_0}{(\rho_1+\rho_2)\delta}$$
+<span class="small">($(\rho_1+\rho_2)\delta=\sqrt{(\rho_1+\rho_2)/g}$ est la résistance d'entrée du câble.)</span></p></div>
+<div class="step"><h4>V₁(x) et V₂(x)</h4><p>On intègre (1) et (2) avec $i(x)$ :
+$$V_1(x)=V_1-\frac{\rho_1}{\rho_1+\rho_2}U_0\left(1-e^{-x/\delta}\right),\qquad V_2(x)=V_2+\frac{\rho_2}{\rho_1+\rho_2}U_0\left(1-e^{-x/\delta}\right)$$
+Vérif : $V_1(x)-V_2(x)=U_0-U_0(1-e^{-x/\delta})=U_0e^{-x/\delta}$ ✓. Les deux potentiels se rejoignent à l'infini.</p></div>
+<div class="step"><h4>Interprétation</h4><p>Sur une longueur de quelques δ, tout le courant a fui à travers l'isolant. Un bon isolant (ρ grand) et de bons conducteurs (ρ₁, ρ₂ petits) donnent un δ grand : peu de pertes. Si le câble a une longueur finie L, on garde A et B et on les fixe avec les conditions aux deux extrémités (par ex. extrémité en circuit ouvert : $i(L)=0$).</p></div>
+</div>
+<div class="card trap"><span class="tag">⚠ Pièges</span><p>Le signe dans l'armature (le courant y va vers −x) ; confondre « résistance par unité de longueur » (Ω/m, ρ₁) et « résistivité » (Ω·m, ρ) ; mettre les coquilles de l'isolant en parallèle (elles sont en série : le courant les traverse une à une).</p></div>
+</div></section>
+
+<h2 id="bilan" data-nomaster>Bilan du TD 2 : les patterns</h2>
+<div class="decision">
+<div class="row"><div class="if">« Influence / mise à la Terre / écran »</div><div class="arrow">→</div><div>Isolé : charge conservée. À la Terre : V = 0, la charge s'ajuste. Écran : plus d'influence, répartition uniforme.</div></div>
+<div class="row"><div class="if">« Calculer une capacité »</div><div class="arrow">→</div><div>Q (ou σ) → E par Gauss → U = ∫E·dl de 1 à 2 → C = Q/U → cas limites.</div></div>
+<div class="row"><div class="if">« Modèle microscopique (Drude) »</div><div class="arrow">→</div><div>Forces sur 1 porteur → PFD → régime permanent → $\vec j=nq\vec v$.</div></div>
+<div class="row"><div class="if">« Résistance d'une forme bizarre »</div><div class="arrow">→</div><div>Tubes élémentaires ; traversés successivement → série (∫dR) ; côte à côte → parallèle (∫dG).</div></div>
+<div class="row"><div class="if">« Tranche dx, grandeurs fonctions de x »</div><div class="arrow">→</div><div>Ohm le long des conducteurs + nœuds + élément transverse → EDO 2ᵈ ordre → solution bornée.</div></div>
+</div>
+
+<h2 id="quiz" data-nomaster>Quiz méthode TD 2</h2>
+<div class="quiz" data-quiz="td2"></div>
+<h2 id="flash" data-nomaster>Flashcards méthodes</h2>
+<div class="flash" data-cards="td2"></div>
+
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

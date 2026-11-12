@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch. 4 — Induction électromagnétique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ch4">
+<article class="content">
+
+<div class="kicker">Chapitre 4</div>
+<h1>Induction électromagnétique</h1>
+<p class="lead">Jusqu'ici $\vec B$ était constant. Maintenant il <b>varie</b> (ou le circuit bouge) : un flux magnétique variable crée une <b>force électromotrice</b>, qui met les charges en mouvement (courant), qui subissent une force de Laplace… qui <b>s'oppose</b> au mouvement initial. C'est le principe de l'alternateur, du transformateur, de la recharge sans fil.</p>
+
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list">
+<li>orienter un circuit et calculer Φ(t)</li><li>appliquer $e=-\mathrm d\Phi/\mathrm dt$ avec les bons signes</li>
+<li>prévoir le sens du courant induit (Lenz)</li><li>traiter les rails de Laplace en entier (5 étapes)</li>
+<li>distinguer induction de Lorentz et de Neumann</li><li>écrire $\overrightarrow{\mathrm{rot}}\vec E=-\partial_t\vec B$</li>
+<li>auto-induction $u_L=L\,\mathrm di/\mathrm dt$, mutuelle</li><li>oscillateur LC : $\omega_0=1/\sqrt{LC}$</li>
+</ul></div>
+
+<h2 id="flux"><span class="h2num">4.1</span>Rappel — flux magnétique et orientation</h2>
+<div class="card def"><span class="tag">Définition — flux magnétique</span>
+$$\Phi=\iint_S\vec B\cdot\vec n\,\mathrm dS\qquad[\Phi]=\mathrm{Wb}=\mathrm{T\,m^2}$$
+<p>« Le nombre de lignes de champ qui traversent le circuit. »</p>
+<p><b>Convention :</b> sens de parcours du contour et normale $\vec n$ liés par la <b>main droite</b> (doigts = parcours, pouce = $\vec n$). Ce choix est <b>arbitraire</b>, mais une fois fait, il fixe <b>simultanément</b> le signe de Φ, de la fem et le sens positif du courant.</p></div>
+
+<h2 id="fem"><span class="h2num">4.2</span>Force électromotrice</h2>
+<div class="card def"><span class="tag">Définition — force électromotrice (fem)</span>
+$$e=\frac{W_{non\text{-}élec}}{q}\qquad[e]=\mathrm{J\,C^{-1}}=\mathrm V$$
+<p>Travail fourni aux charges par une action <b>non électrostatique</b>, par unité de charge. <b>Malgré son nom, une fem n'est pas une force</b> (héritage historique) : c'est une énergie par charge, comme une tension. Origine chimique (pile) ou magnétique (induction, alternateur).</p></div>
+<div class="card why"><span class="tag">Pourquoi a-t-on besoin d'une fem ?</span><p>Un champ électrostatique est conservatif : sur un tour complet de circuit, il ne fournit <b>aucune</b> énergie ($\oint\vec E\cdot\mathrm d\vec\ell=0$). Or l'effet Joule dissipe de l'énergie en permanence. Il faut donc une action d'une autre nature qui « remonte » les charges : c'est la fem. (Ch. 2 : « un courant permanent exige une fem ».)</p></div>
+
+<h2 id="faraday"><span class="h2num">4.3</span>Lois de Faraday et de Lenz</h2>
+<div class="card def"><span class="tag">Définition — loi de Faraday</span>
+$$\boxed{e=-\frac{\mathrm d\Phi}{\mathrm dt}}\qquad[e]=\mathrm{Wb\,s^{-1}}=\mathrm V$$
+<p>Le circuit se comporte comme s'il était alimenté par un générateur de fem $e$. <b>La cause de la variation ne compte pas</b> (aimant qui bouge, circuit qui bouge ou se déforme, courant qui varie) : seule la <b>variation</b> du flux intervient. Un flux intense mais constant ne produit <b>rien</b>.</p></div>
+<div class="card def"><span class="tag">Définition — loi de Lenz</span><p>Le signe − traduit : <b>le courant induit s'oppose à la cause qui lui donne naissance.</b> Le champ créé par le courant induit tend à maintenir le flux à sa valeur antérieure.</p></div>
+<figure class="anim tall" data-anim="lenz" data-badge><figcaption><b>Regarde / manipule :</b> quand l'aimant approche, Φ augmente, $e\lt0$, le B induit (vert) pointe <b>contre</b> l'aimant : la spire lui présente le même pôle et le repousse. Quand il s'éloigne, le B induit change de sens pour « retenir » le flux. Aimant immobile : rien, même tout près.</figcaption></figure>
+<div class="card trap"><span class="tag">⚠ Lenz s'oppose à la VARIATION, pas au champ</span><p>Erreur fréquente : « le B induit est toujours opposé à B ». Faux ! Si le flux <b>diminue</b>, le B induit est dans le <b>même sens</b> que B pour compenser la perte. Et la règle de la main droite appliquée au courant induit donne le champ <b>induit</b>, jamais le champ appliqué.</p></div>
+<div class="card def"><span class="tag">Circuit équivalent</span><p>Un circuit induit se ramène à une <b>maille unique</b> : un générateur de fem $e$ + la résistance <b>totale</b> $R$. Loi d'Ohm : $i=|e|/R$ (ou $i=e/R$ en algébrique). <b>Aucune notion nouvelle</b> ensuite : c'est de l'électrocinétique.</p></div>
+<div class="card rem"><span class="tag">Deux méthodes cohérentes — à ne JAMAIS mélanger</span>
+<div class="tablewrap"><table><tr><th></th><th>Méthode algébrique</th><th>Méthode module + Lenz</th></tr>
+<tr><td>Étape 1</td><td>orienter le contour</td><td>orienter le contour</td></tr>
+<tr><td>Étape 2</td><td>$e=-\mathrm d\Phi/\mathrm dt$ algébrique</td><td>$|e|=|\mathrm d\Phi/\mathrm dt|$</td></tr>
+<tr><td>Étape 3</td><td>$i=e/R$ algébrique</td><td>$i=|e|/R$</td></tr>
+<tr><td>Sens du courant</td><td>donné par le <b>signe</b> de $i$</td><td>donné <b>à part</b>, par Lenz</td></tr></table></div>
+<p>La valeur absolue signale que l'information de signe a déjà été utilisée ailleurs. Écrire $i=|e|/R$ puis conclure que le courant circule dans le sens de l'orientation initiale est une <b>erreur de raisonnement</b>.</p></div>
+
+<h2 id="rails"><span class="h2num">4.4</span>Application complète — les rails de Laplace</h2>
+<p>Barre conductrice de longueur $\ell$ glissant à la vitesse $v$ sur deux rails fermés par une résistance $R$, dans un $\vec B$ externe uniforme ⟂ au plan. Rails et barre parfaitement conducteurs. <b>Ce dispositif contient tous les mécanismes de l'induction.</b> La chaîne : <i>mouvement → Φ varie → fem → courant → force de Laplace → freinage</i>.</p>
+<figure class="anim tall" data-anim="rails" data-badge><figcaption><b>Manipule :</b> en « vitesse imposée », vérifie que la puissance de l'opérateur égale la puissance Joule. En « lancée puis libre », la force de Laplace freine la barre : $v(t)$ décroît exponentiellement. Augmente B : le freinage est bien plus fort ($\propto B^2$).</figcaption></figure>
+<div class="steps" data-start="Résoudre pas à pas">
+<div class="step"><h4>0. Orientation</h4><p>On choisit $\vec n$ dans le sens de $\vec B$ (⊗, entrant) ⇒ sens positif de parcours <b>horaire</b> (main droite).</p></div>
+<div class="step"><h4>1. Flux</h4><p>Surface du circuit $S=\ell x(t)$ ⇒ $\Phi=B\ell x(t)$ (positif avec cette orientation).</p></div>
+<div class="step"><h4>2. Fem</h4><p>$e=-\dfrac{\mathrm d\Phi}{\mathrm dt}=-B\ell\dfrac{\mathrm dx}{\mathrm dt}=-B\ell v$. Le flux augmente ⇒ $e\lt0$ : le courant circule dans le sens <b>trigo</b> (opposé à l'orientation), et son champ induit ⊙ s'oppose à l'augmentation du flux ⊗ ✓ Lenz.</p></div>
+<div class="step"><h4>3. Courant induit</h4><p>$i=\dfrac{|e|}{R}=\dfrac{B\ell v}{R}$.</p></div>
+<div class="step"><h4>4. Force de Laplace sur la barre</h4><p>Parcourue par $i$ dans $\vec B$ : $F=i\ell B=\dfrac{B^2\ell^2v}{R}$, <b>dirigée à l'opposé de $\vec v$</b> : la force freine le mouvement qui la produit (Lenz).</p>
+<p class="small muted">Vérif vectorielle : dans la barre le courant monte ($\vec\ell=+\ell\vec e_y$), $\vec B=-B\vec e_z$ : $\vec\ell\wedge\vec B=-\ell B(\vec e_y\wedge\vec e_z)=-\ell B\vec e_x$ ⇒ vers la gauche ✓.</p></div>
+<div class="step"><h4>5. Bilan d'énergie</h4><p>Maintenir $v$ constante exige $P_{op}=Fv=\dfrac{B^2\ell^2v^2}{R}$. Joule : $P_J=Ri^2=R\left(\dfrac{B\ell v}{R}\right)^2=\dfrac{B^2\ell^2v^2}{R}=P_{op}$ ✓</p>
+<p><b>Le travail mécanique est intégralement converti en chaleur.</b> L'induction n'est pas une source d'énergie : c'est un <b>convertisseur</b> mécanique → électrique (alternateur, dynamo). L'inverse = moteur électrique.</p></div>
+</div>
+<div class="card ex"><span class="tag">Bonus (classique en partiel) — barre lâchée avec $v_0$, sans opérateur</span>
+<p>PFD sur la barre (masse $m$) : $m\dfrac{\mathrm dv}{\mathrm dt}=-\dfrac{B^2\ell^2}{R}v$ ⇒ $v(t)=v_0\,e^{-t/\tau}$ avec $\boxed{\tau=\dfrac{mR}{B^2\ell^2}}$. Distance d'arrêt : $\int_0^\infty v\,\mathrm dt=v_0\tau$. Toute l'énergie cinétique $\frac12mv_0^2$ part en effet Joule.</p></div>
+
+<h2 id="maxfar"><span class="h2num">4.5</span>Deux origines de l'induction &amp; Maxwell-Faraday</h2>
+<p>$\Phi=\iint\vec B\cdot\vec n\,\mathrm dS$ varie soit parce que <b>$\vec B$ varie</b> ($\partial\vec B/\partial t\neq0$), soit parce que <b>la surface varie</b> (circuit mobile/déformable).</p>
+<div class="grid2">
+<div class="card def"><span class="tag">Circuit mobile, champ statique (Lorentz)</span>
+$$e=\oint_\Gamma(\vec v\wedge\vec B)\cdot\mathrm d\vec\ell$$
+<p>La fem vient de la <b>force de Lorentz magnétique</b> sur les porteurs entraînés à la vitesse $\vec v$. Rails de Laplace, alternateur. Le champ électrique induit est nul ($\partial\vec B/\partial t=0$).</p></div>
+<div class="card def"><span class="tag">Circuit fixe, champ variable (Neumann)</span>
+$$\oint_\Gamma\vec E\cdot\mathrm d\vec\ell=-\frac{\mathrm d}{\mathrm dt}\iint_S\vec B\cdot\mathrm d\vec S$$
+<p>La fem vient d'un <b>champ électrique induit</b> à circulation non nulle. Transformateur, bobine. La circulation de $\vec E$ = la fem (la « tension » d'un tour).</p></div>
+</div>
+<div class="card meth"><span class="tag">Forme locale (Stokes sur le membre de gauche, circuit fixe)</span>
+$$\iint_S\overrightarrow{\mathrm{rot}}\vec E\cdot\mathrm d\vec S=-\iint_S\frac{\partial\vec B}{\partial t}\cdot\mathrm d\vec S\ \ \text{pour toute }S\ \Rightarrow$$
+<div class="callout-big">2ᵉ équation de Maxwell, version complète (Maxwell-Faraday) : $\overrightarrow{\mathrm{rot}}\,\vec E=-\dfrac{\partial\vec B}{\partial t}$</div>
+<p>Elle remplace $\overrightarrow{\mathrm{rot}}\vec E=\vec0$ du Ch. 1, qui n'était que le cas statique. <b>Un $\vec B$ qui varie crée un $\vec E$ qui tourne.</b></p></div>
+<div class="card why"><span class="tag">Une curiosité profonde</span><p>Deux phénomènes différents (force de Lorentz d'un côté, champ électrique induit de l'autre) obéissent à la <b>même</b> loi $e=-\mathrm d\Phi/\mathrm dt$. Aucune autre loi de la physique n'a cette particularité. L'explication vient de la <b>relativité restreinte</b> : c'est le même phénomène vu depuis deux référentiels (celui de l'aimant, celui du circuit).</p></div>
+
+<h2 id="auto"><span class="h2num">4.6</span>Auto-induction</h2>
+<div class="card def"><span class="tag">Définition — auto-induction</span>
+<p>Un circuit d'inductance $L$ parcouru par $i(t)$ crée son propre flux $\Phi=Li$ (Ch. 3) ; Faraday appliqué au circuit <b>sur lui-même</b> :</p>
+$$\boxed{e=-L\frac{\mathrm di}{\mathrm dt}}\qquad\text{soit, en convention récepteur :}\qquad u_L=L\frac{\mathrm di}{\mathrm dt}$$
+<p><b>C'est la loi de la bobine utilisée en électronique</b>, avec le coefficient géométrique L calculé au Ch. 3.</p></div>
+<div class="card why"><span class="tag">D'où vient l'énergie $\frac12Li^2$ ?</span><p>Puissance reçue par la bobine : $P=u_Li=Li\frac{\mathrm di}{\mathrm dt}=\frac{\mathrm d}{\mathrm dt}\left(\frac12Li^2\right)$. L'énergie stockée est donc $W=\frac12Li^2$. Pour un solénoïde ($L=\mu_0n^2\ell S$, $B=\mu_0ni$) : $\frac12Li^2=\frac{B^2}{2\mu_0}\times(\ell S)$ ⇒ <b>densité d'énergie magnétique $u_B=\dfrac{B^2}{2\mu_0}$</b>, le pendant de $\frac12\varepsilon_0E^2$. Elle aussi est dans le champ.</p></div>
+<div class="card rem"><span class="tag">Conséquence pratique</span><p>Une bobine s'oppose aux <b>variations</b> brusques de courant : on ne peut pas couper instantanément le courant dans une bobine ($\mathrm di/\mathrm dt$ infini ⇒ tension énorme : étincelle à l'ouverture d'un interrupteur).</p></div>
+
+<h2 id="mutuelle"><span class="h2num">4.7</span>Induction mutuelle</h2>
+<div class="card def"><span class="tag">Définition — induction mutuelle</span>
+<p>Le flux créé par le circuit 1 à travers le circuit 2 : $\Phi_2=Mi_1$, $M$ = inductance mutuelle (H), dépend des deux géométries <b>et</b> de leur position relative. Faraday sur le circuit 2 :</p>
+$$\boxed{e_2=-M\frac{\mathrm di_1}{\mathrm dt}}$$
+<p><b>Un courant variable dans un circuit induit une fem dans un circuit voisin, sans contact électrique.</b> Transformateur, recharge à induction (téléphone, brosse à dents), RFID, NFC : une carte sans contact n'a pas de pile, elle prélève l'énergie sur le champ du lecteur.</p></div>
+<div class="card trap"><span class="tag">⚠ Piège classique</span><p><b>L'induction mutuelle exige un courant VARIABLE.</b> Un courant continu, même intense, ne transfère rien ($\mathrm di_1/\mathrm dt=0$). C'est pour ça qu'un transformateur ne fonctionne qu'en alternatif.</p></div>
+
+<h2 id="lc"><span class="h2num">4.8</span>L'oscillateur LC</h2>
+<p>Un condensateur chargé branché sur une bobine. Loi des mailles : $\frac qC+L\frac{\mathrm di}{\mathrm dt}=0$ avec $i=\frac{\mathrm dq}{\mathrm dt}$ :</p>
+$$\frac{\mathrm d^2q}{\mathrm dt^2}+\frac{1}{LC}\,q=0\qquad\Rightarrow\qquad q(t)=Q_0\cos(\omega_0t),\qquad\boxed{\omega_0=\frac{1}{\sqrt{LC}}}$$
+<p>C'est l'exemple d'homogénéité du <a href="ch0.html#dims">Ch. 0</a>. Énergie totale $\frac{q^2}{2C}+\frac12Li^2$ = constante.</p>
+<figure class="anim tall" data-anim="lc" data-badge><figcaption><b>Regarde :</b> l'énergie passe du <b>champ E</b> du condensateur au <b>champ B</b> de la bobine et revient, sans perte. Quand q est maximale, i = 0 et inversement (déphasage d'un quart de période). Ce va-et-vient E ↔ B, répété de cellule en cellule le long d'un câble, deviendra une <b>onde</b> au Ch. 5.</figcaption></figure>
+
+<h2 id="retenir" data-nomaster>À retenir</h2>
+<div class="card key"><span class="tag">À retenir — Chapitre 4</span>
+<ul><li>Orienter d'abord : la main droite lie sens de parcours et $\vec n$, et fixe les signes de Φ, e, i.</li>
+<li>Faraday $e=-\mathrm d\Phi/\mathrm dt$ ; seule la variation compte. Lenz : le courant induit s'oppose à la cause.</li>
+<li>Chaîne : fem → (Ohm) courant → (Laplace) force qui s'oppose au mouvement ; $P_{méca}=P_{Joule}$.</li>
+<li>Circuit mobile : $e=\oint(\vec v\wedge\vec B)\cdot\mathrm d\vec\ell$. Circuit fixe : $\overrightarrow{\mathrm{rot}}\vec E=-\partial\vec B/\partial t$.</li>
+<li>Auto-induction $u_L=L\,\mathrm di/\mathrm dt$, énergie $\frac12Li^2$, $u_B=B^2/2\mu_0$. Mutuelle $e_2=-M\,\mathrm di_1/\mathrm dt$ (régime variable obligatoire).</li>
+<li>LC : $\omega_0=1/\sqrt{LC}$, échange d'énergie entre E et B.</li></ul></div>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ch4"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ch4"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=loi+de+Lenz+aimant+tube+cuivre">▶ Lenz : aimant dans un tube de cuivre</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=rails+de+Laplace+induction+explication">▶ Rails de Laplace</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=transformateur+induction+mutuelle+principe">▶ Transformateur</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=anneau+de+Thomson+induction">▶ Anneau de Thomson</a></p>
+
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

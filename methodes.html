@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Patterns — quoi faire quand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="methodes">
+<article class="content">
+
+<div class="kicker">Le cœur du site</div>
+<h1>Patterns : quand on te demande X, tu fais Y</h1>
+<p class="lead">En électromagnétisme, il n'y a qu'une dizaine de <b>types de questions</b>. Chacune a un mot-clé déclencheur, une méthode en étapes fixes, et un piège classique. Apprends ces patterns : face à un sujet, tu sauras <b>par où commencer</b> — c'est 80 % de la difficulté.</p>
+
+<h2 id="arbreE"><span class="h2num">A</span>Calculer un champ électrique : quelle méthode ?</h2>
+<div class="decision">
+<div class="row"><div class="if">Symétrie <b>forte</b> : sphère, cylindre/fil <b>infini</b>, plan <b>infini</b> (E ne dépend que d'UNE variable)</div><div class="arrow">→</div><div><b>Théorème de Gauss</b> (5 étapes). C'est le cas le plus fréquent.</div></div>
+<div class="row"><div class="if">Point <b>sur l'axe</b> d'une distribution finie (anneau, disque, segment)</div><div class="arrow">→</div><div><b>Superposition</b> : $\mathrm d\vec E$ d'un $\mathrm dq$, symétrie pour annuler des composantes, <b>projeter</b> puis intégrer. Ou plus court : calculer <b>V</b> (scalaire, pas de projection) puis $E=-\mathrm dV/\mathrm dz$.</div></div>
+<div class="row"><div class="if">Juste à côté de la surface d'un <b>conducteur</b></div><div class="arrow">→</div><div><b>Théorème de Coulomb</b> : $E=\sigma/\varepsilon_0$, normal.</div></div>
+<div class="row"><div class="if">Plusieurs distributions simples (2 plans, sphère + charge…)</div><div class="arrow">→</div><div><b>Superposition</b> des résultats connus, zone par zone.</div></div>
+<div class="row"><div class="if">Quelques charges ponctuelles</div><div class="arrow">→</div><div><b>Coulomb</b> + somme <b>vectorielle</b> (schéma obligatoire).</div></div>
+<div class="row"><div class="if">On connaît V(x,y,z)</div><div class="arrow">→</div><div>$\vec E=-\vec\nabla V$ (dériver).</div></div>
+<div class="row"><div class="if">Près de l'axe, on connaît E sur l'axe</div><div class="arrow">→</div><div>Flux nul (ρ = 0) à travers un petit cylindre + 1er ordre ⇒ $E_r=-\frac r2\frac{\mathrm dE_0}{\mathrm dz}$ (TD1 ex. 3).</div></div>
+</div>
+
+<h2 id="arbreB"><span class="h2num">B</span>Calculer un champ magnétique</h2>
+<div class="decision">
+<div class="row"><div class="if">Fil infini, solénoïde infini, coaxial, tore (symétrie forte)</div><div class="arrow">→</div><div><b>Théorème d'Ampère</b> (5 étapes) avec les <b>règles de symétrie inversées</b> (B ⟂ aux plans de symétrie des courants).</div></div>
+<div class="row"><div class="if">Plusieurs sources simples</div><div class="arrow">→</div><div>Superposition (somme vectorielle).</div></div>
+<div class="row"><div class="if">Mouvement d'une particule dans B</div><div class="arrow">→</div><div>PFD avec $q\vec v\wedge\vec B$ ; ⟂ ⇒ cercle $R=mv/|q|B$ ; la vitesse (norme) est constante.</div></div>
+</div>
+
+<h2 id="liste"><span class="h2num">C</span>Les patterns, un par un</h2>
+
+<div class="card meth"><span class="tag">P1 — « Montrer que $\vec E$ (ou $\vec B$) est porté par… / ne dépend que de… »</span>
+<p><b>Mots-clés :</b> <i>par des arguments de symétrie</i>, <i>montrer que E_θ = 0</i>, <i>ne dépend que de r</i>.</p>
+<ol><li><b>Invariances</b> → variables : « La distribution est invariante par rotation d'angle quelconque autour de Oz, donc les composantes ne dépendent pas de θ. »</li>
+<li><b>Plans de symétrie passant par M</b> → direction : « Le plan (M, $\vec u_r$, $\vec u_z$) est plan de symétrie de la distribution, donc $\vec E(M)$ appartient à ce plan : $E_\theta=0$. »</li>
+<li>Pour $\vec B$ : plan de symétrie <b>des courants</b> ⇒ $\vec B$ <b>perpendiculaire</b>.</li></ol>
+<p class="small"><b>Piège :</b> l'invariance ne donne jamais la direction. <b>Vu dans :</b> Ch. 1 §1.5, TD1 ex. 3, 4, 6 ; Ch. 3 fil &amp; solénoïde.</p></div>
+
+<div class="card meth"><span class="tag">P2 — « Calculer E » avec une forte symétrie → Gauss</span>
+<ol><li>Symétries/invariances ⇒ $\vec E=E(r)\vec u$.</li><li>Surface de Gauss fermée passant par M, épousant la symétrie.</li><li>$\Phi=E\times S_{utile}$ (faces où E est tangent : 0).</li><li>$Q_{int}$ : seulement ce qui est dedans (intégrer si ρ varie).</li><li>Égaler, isoler E. <b>Plusieurs zones</b> (dedans/dehors) ⇒ refaire 4 et 5 pour chaque zone.</li></ol>
+<p class="small"><b>Vérifs :</b> continuité à la frontière (sans charge surfacique), loin ⇒ charge ponctuelle. <b>Vu dans :</b> Ch. 1 §1.8, TD1 ex. 4–6, TD2 ex. 2.</p></div>
+
+<div class="card meth"><span class="tag">P3 — « Calculer le potentiel V »</span>
+<ol><li>Avoir $E(r)$ (P2) ; écrire $E_r=-\mathrm dV/\mathrm dr$ (ou $\mathrm dV=-\vec E\cdot\mathrm d\vec\ell$).</li><li>Intégrer <b>zone par zone</b>.</li><li>Fixer la constante avec la <b>référence</b> imposée (V(∞) = 0 si la distribution est finie ; sinon sur un plan, en O…).</li><li>Raccorder par <b>continuité</b> de V aux frontières.</li></ol>
+<p class="small"><b>Pièges :</b> distribution infinie ⇒ pas de V(∞) = 0 ; oublier la constante ; mauvais sens d'intégration. <b>Vu dans :</b> TD1 ex. 4–6.</p></div>
+
+<div class="card meth"><span class="tag">P4 — « Distribution non uniforme ρ(r) / σ(r) / λ(x) »</span>
+<p>On ne peut PAS faire densité × taille. Découper en éléments où la densité est uniforme : coquille sphérique $\mathrm dV=4\pi r^2\mathrm dr$, coquille cylindrique $2\pi rh\,\mathrm dr$, anneau $2\pi r\,\mathrm dr$… puis $q=\int\rho\,\mathrm dV$.</p><p class="small"><b>Vu dans :</b> TD1 ex. 5.</p></div>
+
+<div class="card meth"><span class="tag">P5 — « Calculer une capacité »</span>
+<ol><li>Poser $Q$ (ou σ) sur l'armature 1 ; $\vec E$ entre armatures par Gauss.</li><li>$U=V_1-V_2=\int_1^2\vec E\cdot\mathrm d\vec\ell$.</li><li>$C=Q/U$ — Q doit disparaître.</li><li>Cas limites (sphère seule, plan…).</li></ol>
+<p class="small"><b>Résultats à connaître :</b> plan $\varepsilon_0S/e$, coax $2\pi\varepsilon_0\ell/\ln(b/a)$, sphères $4\pi\varepsilon_0R_1R_2/(R_2-R_1)$. <b>Vu dans :</b> Ch. 2 §2.3, TD2 ex. 2.</p></div>
+
+<div class="card meth"><span class="tag">P6 — « Calculer une résistance »</span>
+<ul><li>Géométrie simple (fil) : $R=\rho L/S$, ou $E\to j=\sigma E\to i=\iint\vec j\cdot\mathrm d\vec S$ → $R=U/i$.</li>
+<li>Géométrie non triviale : tubes élémentaires. <b>Traversés successivement</b> (même $i$) ⇒ série $R=\int\mathrm dR$. <b>Côte à côte</b> entre les mêmes faces (même $U$) ⇒ parallèle $1/R=\int\mathrm dG$.</li></ul>
+<p class="small"><b>Vu dans :</b> Ch. 2 §2.5, TD2 ex. 4 (parallèle), ex. 5 Q1 (série).</p></div>
+
+<div class="card meth"><span class="tag">P7 — « Établir une loi macroscopique à partir d'un modèle microscopique »</span>
+<ol><li>Système : UNE particule ; bilan des forces (électrique, frottement −mv/τ, magnétique…).</li><li>PFD.</li><li>Régime permanent (dv/dt = 0) ⇒ vitesse limite.</li><li>$\vec j=nq\vec v$ ⇒ identification.</li></ol><p class="small"><b>Vu dans :</b> Ch. 2 Drude, TD2 ex. 3.</p></div>
+
+<div class="card meth"><span class="tag">P8 — « Calculer B » avec forte symétrie → Ampère</span>
+<ol><li>Symétries (<b>règles inversées</b>) ⇒ $\vec B=B(r)\vec u_\theta$ (fil) ou $B\vec u_z$ (solénoïde).</li><li>Contour = une ligne de champ (cercle) ou rectangle à cheval.</li><li>$\oint\vec B\cdot\mathrm d\vec\ell=B\times\mathcal L$.</li><li>$i_{enl}$ avec signes (main droite).</li><li>Égaler.</li></ol><p class="small"><b>Vu dans :</b> Ch. 3 §3.6.</p></div>
+
+<div class="card meth"><span class="tag">P9 — « Calculer une inductance »</span>
+<ol><li>Poser $i$, $\vec B$ par Ampère.</li><li>$\Phi=\iint\vec B\cdot\mathrm d\vec S$ à travers le circuit (× N spires ; B non uniforme ⇒ bandes $\mathrm dS$).</li><li>$L=\Phi/i$.</li></ol><p class="small"><b>Vu dans :</b> Ch. 3 §3.7 (solénoïde, coax).</p></div>
+
+<div class="card meth"><span class="tag">P10 — « Induction : fem, courant, force »</span>
+<ol><li><b>Orienter</b> le circuit (choisir $\vec n$, sens de parcours par la main droite).</li><li>$\Phi(t)=\iint\vec B\cdot\vec n\,\mathrm dS$ (souvent $B\times$ aire variable).</li><li>$e=-\mathrm d\Phi/\mathrm dt$.</li><li>Circuit équivalent : $i=e/R$ (algébrique, le signe donne le sens) <b>ou</b> $|e|/R$ + Lenz (jamais les deux mélangés).</li><li>Force de Laplace $i\vec\ell\wedge\vec B$ ⇒ elle s'oppose au mouvement.</li><li>Bilan d'énergie : $P_{méca}=P_{Joule}$ ; mouvement libre ⇒ PFD ⇒ exponentielle $\tau=mR/B^2\ell^2$.</li></ol><p class="small"><b>Vu dans :</b> Ch. 4 §4.4.</p></div>
+
+<div class="card meth"><span class="tag">P11 — « Passer de la forme intégrale à la forme locale »</span>
+<ol><li>Écrire la loi intégrale pour une surface/un contour <b>quelconque</b>.</li><li>Membre de gauche : <b>Ostrogradski</b> (flux → ∭div) ou <b>Stokes</b> (circulation → ∬rot).</li><li>Membre de droite en intégrale de volume/surface ($Q=\iiint\rho\,\mathrm dV$, $i=\iint\vec j\cdot\mathrm d\vec S$, $\Phi=\iint\vec B\cdot\mathrm d\vec S$).</li><li>Regrouper sous une même intégrale = 0.</li><li><b>« Quel que soit V (ou S et son orientation), l'intégrande est nulle. »</b></li></ol><p class="small"><b>Vu dans :</b> Ch. 1 (div E, rot E), Ch. 3 (div B, rot B), Ch. 4 (rot E = −∂B/∂t).</p></div>
+
+<div class="card meth"><span class="tag">P12 — « Bilan sur une tranche dx / un pavé / un petit cylindre »</span>
+<ol><li>Dessiner l'élément, nommer les grandeurs en $x$ et en $x+\mathrm dx$.</li><li>Écrire la loi physique sur l'élément (Ohm, mailles, nœuds, flux sortant…).</li><li>Développement au 1er ordre : $f(x+\mathrm dx)-f(x)=f'(x)\mathrm dx$ ; négliger les ordres supérieurs.</li><li>Simplifier par dx ⇒ équation différentielle.</li><li>Combiner les équations (dériver, croiser) ⇒ une seule équation du 2ᵈ ordre.</li></ol><p class="small"><b>Vu dans :</b> TD1 ex. 3, TD2 ex. 5, Ch. 5 ligne LC et onde EM.</p></div>
+
+<div class="card meth"><span class="tag">P13 — « Établir l'équation de propagation »</span>
+<ol><li>Deux équations couplées du 1er ordre ($\partial_zV=-\mathcal L\partial_tI$ et $\partial_zI=-\mathcal C\partial_tV$, ou $\partial_zE=-\partial_tB$ et $\partial_zB=-\varepsilon_0\mu_0\partial_tE$).</li><li>Dériver l'une par $z$, l'autre par $t$ ; échanger l'ordre des dérivées.</li><li>Injecter ⇒ $\partial^2_zf=\frac1{v^2}\partial^2_tf$ ; identifier $v$ ; vérifier la dimension.</li></ol><p class="small"><b>Vu dans :</b> Ch. 5.</p></div>
+
+<div class="card meth"><span class="tag">P14 — « Ordre de grandeur / rapport / application numérique »</span>
+<ol><li>Littéral d'abord, simplifier.</li><li>Tout en SI (préfixes !).</li><li>Puissances de 10 à part, mantisses à part.</li><li>Unité + 2–3 chiffres significatifs + <b>phrase de commentaire</b>.</li></ol><p class="small"><b>Vu dans :</b> TD1 ex. 1, Ch. 2 vitesse de dérive.</p></div>
+
+<div class="card meth"><span class="tag">P15 — « Influence, mise à la Terre, écran »</span>
+<p>Isolé ⇒ charge totale conservée (redistribution possible). À la Terre ⇒ V = 0, la charge s'ajuste (pas forcément nulle sous influence). Écran ⇒ plus d'influence. Équilibre ⇒ charges en surface, E = 0 dedans.</p><p class="small"><b>Vu dans :</b> TD2 ex. 1.</p></div>
+
+<h2 id="redaction"><span class="h2num">D</span>Modèles de rédaction (à recopier en partiel)</h2>
+<details open><summary>Rédaction type — Gauss (sphère chargée de rayon R, densité ρ)</summary><div class="inner">
+<p><b>Symétries.</b> La distribution est invariante par toute rotation autour de O : $E$ ne dépend que de $r$. Tout plan contenant O et M est plan de symétrie de la distribution, donc $\vec E(M)$ est porté par leur intersection (OM) : $\vec E(M)=E(r)\,\vec u_r$.</p>
+<p><b>Surface de Gauss.</b> Sphère $\Sigma$ de centre O passant par M (rayon $r$), fermée, orientée vers l'extérieur. Sur Σ, $\vec E$ est normal et de norme uniforme.</p>
+<p><b>Flux.</b> $\oiint_\Sigma\vec E\cdot\mathrm d\vec S=E(r)\cdot4\pi r^2$.</p>
+<p><b>Charge intérieure.</b> Si $r\lt R$ : $Q_{int}=\rho\frac43\pi r^3$ ; si $r>R$ : $Q_{int}=\rho\frac43\pi R^3$.</p>
+<p><b>Théorème de Gauss.</b> $E(r)\,4\pi r^2=Q_{int}/\varepsilon_0$ ⇒ $E=\frac{\rho r}{3\varepsilon_0}$ ($r\lt R$), $E=\frac{\rho R^3}{3\varepsilon_0r^2}$ ($r>R$). <b>Vérification :</b> continuité en R ✓, comportement de charge ponctuelle à l'extérieur ✓.</p></div></details>
+<details><summary>Rédaction type — Ampère (fil infini parcouru par i)</summary><div class="inner">
+<p><b>Symétries.</b> Invariance par translation selon Oz et par rotation autour de Oz : B ne dépend que de $r$. Le plan contenant M et le fil est plan de symétrie de la distribution de courants ; $\vec B$ étant un pseudo-vecteur, il lui est perpendiculaire : $\vec B=B(r)\,\vec u_\theta$.</p>
+<p><b>Contour.</b> Cercle Γ d'axe Oz passant par M, orienté dans le sens de $\vec u_\theta$ (courant compté positivement vers $+\vec u_z$, main droite).</p>
+<p><b>Circulation.</b> $\oint_\Gamma\vec B\cdot\mathrm d\vec\ell=B(r)\cdot2\pi r$. <b>Courant enlacé :</b> $i$.</p>
+<p><b>Théorème d'Ampère.</b> $B(r)\,2\pi r=\mu_0i$ ⇒ $\vec B=\frac{\mu_0i}{2\pi r}\vec u_\theta$.</p></div></details>
+<details><summary>Rédaction type — Induction (rails de Laplace)</summary><div class="inner">
+<p><b>Orientation.</b> On oriente le circuit dans le sens horaire, ce qui impose $\vec n=-\vec u_z$ (sens de $\vec B$).</p>
+<p><b>Flux.</b> $\Phi=\vec B\cdot\vec n\,S=B\ell x(t)$. <b>Fem (Faraday) :</b> $e=-\frac{\mathrm d\Phi}{\mathrm dt}=-B\ell v$.</p>
+<p><b>Courant.</b> Circuit équivalent : fem $e$ en série avec R : $i=\frac eR=-\frac{B\ell v}{R}$. $i\lt0$ : le courant circule dans le sens trigonométrique.</p>
+<p><b>Force de Laplace</b> sur la barre : $\vec F=i\vec\ell\wedge\vec B$, de norme $\frac{B^2\ell^2v}{R}$, opposée à $\vec v$, conformément à la loi de Lenz.</p></div></details>
+
+<h2 id="verifs"><span class="h2num">E</span>Check-list de vérification (avant de rendre)</h2>
+<div class="card key"><span class="tag">Les 7 vérifications</span>
+<ol><li><b>Homogénéité</b> du résultat littéral (dimensions).</li><li><b>Unités SI</b> dans l'AN, unité écrite dans le résultat.</li><li><b>Cas limites</b> : loin ⇒ charge ponctuelle ; au centre/sur l'axe ⇒ ce qu'impose la symétrie.</li><li><b>Continuité</b> de E (sans charge surfacique) et de V aux frontières.</li><li><b>Signe / sens</b> : E vers les V décroissants, Lenz s'oppose, force de Laplace freine.</li><li><b>Paramètre arbitraire disparu</b> : Q dans C, i dans L, h ou L dans Gauss/Ampère.</li><li><b>Phrase physique</b> de conclusion quand on demande « commenter » / « interpréter ».</li></ol></div>
+
+<h2 id="entrainement" data-nomaster>Entraînement : reconnais le pattern</h2>
+<p>On te donne un début d'énoncé : choisis la bonne <b>première idée</b>.</p>
+<div class="quiz" data-quiz="pat"></div>
+
+</article>
+<script src="js/data.js"></script>
+<script>
+(function(){const r=String.raw; EM_DATA.quiz.pat=[
+{q:`« Un cylindre infini de rayon R porte une charge volumique ρ uniforme. Calculer E en tout point. »`,o:[`Gauss avec un cylindre coaxial, 2 zones (r < R et r > R)`,`Superposition d'anneaux`,`Coulomb + somme vectorielle`,`Théorème de Coulomb σ/ε₀`],a:0,e:`Symétrie cylindrique infinie : E = E(r) e_r. Gauss avec cylindre de hauteur h ; dedans $Q_{int}=\\rho\\pi r^2h$ ⇒ $E=\\rho r/2\\varepsilon_0$ ; dehors $E=\\rho R^2/(2\\varepsilon_0 r)$.`},
+{q:`« Un disque de rayon R porte σ uniforme. Calculer E en un point de son axe. »`,o:[`Découper en anneaux (superposition) ou calculer V puis dériver`,`Gauss avec une sphère`,`Ampère`,`E = σ/2ε₀ partout`],a:0,e:`Distribution finie : pas assez de symétrie pour Gauss. On somme les anneaux de rayon r, largeur dr, charge $\\sigma 2\\pi r\\,dr$ (résultat de l'anneau du cours). σ/2ε₀ n'est que la limite R → ∞.`},
+{q:`« Montrer que le champ en M est contenu dans le plan (M, Oz). »`,o:[`Ce plan est un plan de symétrie de la distribution`,`La distribution est invariante par rotation`,`Théorème de Gauss`,`div E = 0`],a:0,e:`Pour fixer une DIRECTION : plan de symétrie passant par M. L'invariance ne fixe que les variables.`},
+{q:`« Une barre glisse sur des rails dans un champ B uniforme. Déterminer le courant. »`,o:[`Orienter le circuit, Φ(t) = Bℓx(t), e = −dΦ/dt, i = e/R`,`Théorème d'Ampère`,`Loi de Coulomb`,`Gauss sur la barre`],a:0,e:`Pattern induction P10 : orientation → flux → fem → circuit équivalent → (force de Laplace).`},
+{q:`« Calculer la résistance entre deux cylindres coaxiaux (rayons a < b, longueur ℓ) séparés par un matériau de résistivité ρ. »`,o:[`Coquilles cylindriques en SÉRIE : dR = ρ dr/(2πrℓ)`,`Coquilles en parallèle`,`R = ρℓ/(π(b²−a²))`,`R = ρ(b−a)/ℓ`],a:0,e:`Le courant est radial : il traverse les coquilles l'une après l'autre ⇒ série ⇒ $R=\\frac{\\rho}{2\\pi\\ell}\\ln\\frac ba$.`},
+{q:`« Établir l'équation vérifiée par V(z,t) sur une ligne formée de cellules 𝓛dz, 𝒞dz. »`,o:[`Mailles + nœuds sur une cellule, 1er ordre, puis dériver et croiser`,`Théorème de Gauss`,`Calculer la capacité totale`,`Loi de Lenz`],a:0,e:`Patterns P12 + P13 : deux EDP du 1er ordre couplées → d'Alembert.`},
+{q:`« Un électron est lancé perpendiculairement à B uniforme. Nature de la trajectoire ? »`,o:[`Cercle de rayon mv/(eB) parcouru à vitesse constante`,`Droite accélérée`,`Parabole`,`Spirale qui s'arrête`],a:0,e:`La force magnétique est ⟂ à v : pas de travail, |v| constante, force centripète constante ⇒ cercle.`},
+{q:`« Calculer l'inductance par unité de longueur d'un câble coaxial. »`,o:[`Ampère pour B(r), flux à travers ℓ×(b−a) par bandes ℓ dr, L = Φ/i`,`Gauss puis U = ∫E dr`,`L = μ₀n²ℓS directement`,`Faraday`],a:0,e:`Pattern P9. Résultat : $\\frac{\\mu_0}{2\\pi}\\ln\\frac ba$.`},
+{q:`« On relie un conducteur à la Terre en présence d'un corps chargé +. Sa charge devient… »`,o:[`négative (il est sous influence, V fixé à 0)`,`nulle`,`positive`,`inchangée`],a:0,e:`La Terre fixe le potentiel, pas la charge (pattern P15).`},
+{q:`« Montrer que div E = ρ/ε₀ à partir du théorème de Gauss. »`,o:[`Ostrogradski à gauche, Q = ∭ρ dV à droite, « quel que soit V »`,`Stokes`,`Dériver la loi de Coulomb`,`Gauss avec une sphère`],a:0,e:`Pattern P11. L'argument final « quel que soit le volume » est indispensable.`},
+];})();
+</script>
+<script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

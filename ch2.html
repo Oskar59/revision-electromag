@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch. 2 — Conducteurs, condensateurs, courant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ch2">
+<article class="content">
+
+<div class="kicker">Chapitre 2</div>
+<h1>Conducteurs, condensateurs et courant</h1>
+<p class="lead">Le Ch. 1 a construit $\vec E$ dans le vide. Ici on met de la <b>matière</b> dans ce champ — surtout du métal, où les charges sont <b>mobiles</b>. On en tire deux des trois composants de base de l'électronique : le <b>condensateur</b> ($C$) et la <b>résistance</b> ($R$).</p>
+
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list">
+<li>justifier $\vec E_{int}=\vec0$ et ses 3 conséquences</li><li>démontrer $E=\sigma/\varepsilon_0$ (théorème de Coulomb)</li>
+<li>calculer une capacité en 3 étapes (plan, coax, sphères)</li><li>relier $i$ et $\vec j$, calculer une vitesse de dérive</li>
+<li>écrire la conservation de la charge</li><li>établir $\vec j=\sigma\vec E$ (Drude) et $R=\rho_rL/S$</li>
+<li>décomposer en série / parallèle pour une résistance</li><li>énergie $\frac12CU^2$ et lien avec $\frac12\varepsilon_0E^2$</li>
+</ul></div>
+
+<h2 id="equilibre"><span class="h2num">2.1</span>Conducteur à l'équilibre</h2>
+<div class="card def"><span class="tag">Définition — conducteur à l'équilibre électrostatique</span>
+<p>Un conducteur contient des charges libres (électrons de conduction d'un métal). Il est à l'<b>équilibre</b> quand aucun mouvement <b>macroscopique</b> de charge n'a lieu. Alors :</p>
+$$\boxed{\vec E_{int}=\vec 0}\ \text{ en tout point à l'intérieur du conducteur.}$$</div>
+<div class="card why"><span class="tag">Pourquoi $\vec E_{int}=\vec0$ ?</span><p>Si un champ existait dedans, il pousserait les charges libres : il y aurait un mouvement d'ensemble, donc un <b>courant mesurable sans générateur</b>. Absurde. (Au microscope les électrons s'agitent, mais leurs mouvements se compensent en moyenne.) Quand on applique un champ extérieur, les électrons se déplacent <b>jusqu'à</b> ce que le champ qu'ils créent annule le champ extérieur à l'intérieur — ça prend ~10⁻¹⁹ s.</p></div>
+<figure class="anim" data-anim="conductor" data-badge><figcaption><b>Manipule :</b> applique $\vec E_{ext}$. Les électrons migrent vers la face gauche, la face droite devient +. Le champ à l'intérieur diminue jusqu'à <b>zéro</b> : coche « décomposer » pour voir le champ induit (bleu) compenser exactement $\vec E_{ext}$.</figcaption></figure>
+<div class="card def"><span class="tag">Les 3 propriétés qui en découlent</span>
+<ol><li><b>Pas de charge en volume.</b> $\mathrm{div}\vec E=\rho/\varepsilon_0=0$ ⇒ $\rho=0$. Les charges se repoussent jusqu'à la <b>surface</b>.</li>
+<li><b>Volume équipotentiel.</b> $\vec E=-\vec\nabla V=\vec0$ ⇒ $V$ constant dans tout le conducteur ; sa surface est une équipotentielle.</li>
+<li><b>Champ normal à la surface</b> (juste à l'extérieur) : $\vec E$ ⟂ aux équipotentielles (Ch. 0). Une composante tangentielle mettrait les charges de surface en mouvement.</li></ol></div>
+
+<h2 id="thcoulomb"><span class="h2num">2.2</span>Théorème de Coulomb</h2>
+<div class="card def"><span class="tag">Définition — théorème de Coulomb</span>
+$$\boxed{\vec E=\frac{\sigma}{\varepsilon_0}\vec n}\qquad\text{juste à l'extérieur d'un conducteur de densité surfacique }\sigma,\ \vec n\text{ normale sortante.}$$</div>
+<p><b>Démonstration (Gauss avec un cylindre « pincé ») :</b> un petit cylindre à cheval sur la paroi, face du haut $\mathrm dS$ dans le vide, face du bas dans le métal, hauteur $h\to0$.</p>
+<div class="steps" data-start="Faire la démonstration">
+<div class="step"><h4>Face inférieure (dans le métal)</h4><p>$\vec E_{int}=\vec0$ : contribution nulle.</p></div>
+<div class="step"><h4>Surface latérale</h4><p>$\vec E$ est normal à la paroi donc tangent à la surface latérale : $\vec E\cdot\mathrm d\vec S=0$. (De plus elle s'annule quand $h\to0$.)</p></div>
+<div class="step"><h4>Face supérieure (dans le vide)</h4><p>$\vec E$ lui est normal et uniforme sur $\mathrm dS$ (assez petit pour être plan) : contribution $E\,\mathrm dS$.</p></div>
+<div class="step"><h4>Gauss</h4><p>$\Phi=E\,\mathrm dS$ et $Q_{int}=\sigma\,\mathrm dS$ (seule la surface découpée est chargée) ⇒ $E\,\mathrm dS=\sigma\,\mathrm dS/\varepsilon_0$ ⇒ $E=\sigma/\varepsilon_0$. $\mathrm dS$ se simplifie. Sens : vers l'extérieur si $\sigma>0$, vers l'intérieur si $\sigma<0$.</p></div>
+</div>
+<div class="card why"><span class="tag">Pourquoi σ/ε₀ ici mais σ/2ε₀ pour un plan isolé ?</span><p>Plan isolé : le flux sort par les <b>deux</b> faces de la boîte ($2ES$). Conducteur : la face intérieure est dans une zone où $E=0$, tout le flux sort par <b>une seule</b> face ($ES$). Même charge, deux fois plus de champ du côté utile.</p></div>
+<div class="grid2">
+<div class="card rem"><span class="tag">Portée — pouvoir des pointes</span><p>Théorème <b>local</b> : relie $E$ et σ au même point, sans symétrie requise. Mais la répartition de σ dépend de toute la géométrie : σ est plus forte là où la <b>courbure</b> est forte → champ intense à la pointe d'un <b>paratonnerre</b>.</p></div>
+<div class="card ex"><span class="tag">Cage de Faraday</span><p>Conducteur creux à l'équilibre, sans charge dans la cavité : $E=0$ dans toute la cavité, quel que soit le champ extérieur. <b>Démo :</b> une ligne de champ dans la cavité partirait de la paroi (V₀) et y reviendrait (V₀) ; le long de la ligne $\vec E\cdot\mathrm d\vec\ell>0$ donc V décroîtrait strictement : contradiction.</p><p class="small muted">Le blindage des champs <i>variables</i> (voiture foudroyée, micro-ondes, ascenseur) relève de l'effet de peau (Partie B).</p></div>
+</div>
+
+<h2 id="condensateur"><span class="h2num">2.3</span>Le condensateur</h2>
+<div class="card why"><span class="tag">D'où vient le champ σ/ε₀ entre deux plaques ?</span><p>Superposition (cf. TD1 ex. 6) : un plan +σ crée $\sigma/2\varepsilon_0$ de chaque côté, sortant ; un plan −σ crée $\sigma/2\varepsilon_0$ entrant. <b>Entre</b> les plaques les deux champs s'ajoutent : $\sigma/\varepsilon_0$. <b>Dehors</b> ils s'annulent : 0.</p></div>
+<div class="card def"><span class="tag">Définition — condensateur et capacité</span>
+<p>Deux conducteurs (<b>armatures</b>) portant $+Q$ et $-Q$, séparés par un isolant. La tension entre armatures est <b>proportionnelle</b> à $Q$ (linéarité des équations) :</p>
+$$\boxed{Q=CU}\qquad[C]=\mathrm F=\mathrm{C\,V^{-1}}$$
+<p><b>C ne dépend que de la géométrie et de l'isolant</b>, ni de Q ni de U. Propriété du composant, comme R.</p></div>
+<div class="card meth"><span class="tag">Méthode — calculer une capacité (3 étapes, toutes géométries)</span>
+<ol><li><b>Poser une charge $Q$</b> sur l'armature interne, calculer $\vec E$ entre les armatures par <b>Gauss</b>.</li>
+<li><b>Intégrer</b> : $U=V_1-V_2=\int_1^2\vec E\cdot\mathrm d\vec\ell$.</li>
+<li><b>Identifier</b> $C=Q/U$. <b>Q se simplifie systématiquement</b> ; s'il reste, il y a une erreur.</li></ol>
+<p class="small muted">Le TD2 formule la même méthode en passant par σ : $E$ (Gauss) → circulation → $\sigma=f(V_1-V_2)$ → $Q=\iint\sigma\,\mathrm dS$ → C.</p></div>
+<div class="card ex"><span class="tag">Condensateur plan (surface S, écart e ≪ √S)</span>
+<ol><li>$\sigma=Q/S$, théorème de Coulomb : $E=\sigma/\varepsilon_0=\frac{Q}{\varepsilon_0S}$, <b>uniforme</b>.</li>
+<li>$U=\int_0^eE\,\mathrm dz=Ee=\frac{Qe}{\varepsilon_0S}$.</li>
+<li>$\boxed{C=\dfrac{\varepsilon_0S}{e}}$</li></ol>
+<p><b>Lecture physique :</b> C augmente avec la surface en regard (plus de place pour la charge) et diminue avec l'écart (des charges + et − plus proches s'attirent davantage : il faut moins de tension pour les maintenir séparées).</p></div>
+<figure class="anim" data-anim="capacitor" data-badge><figcaption><b>Manipule :</b> change S, e et U. Observe C, la densité de charges sur les armatures et l'intensité du champ. La ligne du bas vérifie que l'énergie $\frac12CU^2$ est exactement $\frac12\varepsilon_0E^2$ × volume : <b>l'énergie est stockée dans le champ</b>.</figcaption></figure>
+<div class="card ex"><span class="tag">Fil rouge (épisode 1) — capacité du câble coaxial</span>
+<p>Âme de rayon $a$, blindage de rayon $b$, longueur $\ell$, charge $Q$ ⇒ $\lambda=Q/\ell$.</p>
+<ol><li>Champ (résultat du fil, § Gauss) pour $a\lt r\lt b$ : $E(r)=\dfrac{\lambda}{2\pi\varepsilon_0r}$.</li>
+<li>Tension (intégration radiale) : $U=\displaystyle\int_a^b\frac{\lambda}{2\pi\varepsilon_0r}\mathrm dr=\frac{\lambda}{2\pi\varepsilon_0}\ln\frac ba$ (le ln vient de la primitive de $1/r$, donc de la symétrie cylindrique).</li>
+<li>$\boxed{\dfrac{C}{\ell}=\dfrac{\lambda}{U}=\dfrac{2\pi\varepsilon_0}{\ln(b/a)}}$ — par unité de longueur, on n'a pas besoin de connaître la longueur du câble.</li></ol></div>
+<div class="card rem"><span class="tag">Isolant réel : $\varepsilon_0\to\varepsilon_r\varepsilon_0$</span><p>Un isolant (polyéthylène, téflon) se polarise et affaiblit le champ. On remplace $\varepsilon_0$ par $\varepsilon=\varepsilon_r\varepsilon_0$ ($\varepsilon_r\ge1$, sans unité) : à tension égale, on stocke $\varepsilon_r$ fois plus de charge. <b>AN (RG-58)</b> : $a=0{,}45$ mm, $b=1{,}5$ mm, $\varepsilon_r\approx2{,}25$ : $C/\ell=\frac{2\pi\times2{,}25\times8{,}85\times10^{-12}}{\ln(1{,}5/0{,}45)}\approx$ <b>104 pF/m</b> (fiches techniques : ~100 pF/m ✓). Réutilisé aux Ch. 3 et 5.</p></div>
+<div class="card def"><span class="tag">Relations de circuit</span>
+$$i=\frac{\mathrm dQ}{\mathrm dt}=C\frac{\mathrm du}{\mathrm dt}\qquad W=\frac12CU^2=\frac{Q^2}{2C}$$
+<p>Sphères concentriques $R_1\lt R_2$ (<a href="td2.html#exo2">TD2 ex. 2</a>) : $C=\dfrac{4\pi\varepsilon_0R_1R_2}{R_2-R_1}$.</p></div>
+
+<h2 id="courant"><span class="h2num">2.4</span>Le courant électrique</h2>
+<p>On sort de l'équilibre en <b>maintenant</b> un champ dans le conducteur avec un générateur. Le conducteur n'est plus équipotentiel : le potentiel décroît le long du fil dans le sens du courant. Les charges sont en mouvement permanent : c'est le courant.</p>
+<div class="card def"><span class="tag">Définition — intensité et densité de courant</span>
+$$i=\frac{\mathrm dq}{\mathrm dt}\ \ [\mathrm A=\mathrm{C\,s^{-1}}]\qquad\boxed{\vec j=nq\,\vec v_d}\ \ [\mathrm{A\,m^{-2}}]\qquad i=\iint_S\vec j\cdot\mathrm d\vec S$$
+<p>$n$ : porteurs par m³, $\vec v_d$ : vitesse de <b>dérive</b> moyenne. $\vec j$ est un <b>champ</b> (une valeur en chaque point) ; $i$ est un <b>flux</b> (un nombre pour toute une section).</p></div>
+<div class="card ex"><span class="tag">Vitesse de dérive dans le cuivre</span><p>$S=1$ mm², $i=1$ A, $n\approx8{,}5\times10^{28}$ m⁻³ : $v_d=\frac{i}{neS}=\frac{1}{8{,}5\times10^{28}\times1{,}6\times10^{-19}\times10^{-6}}\approx7\times10^{-5}$ m/s ≈ <b>7 cm par heure</b>. Traverser 1 m prendrait plus de 4 h !</p></div>
+<div class="card why"><span class="tag">Alors pourquoi la lampe s'allume instantanément ?</span><p><b>Les porteurs ne parcourent pas la distance du signal ; c'est le champ qui se propage.</b> À la fermeture de l'interrupteur, $\vec E$ s'établit dans tout le circuit à une vitesse proche de $c$ (≈ 0,7 c dans un câble) et met en mouvement <b>simultanément</b> tous les électrons, y compris ceux de la lampe. (Comme un tuyau déjà plein d'eau : l'eau sort au robinet immédiatement.)</p></div>
+<div class="card def"><span class="tag">Définition — conservation de la charge</span>
+$$\oiint_S\vec j\cdot\mathrm d\vec S=-\frac{\mathrm dQ_{int}}{\mathrm dt}\qquad\text{(forme locale : }\mathrm{div}\,\vec j+\frac{\partial\rho}{\partial t}=0)$$
+<p>Ce qui sort a été prélevé sur le contenu. Le <b>signe −</b> : à gauche on compte ce qui <b>quitte</b> le volume ; à droite la variation de la charge <b>intérieure</b>, qui diminue quand ça sort. En <b>régime permanent</b> ($\partial\rho/\partial t=0$) : flux sortant nul = <b>loi des nœuds</b>.</p></div>
+
+<h2 id="ohm"><span class="h2num">2.5</span>Loi d'Ohm</h2>
+<div class="card def"><span class="tag">Définition — loi d'Ohm locale</span>
+$$\boxed{\vec j=\sigma\vec E}\qquad\sigma\text{ conductivité (S·m⁻¹)},\quad\rho_r=1/\sigma\text{ résistivité (Ω·m)}$$
+<p class="small muted">Attention : ce σ (conductivité) n'a rien à voir avec la densité surfacique σ ! Le TD2 la note $\gamma_0$.</p></div>
+<div class="card why"><span class="tag">Pourquoi j est proportionnel à E ? Le modèle de Drude</span>
+<p>Un électron subit la force $-e\vec E$ et un freinage dû aux collisions avec les ions, modélisé par un frottement fluide $-m\vec v/\tau$ ($\tau$ : temps moyen entre collisions, ~10⁻¹⁴ s dans le cuivre). PFD :</p>
+$$m\frac{\mathrm d\vec v}{\mathrm dt}=-e\vec E-\frac{m\vec v}{\tau}$$
+<p>Régime permanent ($\mathrm d\vec v/\mathrm dt=0$) : vitesse limite $\vec v_d=-\frac{e\tau}{m}\vec E$, d'où</p>
+$$\vec j=n(-e)\vec v_d=\underbrace{\frac{ne^2\tau}{m}}_{=\sigma}\vec E$$
+<p><b>La loi d'Ohm est une loi de vitesse limite</b>, comme un corps qui chute avec frottement. C'est une loi de <b>comportement</b> (valable tant que le matériau est ohmique), pas une loi fondamentale.</p></div>
+<figure class="anim" data-anim="drude" data-badge><figcaption><b>Manipule :</b> les électrons s'agitent très vite dans tous les sens (agitation thermique) ; une collision (orange) les relance au hasard. Avec E, ils dérivent lentement vers la gauche (charge négative). Double E ou τ : la vitesse de dérive double ⇒ $j\propto\tau E$.</figcaption></figure>
+<div class="card meth"><span class="tag">Méthode — de la loi locale à U = Ri</span>
+<p>Fil cylindrique de longueur $L$, section $S$, conductivité σ, tension $U$ :</p>
+<ul><li>champ uniforme : $E=U/L$ ;</li><li>loi locale : $j=\sigma E=\sigma U/L$ ;</li><li>intensité : $i=jS=\frac{\sigma S}{L}U$.</li></ul>
+$$\boxed{U=Ri}\qquad\text{avec}\qquad\boxed{R=\frac{L}{\sigma S}=\frac{\rho_rL}{S}}$$
+<p><b>U = Ri n'est pas une loi indépendante</b> : c'est la loi locale intégrée sur une géométrie. Comme C, R ne dépend que de la géométrie et du matériau.</p></div>
+<div class="card meth"><span class="tag">Méthode — géométrie non triviale : série ou parallèle ?</span>
+<p>Découpe le conducteur en tranches élémentaires où la formule $R=\rho L/S$ s'applique :</p>
+<ul><li>Si le courant <b>traverse successivement</b> les tranches (même courant) → <b>série</b> : $R=\int\mathrm dR$. Ex. : isolant d'un coax, courant radial, coquilles $\mathrm dR=\frac{\rho\,\mathrm dr}{2\pi r\,\ell}$ ⇒ $R=\frac{\rho\ln(R_2/R_1)}{2\pi\ell}$.</li>
+<li>Si les tranches sont <b>côte à côte</b> entre les deux mêmes équipotentielles (même tension) → <b>parallèle</b> : $\frac1R=\int\mathrm dG=\int\frac{1}{\mathrm dR}$. Ex. : couronne fendue (<a href="td2.html#exo4">TD2 ex. 4</a>).</li></ul></div>
+<div class="card def"><span class="tag">Puissance</span><p>Puissance reçue par un dipôle : $P=Ui$ ; dissipée par effet Joule dans une résistance : $P=Ri^2=U^2/R$.</p></div>
+
+<h2 id="retenir" data-nomaster>À retenir</h2>
+<div class="card key"><span class="tag">À retenir — Chapitre 2</span>
+<ul><li>Conducteur à l'équilibre : $\vec E_{int}=\vec0$, charges en surface, volume équipotentiel ; juste à l'extérieur $E=\sigma/\varepsilon_0$.</li>
+<li>Condensateur : $Q=CU$, C fixé par la géométrie et l'isolant ($\varepsilon_0\to\varepsilon_r\varepsilon_0$) ; énergie $\frac12CU^2$ stockée dans le champ ; $i=C\,\mathrm du/\mathrm dt$.</li>
+<li>Courant : $i=\iint\vec j\cdot\mathrm d\vec S$, $\vec j=nq\vec v_d$ ; un courant permanent exige une fem.</li>
+<li>Loi d'Ohm : $\vec j=\sigma\vec E$ ⇒ $U=Ri$, $R=\rho_rL/S$ ; puissance reçue $Ui$, dissipée par effet Joule $Ri^2$.</li></ul></div>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ch2"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ch2"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=conducteur+%C3%A9quilibre+%C3%A9lectrostatique+cage+de+faraday">▶ Conducteurs & cage de Faraday</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=capacit%C3%A9+condensateur+plan+calcul+gauss">▶ Calcul de capacité</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=mod%C3%A8le+de+Drude+loi+d%27Ohm+locale">▶ Modèle de Drude</a></p>
+
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>
