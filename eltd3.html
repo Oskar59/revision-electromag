@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Élec TD 3 — Sinusoïdal & fonction de transfert</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="eltd3">
+<article class="content">
+<div class="kicker">Électronique · Travaux dirigés</div>
+<h1>TD 3 — Régime sinusoïdal &amp; fonction de transfert</h1>
+<p class="lead">Lire un oscillogramme, passer en complexe, impédances, fonctions de transfert, Bode, et prévoir ce que devient un signal (sinus ou créneau) à travers un filtre.</p>
+<div class="card rem"><span class="tag">Note</span><p>Pas de corrigé officiel fourni : correction rédigée à partir du cours. Les valeurs de l'exercice 1 sont des lectures graphiques (à ±5 % près).</p></div>
+
+<section class="exo" id="exo1"><header><h2 id="e1">Exercice 1 — Signal sinusoïdal</h2><span class="time">20 min</span></header><div class="body">
+<img class="schema md" src="img/el-td3-ex1.png" alt="Oscillogramme de v1 et v2">
+<div class="statement">1. Tableau : valeur max, efficace, période, fréquence, pulsation. 2. Retard t₁ et déphasage (rad et °). 3. Expressions de v₁ et v₂. 4. Écriture complexe.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> période = distance entre deux maxima <b>du même signal</b> ; décalage = distance entre les maxima (ou les passages par zéro montants) <b>des deux signaux</b> ; $\Delta\phi=2\pi\,t_1/T$. Celui dont le pic arrive <b>en premier</b> est en avance.</div></div>
+<div class="steps">
+<div class="step"><h4>1. Tableau</h4><div class="tablewrap"><table><tr><th></th><th>V max</th><th>V eff</th><th>T</th><th>f</th><th>ω</th></tr>
+<tr><td>v₁</td><td>≈ 30 V</td><td>30/√2 ≈ 21,2 V</td><td>20 ms</td><td>50 Hz</td><td>100π ≈ 314 rad/s</td></tr>
+<tr><td>v₂</td><td>≈ 30 V</td><td>≈ 21,2 V</td><td>20 ms</td><td>50 Hz</td><td>≈ 314 rad/s</td></tr></table></div>
+<p class="small">v₁ a un maximum en t = 0 et le suivant en t = 20 ms.</p></div>
+<div class="step"><h4>2. Décalage et déphasage</h4><p>Le pic de v₂ arrive environ $t_1\approx2$ ms <b>après</b> celui de v₁ : v₂ est <b>en retard</b>. $\Delta\phi=2\pi\frac{t_1}T=2\pi\frac2{20}=\frac\pi5$ rad ≈ <b>36°</b> (déphasage de v₂ par rapport à v₁ : $-\pi/5$).</p></div>
+<div class="step"><h4>3. Expressions</h4><p>$v_1(t)=30\cos(100\pi t)$ V ; $v_2(t)=30\cos\left(100\pi t-\frac\pi5\right)$ V.</p></div>
+<div class="step"><h4>4. Complexes</h4><p>$\underline v_1=30e^{j100\pi t}$, amplitude complexe $\underline V_1=30$ ; $\underline v_2=30e^{j(100\pi t-\pi/5)}$, $\underline V_2=30e^{-j\pi/5}$.</p></div>
+</div>
+<figure class="anim" data-anim="phasor" data-badge><figcaption>Règle φ = −36° : v₂ (bleu) suit v₁ avec un léger retard, comme sur l'oscillogramme.</figcaption></figure>
+</div></section>
+
+<section class="exo" id="exo2"><header><h2 id="e2">Exercice 2 (bonus) — Impédances complexes</h2><span class="time">15 min</span></header><div class="body">
+<img class="schema lg" src="img/el-td3-ex2.png" alt="Dipôles AB, CD, EF">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> exactement comme des résistances : série → on additionne, parallèle → on additionne les inverses (admittances). Puis on simplifie en multipliant haut et bas pour faire disparaître les fractions.</div></div>
+<div class="steps">
+<div class="step"><h4>AB (série R₁, L₁, C₁)</h4><p>$\underline Z_{AB}=R_1+jL_1\omega+\dfrac1{jC_1\omega}=R_1+j\left(L_1\omega-\dfrac1{C_1\omega}\right)$.</p></div>
+<div class="step"><h4>CD (C₁ en série avec [(C₂ + R₂) ∥ L₂])</h4><p>$\underline Z_{CD}=\dfrac1{jC_1\omega}+\dfrac{\left(R_2+\frac1{jC_2\omega}\right)jL_2\omega}{R_2+\frac1{jC_2\omega}+jL_2\omega}=\dfrac1{jC_1\omega}+\dfrac{jL_2\omega\,(1+jR_2C_2\omega)}{1-L_2C_2\omega^2+jR_2C_2\omega}$.</p></div>
+<div class="step"><h4>EF (R₁ ∥ L₁ ∥ C₁)</h4><p>$\dfrac1{\underline Z_{EF}}=\dfrac1{R_1}+\dfrac1{jL_1\omega}+jC_1\omega$ ⇒ $\underline Z_{EF}=\dfrac{1}{\frac1{R_1}+j\left(C_1\omega-\frac1{L_1\omega}\right)}$.</p></div>
+</div></div></section>
+
+<section class="exo" id="exo3"><header><h2 id="e3">Exercice 3 — Circuit RC en sinusoïdal</h2><span class="time">10 min</span></header><div class="body">
+<img class="schema sm" src="img/el-td3-ex3.png" alt="Circuit RC">
+<div class="steps">
+<div class="step"><h4>Diviseur de tension en complexe</h4><p>$\underline U=\underline E\dfrac{Z_C}{R+Z_C}=\dfrac{E}{1+jRC\omega}$.</p></div>
+<div class="step"><h4>Module et argument</h4><p>$|\underline U|=\dfrac{E}{\sqrt{1+(RC\omega)^2}}$, $\arg\underline U=-\arctan(RC\omega)$.</p></div>
+<div class="step"><h4>Retour au réel</h4><p>$$u(t)=\frac{E}{\sqrt{1+(RC\omega)^2}}\cos\big(\omega t-\arctan(RC\omega)\big)$$</p></div>
+</div></div></section>
+
+<section class="exo" id="exo4"><header><h2 id="e4">Exercice 4 (bonus) — C en série, R ∥ Rᵤ en sortie</h2><span class="time">15 min</span></header><div class="body">
+<img class="schema sm" src="img/el-td3-ex4.png" alt="Circuit de l'exercice 4">
+<div class="steps">
+<div class="step"><h4>Regrouper la sortie</h4><p>R et $R_u$ en parallèle : $R'=\dfrac{RR_u}{R+R_u}$.</p></div>
+<div class="step"><h4>Diviseur</h4><p>$\underline U=\underline E\dfrac{R'}{R'+\frac1{jC\omega}}=e_m\dfrac{jR'C\omega}{1+jR'C\omega}$ (passe-haut 1ᵉʳ ordre).</p></div>
+<div class="step"><h4>Réponse harmonique</h4><p>$$u(t)=\frac{e_mR'C\omega}{\sqrt{1+(R'C\omega)^2}}\cos\left(\omega t+\frac\pi2-\arctan(R'C\omega)\right)$$</p></div>
+</div></div></section>
+
+<section class="exo" id="exo5"><header><h2 id="e5">Exercice 5 — Deux sources de fréquences différentes</h2><span class="time">25 min</span></header><div class="body">
+<div class="statement">$e_1=e_m\cos(\omega t)$ et $e_2=e_m\sin(2\omega t)$. Déterminer $u(t)$ aux bornes de C.</div>
+<img class="schema md" src="img/el-td3-ex5.png" alt="Circuit de l'exercice 5">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> deux pulsations différentes (ω et 2ω) ⇒ <b>superposition obligatoire</b>, chaque contribution calculée en complexe à SA pulsation, puis somme <b>en temporel</b>. Pour chaque cas, Millman (ou diviseur) au nœud de u.</div></div>
+<div class="steps">
+<div class="step"><h4>Notation</h4><p>$R_p=R_1\parallel R_2=\dfrac{R_1R_2}{R_1+R_2}$.</p></div>
+<div class="step"><h4>e₁ seule (e₂ = fil), pulsation ω</h4><p>Millman : $\underline U_1=\dfrac{\underline E_1/R_1}{\frac1{R_1}+\frac1{R_2}+jC\omega}=\underline E_1\dfrac{R_p/R_1}{1+jR_pC\omega}$
+$$u_1(t)=\frac{e_mR_p/R_1}{\sqrt{1+(R_pC\omega)^2}}\cos\big(\omega t-\arctan(R_pC\omega)\big)$$</p></div>
+<div class="step"><h4>e₂ seule (e₁ = fil), pulsation 2ω</h4><p>$e_2=e_m\cos(2\omega t-\frac\pi2)$. $\underline U_2=\underline E_2\dfrac{R_p/R_2}{1+2jR_pC\omega}$
+$$u_2(t)=\frac{e_mR_p/R_2}{\sqrt{1+(2R_pC\omega)^2}}\sin\big(2\omega t-\arctan(2R_pC\omega)\big)$$</p></div>
+<div class="step"><h4>Somme</h4><p>$u(t)=u_1(t)+u_2(t)$ — on additionne des fonctions du temps, <b>pas</b> des amplitudes complexes.</p></div>
+</div></div></section>
+
+<section class="exo" id="exo6"><header><h2 id="e6">Exercice 6 — Filtre d'une bobine réelle</h2><span class="time">30 min</span></header><div class="body">
+<div class="statement">R = R₀ = 50 Ω, L = 10 mH (R, L : bobine réelle), sortie sur R₀. 1. H en sortie ouverte. 2. Type. 3. Pulsation caractéristique. 4. u₂(t) approché pour : (a) f = 10 kHz ; (b) f = 100 Hz ; (c) créneau ±U de période 0,1 ms.</div>
+<img class="schema md" src="img/el-td3-ex6.png" alt="Circuit de l'exercice 6"><img class="schema sm" src="img/el-td3-ex6b.png" alt="Signal créneau">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> diviseur de tension en complexe → forme canonique $\frac{H_0}{1+jx}$. Pour une fréquence donnée, calcule $x=\omega/\omega_c$ : $x\ll1$ ou $x\gg1$ ⇒ approximation ; créneau ⇒ penser harmoniques / intégrateur.</div></div>
+<div class="steps">
+<div class="step"><h4>1. Fonction de transfert</h4><p>$\underline H=\dfrac{R_0}{R+R_0+jL\omega}=\dfrac{H_0}{1+j\frac{\omega}{\omega_c}}$ avec $H_0=\dfrac{R_0}{R+R_0}=\dfrac12$ et $\omega_c=\dfrac{R+R_0}{L}$.</p></div>
+<div class="step"><h4>2. Type</h4><p>BF : L = fil ⇒ diviseur résistif, $H\to\frac12$ ; HF : L = ouvert ⇒ $H\to0$. <b>Passe-bas du 1ᵉʳ ordre</b>.</p></div>
+<div class="step"><h4>3. Pulsation caractéristique</h4><p>$\omega_c=\dfrac{100}{0{,}01}=\boxed{10^4\ \mathrm{rad/s}}$ ($f_c\approx1{,}6$ kHz). Gain max $-6$ dB.</p></div>
+<div class="step"><h4>4(a) f = 10 kHz</h4><p>$x=2\pi\times10^4/10^4\approx6{,}3$ : $G=\frac{0{,}5}{\sqrt{1+39{,}5}}\approx0{,}079$, $\phi=-\arctan6{,}3\approx-81°$ ⇒ $u_2\approx0{,}08\,U\cos(2\pi ft-1{,}41)$. Fortement atténué, presque en quadrature retard.</p></div>
+<div class="step"><h4>4(b) f = 100 Hz</h4><p>$x\approx0{,}063\ll1$ : $G\approx0{,}5$, $\phi\approx-3{,}6°$ ⇒ $u_2\approx\frac U2\cos(2\pi\cdot100\,t)$.</p></div>
+<div class="step"><h4>4(c) Créneau de période 0,1 ms (f = 10 kHz ≫ f_c)</h4><p>Toutes les harmoniques sont dans la zone $x\gg1$ où $\underline H\approx\frac{H_0\omega_c}{j\omega}$ : le filtre <b>intègre</b>. $u_2\approx H_0\omega_c\int u_1\,\mathrm dt$ : <b>signal triangulaire</b> de valeur moyenne nulle. Sur une demi-période, $\Delta u_2=H_0\omega_cU\frac T2=0{,}5\times10^4\times U\times5\cdot10^{-5}=0{,}25\,U$ ⇒ triangle d'amplitude <b>±U/8</b>.</p></div>
+</div>
+<figure class="anim" data-anim="square" data-badge><figcaption>Passe-bas, règle f ≈ 6 f₀ : le créneau devient un triangle.</figcaption></figure>
+</div></section>
+
+<section class="exo" id="exo7"><header><h2 id="e7">Exercice 7 (bonus) — R puis L ∥ C</h2><span class="time">35 min</span></header><div class="body">
+<div class="statement">R = 1 kΩ, L = 5 mH, C = 1 µF, bobine idéale. 1. H en sortie ouverte, grandeurs caractéristiques. 2. Bode, type de filtre. 3. $u_e$ créneau d'amplitude $u_{em}$ : allure de $u_s$ pour f = 2,25 kHz et f = 25 kHz.</div>
+<img class="schema sm" src="img/el-td3-ex7.png" alt="Circuit de l'exercice 7">
+<div class="steps">
+<div class="step"><h4>1. Fonction de transfert</h4><p>$Z_{LC}=\dfrac{jL\omega}{1-LC\omega^2}$ ; $\underline H=\dfrac{Z_{LC}}{R+Z_{LC}}=\dfrac{1}{1+jR\left(C\omega-\frac1{L\omega}\right)}=\boxed{\dfrac1{1+jQ\left(x-\frac1x\right)}}$<br>avec $\omega_0=\frac1{\sqrt{LC}}\approx14\,142$ rad/s ($f_0\approx2{,}25$ kHz), $x=\omega/\omega_0$, $Q=R\sqrt{\frac CL}\approx14{,}1$, $H_0=1$.</p></div>
+<div class="step"><h4>2. Bode — passe-bande</h4><p>BF : L = fil ⇒ $H\to0$ ; HF : C = fil ⇒ $H\to0$ : <b>passe-bande</b> du 2ᵈ ordre, centré sur f₀.<br>$x\ll1$ : $H\approx\frac{jx}Q$ ⇒ +20 dB/déc, φ → +90°. $x\gg1$ : $H\approx\frac1{jQx}$ ⇒ −20 dB/déc, φ → −90°. En $x=1$ : G = 1 (0 dB), φ = 0 ; les asymptotes se coupent à $-20\log Q\approx-23$ dB. Bande passante $\Delta\omega=\omega_0/Q\approx1000$ rad/s ($\Delta f\approx160$ Hz) : très sélectif.
+<span class="small muted">(La grille de phase fournie va de 0 à −180° : ici la phase va de +90° à −90°.)</span></p></div>
+<div class="step"><h4>3. f = 2,25 kHz = f₀</h4><p>Le fondamental du créneau ($\frac{4u_{em}}\pi$) est transmis intégralement ; l'harmonique 3 est atténuée d'un facteur ≈ 38. ⇒ $u_s$ ≈ <b>sinusoïde</b> de fréquence f₀ et d'amplitude $\frac{4u_{em}}\pi\approx1{,}27\,u_{em}$.</p></div>
+<div class="step"><h4>3. f = 25 kHz (x ≈ 11)</h4><p>Zone $\underline H\approx\frac1{jQx}=\frac{\omega_0}{jQ\omega}=\frac1{jRC\omega}$ : le filtre <b>intègre</b> ($u_s\approx\frac1{RC}\int u_e\,\mathrm dt$) ⇒ <b>petit triangle</b>, crête-à-crête $\frac{u_{em}}{RC}\cdot\frac T2=0{,}02\,u_{em}$ (amplitude ±1 % de $u_{em}$).</p></div>
+</div>
+<figure class="anim tall" data-anim="bode" data-badge><figcaption>Choisis « Passe-bande » et règle Q ≈ 14 : pic étroit à x = 1, asymptotes ±20 dB/déc.</figcaption></figure>
+</div></section>
+
+<section class="exo" id="exo8"><header><h2 id="e8">Exercice 8 — RL série, sortie sur L</h2><span class="time">25 min</span></header><div class="body">
+<img class="schema sm" src="img/el-td3-ex8.png" alt="Circuit de l'exercice 8">
+<div class="statement">1. Nature. 2. Avec $\omega_0=R/L$, $x=\omega/\omega_0$ : H et ordre. 3. Gain et déphasage. 4. Asymptotes de $G_{dB}(\log x)$. 5. Effet d'une charge $R_L$ en sortie.</div>
+<div class="steps">
+<div class="step"><h4>1. Nature</h4><p>BF : L = fil ⇒ $u_s=0$. HF : L = ouvert ⇒ $u_s=u_e$. <b>Passe-haut</b>.</p></div>
+<div class="step"><h4>2. Fonction de transfert</h4><p>$\underline H=\dfrac{jL\omega}{R+jL\omega}=\dfrac{jx}{1+jx}$ — <b>1ᵉʳ ordre</b>.</p></div>
+<div class="step"><h4>3. Gain et phase</h4><p>$G=\dfrac{x}{\sqrt{1+x^2}}$, $G_{dB}=20\log x-10\log(1+x^2)$, $\phi=\dfrac\pi2-\arctan x$.</p></div>
+<div class="step"><h4>4. Asymptotes</h4><p>$x\ll1$ : $G_{dB}\approx20\log x$ (pente +20 dB/déc, passe par 0 dB en x = 1), φ → 90°. $x\gg1$ : $G_{dB}\to0$, φ → 0. En x = 1 : −3 dB, 45°.</p></div>
+<div class="step"><h4>5. Avec une charge R_L</h4><p>La sortie devient $L\parallel R_L$ : $\underline H=\dfrac{R_L}{R+R_L}\cdot\dfrac{jx'}{1+jx'}$ avec $\omega_0'=\dfrac{RR_L}{L(R+R_L)}$. Le gain HF tombe à $\frac{R_L}{R+R_L}\lt1$ et la coupure se déplace : <b>un filtre se calcule « en sortie ouverte » ; brancher une charge le modifie</b> (d'où l'intérêt d'étages à forte impédance d'entrée).</p></div>
+</div></div></section>
+
+<section class="exo" id="exo9"><header><h2 id="e9">Exercice 9 — Pont de Wien</h2><span class="time">35 min</span></header><div class="body">
+<img class="schema md" src="img/el-td3-ex9.png" alt="Pont de Wien">
+<div class="statement">1. H(x) avec ω₀ = 1/RC. 2. Gain G et déphasage φ. 3. Pulsations réduites de coupure. 4. Diagrammes asymptotiques de Bode.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> diviseur $\frac{Z_2}{Z_1+Z_2}$ avec $Z_1$ = R série C, $Z_2$ = R ∥ C. Viser la forme canonique du passe-bande $\frac{H_0}{1+jQ(x-1/x)}$ : diviser haut et bas par le terme en $jx$.</div></div>
+<div class="steps">
+<div class="step"><h4>1. H(x)</h4><p>$Z_1=R+\frac1{jC\omega}=\frac{1+jx}{jC\omega}$, $Z_2=\frac{R}{1+jx}$ ($x=RC\omega$).
+$$\underline H=\frac{Z_2}{Z_1+Z_2}=\frac{jx}{(1+jx)^2+jx}=\frac{jx}{1-x^2+3jx}=\boxed{\frac{1/3}{1+\frac j3\left(x-\frac1x\right)}}$$ Passe-bande, $H_0=\frac13$, $Q=\frac13$.</p></div>
+<div class="step"><h4>2. Gain et phase</h4><p>$G=\dfrac{1/3}{\sqrt{1+\frac19\left(x-\frac1x\right)^2}}=\dfrac{x}{\sqrt{(1-x^2)^2+9x^2}}$, $\phi=-\arctan\dfrac{x-1/x}{3}$. Max : $G=\frac13$ ($-9{,}5$ dB) en $x=1$, φ = 0.</p></div>
+<div class="step"><h4>3. Coupures</h4><p>$G=\frac{G_{max}}{\sqrt2}$ ⇔ $\left|x-\frac1x\right|=3$ ⇔ $x^2\mp3x-1=0$ ⇒ $x_{c1}=\dfrac{-3+\sqrt{13}}2\approx\boxed{0{,}30}$, $x_{c2}=\dfrac{3+\sqrt{13}}2\approx\boxed{3{,}30}$. ($x_{c1}x_{c2}=1$ et $x_{c2}-x_{c1}=3=1/Q$.)</p></div>
+<div class="step"><h4>4. Asymptotes</h4><p>$x\ll1$ : $H\approx jx$ ⇒ $20\log x$ (+20 dB/déc), φ = +90°. $x\gg1$ : $H\approx\frac1{jx}$ ⇒ $-20\log x$, φ = −90°. Les asymptotes se coupent en x = 1 à 0 dB ; la vraie courbe passe 9,5 dB en dessous (Q faible = filtre peu sélectif).</p></div>
+</div>
+<figure class="anim tall" data-anim="bode" data-badge><figcaption>Choisis « Pont de Wien » : maximum à −9,5 dB en x = 1, coupures en 0,3 et 3,3.</figcaption></figure>
+</div></section>
+
+<h2 id="bilan" data-nomaster>Bilan du TD 3 : les patterns</h2>
+<div class="decision">
+<div class="row"><div class="if">Oscillogramme</div><div class="arrow">→</div><div>T entre deux pics d'un signal ; t₁ entre les pics des deux ; Δφ = 2πt₁/T ; le premier arrivé est en avance</div></div>
+<div class="row"><div class="if">u(t) dans un circuit sinusoïdal</div><div class="arrow">→</div><div>Impédances, diviseur/Millman en complexe, module + argument, retour au réel</div></div>
+<div class="row"><div class="if">Deux fréquences différentes</div><div class="arrow">→</div><div>Superposition, sommer en temporel</div></div>
+<div class="row"><div class="if">« Fonction de transfert / type de filtre »</div><div class="arrow">→</div><div>BF/HF (L, C → fil/ouvert) puis diviseur → forme canonique</div></div>
+<div class="row"><div class="if">« Expression approchée pour f = … »</div><div class="arrow">→</div><div>Calculer x ; terme dominant de H</div></div>
+<div class="row"><div class="if">Créneau en entrée</div><div class="arrow">→</div><div>Harmoniques : intégrateur → triangle ; dérivateur → pics ; sélectif → sinusoïde</div></div>
+<div class="row"><div class="if">Coupures</div><div class="arrow">→</div><div>Résoudre G = Gmax/√2</div></div>
+</div>
+<h2 id="quiz" data-nomaster>Quiz méthode</h2>
+<div class="quiz" data-quiz="eltd3"></div>
+<h2 id="flash" data-nomaster>Flashcards méthodes</h2>
+<div class="flash" data-cards="eltd3"></div>
+</article>
+<script src="js/data.js"></script><script src="js/data-elec.js"></script><script src="js/anims-core.js"></script><script src="js/anims-elec.js"></script><script src="js/app.js"></script>
+</body></html>

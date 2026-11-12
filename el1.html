@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Élec Ch. 1 — Notions de base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="el1">
+<article class="content">
+
+<div class="kicker">Électronique analogique · Chapitre 1</div>
+<h1>Notions de base : lois et boîte à outils</h1>
+<p class="lead">Tout circuit, aussi compliqué soit-il, se résout avec <b>trois lois</b> (Ohm, nœuds, mailles). Les « théorèmes » (diviseurs, Thévenin-Norton, superposition, Millman) ne sont que des <b>raccourcis</b> pour aller plus vite. L'enjeu de ce chapitre : savoir <b>lequel choisir</b> selon la question.</p>
+
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list">
+<li>orienter tensions et courants (conventions)</li><li>dire si un dipôle reçoit ou fournit de la puissance</li>
+<li>écrire les lois des nœuds et des mailles sans erreur de signe</li><li>simplifier des associations série/parallèle</li>
+<li>reconnaître et appliquer un diviseur de tension / de courant</li><li>trouver un équivalent Thévenin ou Norton</li>
+<li>appliquer la superposition</li><li>appliquer Millman (et le démontrer)</li>
+</ul></div>
+
+<h2 id="dipole"><span class="h2num">1.1</span>Courant, tension, dipôle idéal</h2>
+<div class="card def"><span class="tag">Définition — courant électrique</span>
+<p>Un déplacement de charges. L'intensité est la quantité de charge qui traverse une section par unité de temps :</p>
+$$I=\frac{\Delta Q}{\Delta t}\qquad[\mathrm A]$$
+<p><b>Sens conventionnel</b> : l'inverse du sens de déplacement des électrons (du + vers le − dans le circuit extérieur).</p></div>
+<div class="card ex"><span class="tag">Ordres de grandeur</span><p>Prise électrique : fusible 16 A ; four : 32 A ; TGV : 500 A (1000 A au démarrage) ; foudre : 1 à 100 kA ; <b>électronique : mA, µA, nA, pA</b>.</p></div>
+<div class="card def"><span class="tag">Définition — tension</span>
+<p>Différence de potentiel entre deux points ; c'est elle qui met les charges en mouvement. $U_{AB}=V_A-V_B$ (en volts). <b>La flèche de $U_{AB}$ va de B vers A</b> (sa pointe est sur A).</p></div>
+<div class="card why"><span class="tag">Le lien avec la physique</span><p>Le potentiel est la grandeur du <a href="ch1.html#potentiel">Ch. 1 d'électromagnétisme</a> : $U_{AB}=\int_A^B\vec E\cdot\mathrm d\vec\ell$, et le courant est le flux de $\vec j$ (<a href="ch2.html#courant">Ch. 2</a>). En électronique on oublie les champs et on ne garde que ces deux nombres par dipôle.</p></div>
+<div class="card def"><span class="tag">Dipôle idéal</span><p>Deux bornes ; décrit par une relation entre $i$ et $v$ (sa « caractéristique ») ; ne peut pas être subdivisé.</p></div>
+<div class="grid2">
+<div class="card def"><span class="tag">Convention récepteur</span>
+<svg viewBox="0 0 220 90" style="width:100%;max-width:240px"><line x1="10" y1="40" x2="70" y2="40" stroke="var(--ink)" stroke-width="2"/><rect x="70" y="30" width="80" height="20" fill="none" stroke="var(--ink)" stroke-width="2"/><line x1="150" y1="40" x2="210" y2="40" stroke="var(--ink)" stroke-width="2"/><path d="M25 40 L45 40" stroke="var(--rem)" stroke-width="3" marker-end="url(#ar)"/><defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs><text x="28" y="32" fill="var(--rem)" font-size="13" font-weight="700">i</text><path d="M150 70 L70 70" stroke="var(--acc)" stroke-width="2" marker-end="url(#ar)" style="color:var(--accent)"/><text x="105" y="86" fill="var(--accent)" font-size="13" font-weight="700">u</text></svg>
+<p>Flèches de $u$ et $i$ en <b>sens opposés</b>. $P=ui>0$ ⇒ le dipôle <b>reçoit</b>. Pour R, L, C.</p></div>
+<div class="card def"><span class="tag">Convention générateur</span>
+<svg viewBox="0 0 220 90" style="width:100%;max-width:240px"><line x1="10" y1="40" x2="70" y2="40" stroke="var(--ink)" stroke-width="2"/><rect x="70" y="30" width="80" height="20" fill="none" stroke="var(--ink)" stroke-width="2"/><line x1="150" y1="40" x2="210" y2="40" stroke="var(--ink)" stroke-width="2"/><path d="M25 40 L45 40" stroke="var(--rem)" stroke-width="3" marker-end="url(#ar)" style="color:var(--rem)"/><text x="28" y="32" fill="var(--rem)" font-size="13" font-weight="700">i</text><path d="M70 70 L150 70" stroke="var(--accent)" stroke-width="2" marker-end="url(#ar)" style="color:var(--accent)"/><text x="105" y="86" fill="var(--accent)" font-size="13" font-weight="700">u</text></svg>
+<p>Flèches dans le <b>même sens</b>. $P=ui>0$ ⇒ le dipôle <b>fournit</b>. Pour les sources.</p></div>
+</div>
+<div class="card trap"><span class="tag">⚠ Une convention n'est pas une réalité</span><p>On choisit les flèches <b>avant</b> de calculer ; si on trouve $i\lt0$, le courant réel circule simplement dans l'autre sens. Le signe de $P=ui$ (dans la convention choisie) dit si le dipôle reçoit ou fournit vraiment.</p></div>
+
+<h2 id="composants"><span class="h2num">1.2</span>Les composants de base</h2>
+<div class="grid2">
+<div class="card def"><span class="tag">La masse</span><p>Point de référence de potentiel nul ($V=0$). <b>Une seule masse par circuit.</b> Ex. : si $V_B=2$ V et C à la masse, $U_{BC}=V_B-V_C=2$ V.</p></div>
+<div class="card def"><span class="tag">Coupe-circuit / court-circuit</span><p><b>Circuit ouvert</b> : $I=0$ quelle que soit $U$ ⇒ $R=\infty$. <b>Court-circuit (fil)</b> : $U=0$ quel que soit $I$ ⇒ $R=0$.</p></div>
+</div>
+<div class="tablewrap"><table>
+<tr><th>Dipôle</th><th>Relation</th><th>Caractéristique I(U)</th><th>Rôle</th></tr>
+<tr><td>Source de tension idéale</td><td>$U=V_1$ quel que soit $I$</td><td>droite verticale</td><td>impose la tension (actif, conv. générateur)</td></tr>
+<tr><td>Source de courant idéale</td><td>$I=I_1$ quelle que soit $U$</td><td>droite horizontale</td><td>impose le courant (actif)</td></tr>
+<tr><td>Résistance</td><td>$U=RI$ (loi d'Ohm)</td><td>droite de pente $1/R$</td><td>passif, dissipe (conv. récepteur)</td></tr>
+<tr><td>Condensateur</td><td>$i=C\,\mathrm du/\mathrm dt$</td><td>—</td><td>stocke de l'énergie (<a href="el2.html#composants">Ch. 2</a>)</td></tr>
+<tr><td>Bobine</td><td>$u=L\,\mathrm di/\mathrm dt$</td><td>—</td><td>stocke de l'énergie (<a href="el2.html#composants">Ch. 2</a>)</td></tr>
+</table></div>
+<p>La plupart des systèmes se modélisent par des sources et des éléments passifs.</p>
+<div class="card def"><span class="tag">Associations de résistances</span>
+$$\text{Série : }R_{eq}=R_1+R_2\qquad\text{Parallèle : }\frac1{R_{eq}}=\frac1{R_1}+\frac1{R_2}\iff R_{eq}=R_1\parallel R_2=\frac{R_1R_2}{R_1+R_2}$$
+<p><b>Série</b> = même courant (un seul chemin). <b>Parallèle</b> = même tension (mêmes deux nœuds).</p></div>
+<div class="card why"><span class="tag">Pourquoi ces formules ?</span><p>Série : les tensions s'ajoutent, $U=R_1I+R_2I$. Parallèle : les courants s'ajoutent, $I=U/R_1+U/R_2$. En parallèle, on ajoute des chemins : $R_{eq}$ est toujours <b>plus petite que la plus petite</b>.</p></div>
+<div class="card def"><span class="tag">Puissance</span>
+$$p(t)=u(t)\,i(t)\quad\text{(W)},\qquad\text{continu : }P=UI,\qquad\text{résistance : }P=RI^2=\frac{U^2}{R}$$
+<p>La résistance est <b>toujours réceptrice</b>, quel que soit le sens du courant : elle dissipe en chaleur (effet Joule).</p></div>
+
+<h2 id="kirchhoff"><span class="h2num">1.3</span>Les lois de Kirchhoff</h2>
+<div class="grid2">
+<div class="card def"><span class="tag">Nœud, branche, maille</span><p><b>Nœud</b> : point qui connecte au moins deux éléments (en pratique ≥ 3 fils). <b>Branche</b> : portion entre deux nœuds. <b>Maille</b> : boucle fermée qui ne passe pas deux fois par le même nœud.</p></div>
+<div class="card def"><span class="tag">Les deux lois</span><p><b>Nœuds</b> : $\sum I_{entrants}=\sum I_{sortants}$ (somme algébrique nulle).<br><b>Mailles</b> : $\sum U=0$ en parcourant la boucle (algébrique).</p></div>
+</div>
+<div class="card why"><span class="tag">Pourquoi elles sont vraies</span><p><b>Nœuds</b> = conservation de la charge : rien ne s'accumule dans un fil ($\oiint\vec j\cdot\mathrm d\vec S=0$ en régime permanent, <a href="ch2.html#courant">physique Ch. 2</a>). <b>Mailles</b> = le potentiel est une fonction du point : faire un tour ramène au même potentiel ($\oint\vec E\cdot\mathrm d\vec\ell=0$, <a href="ch1.html#rot">physique Ch. 1</a>).</p></div>
+<div class="card meth"><span class="tag">Méthode — écrire une loi des mailles sans erreur de signe</span>
+<ol><li>Choisis un sens de parcours (flèche courbe dans la maille).</li><li>Pour chaque dipôle : flèche de tension <b>dans le sens de parcours → +</b>, contre → −.</li><li>Somme = 0.</li></ol>
+<p class="small">Exemple du cours : avec deux sources $E_1$, $E_2$ et trois résistances, on obtient $E_1=V_1+V_2$, $E_2=V_2+V_3$, et la grande maille $E_1+V_3=V_1+E_2$ (qui est la différence des deux premières : elle n'apporte rien de nouveau !). Au nœud : $i_1+i_3+i_4=i_2$.</p></div>
+<div class="card trap"><span class="tag">⚠ Équations indépendantes</span><p>Avec $n$ nœuds et $b$ branches, il y a $n-1$ lois des nœuds et $b-n+1$ lois des mailles <b>indépendantes</b>. Écrire plus d'équations ne sert à rien (elles se déduisent des autres).</p></div>
+
+<h2 id="diviseurs"><span class="h2num">1.4</span>Diviseurs de tension et de courant</h2>
+<div class="card def"><span class="tag">Diviseur de tension</span>
+<p>Deux résistances <b>en série</b> (même courant) alimentées par $E$ :</p>
+$$U_{R_2}=E\,\frac{R_2}{R_1+R_2}\qquad U_{R_1}=E\,\frac{R_1}{R_1+R_2}$$
+<p><b>Démo :</b> mailles $E=U_{R_1}+U_{R_2}$, nœud $I_1=I_2=I$, Ohm ⇒ $E=(R_1+R_2)I$ ⇒ $I=\frac{E}{R_1+R_2}$ ⇒ $U_{R_2}=R_2I$.</p>
+<p><b>Exemple :</b> $E=10$ V, $R_1=3$ kΩ, $R_2=7$ kΩ ⇒ $U_{R_2}=7$ V.</p></div>
+<figure class="anim" data-anim="divider" data-badge><figcaption><b>Manipule :</b> la tension se partage au prorata des résistances. Puis branche une charge $R_L$ : la tension de sortie chute — le diviseur n'est valable que si <b>aucun courant ne sort</b> au point milieu (sinon on remplace $R_2$ par $R_2\parallel R_L$).</figcaption></figure>
+<div class="card def"><span class="tag">Diviseur de courant</span>
+<p>Deux résistances <b>en parallèle</b> (même tension) se partageant un courant $I$ :</p>
+$$I_2=I\,\frac{R_1}{R_1+R_2}\qquad I_1=I\,\frac{R_2}{R_1+R_2}$$
+<p><b>Démo :</b> $U=R_1I_1=R_2I_2$ et $I=I_1+I_2=U\left(\frac1{R_1}+\frac1{R_2}\right)$ ⇒ $U=I\,(R_1\parallel R_2)$ ⇒ $I_2=U/R_2$.</p>
+<p><b>Exemple :</b> $I=12$ A, $R_1=15$ Ω, $R_2=5$ Ω ⇒ $I_2=12\times\frac{15}{20}=9$ A et $I_1=3$ A : le courant préfère la petite résistance.</p></div>
+<div class="card trap"><span class="tag">⚠ Les deux pièges classiques</span><ul><li>Diviseur de <b>courant</b> : c'est l'<b>autre</b> résistance au numérateur (contrairement au diviseur de tension).</li><li>Diviseur de tension avec une branche parallèle : <b>regroupe d'abord</b> les résistances en parallèle (TD1 ex. 2 : $R_5\parallel R_6$ avant de diviser).</li></ul></div>
+
+<h2 id="thevenin"><span class="h2num">1.5</span>Équivalents de Thévenin et Norton</h2>
+<div class="grid2">
+<div class="card def"><span class="tag">Source de tension réelle = Thévenin</span><p>Source idéale $E$ + résistance interne $R$ en <b>série</b> : $V=E-RI$. La tension baisse quand on tire du courant.</p></div>
+<div class="card def"><span class="tag">Source de courant réelle = Norton</span><p>Source idéale $I_N$ + résistance $R$ en <b>parallèle</b> : $I=I_N-\frac VR$.</p></div>
+</div>
+<p>Dans les deux cas la caractéristique est une <b>droite</b> : tension à vide $V_1$ (pour $I=0$), courant de court-circuit $I_1$ (pour $V=0$), pente $-R$. <b>Mêmes droites ⇒ mêmes dipôles</b> : si les résistances sont égales et $E=RI_N$, les deux modèles sont équivalents et interchangeables.</p>
+<figure class="anim" data-anim="thevenin" data-badge><figcaption><b>Manipule :</b> la droite violette est la source réelle ; la droite orange est la charge. Leur intersection est le point de fonctionnement. Bonus : la puissance dans la charge est maximale quand $R_L=R_{th}$ (adaptation d'impédance).</figcaption></figure>
+<div class="card key"><span class="tag">Théorème de Thévenin-Norton</span><p><b>Tout circuit linéaire, vu entre deux bornes A et B, est équivalent à un générateur de Thévenin $(E_{th},R_{th})$ ou de Norton $(I_N,R_N)$</b>, avec $R_{th}=R_N$ et $E_{th}=R_{th}I_N$. Intérêt : remplacer tout un morceau de circuit par deux nombres.</p></div>
+<div class="card meth"><span class="tag">Méthode — trouver un équivalent de Thévenin entre A et B</span>
+<ol><li><b>$E_{th}$</b> = tension <b>à vide</b> $U_{AB}$ (rien de branché entre A et B) : souvent un diviseur de tension.</li>
+<li><b>$R_{th}$</b> : on <b>éteint</b> toutes les sources indépendantes — source de tension → <b>fil</b>, source de courant → <b>circuit ouvert</b> — puis on calcule la résistance vue de A et B.</li>
+<li>(Norton) <b>$I_N$</b> = courant de <b>court-circuit</b> entre A et B ; ou $I_N=E_{th}/R_{th}$.</li></ol></div>
+<div class="card ex"><span class="tag">Exemple du cours</span><p>Source $E_1$, $R_2$ en série vers A, $R_1$ entre A et B (B relié au − de $E_1$).</p>
+<ul><li>$E_{th}$ : à vide, diviseur ⇒ $E_{th}=E_1\dfrac{R_1}{R_1+R_2}$.</li>
+<li>$R_{th}$ : $E_1$ → fil ; vues de A–B, $R_1$ et $R_2$ sont en parallèle ⇒ $R_{th}=R_1\parallel R_2=\dfrac{R_1R_2}{R_1+R_2}$.</li>
+<li>$I_N$ : court-circuit A–B ⇒ $R_1$ est court-circuitée ⇒ $I_N=E_1/R_2$. Vérif : $R_{th}I_N=\frac{R_1R_2}{R_1+R_2}\cdot\frac{E_1}{R_2}=E_{th}$ ✓.</li></ul></div>
+<div class="card trap"><span class="tag">⚠ Pièges</span><ul><li>Éteindre une source de <b>courant</b> = l'<b>ouvrir</b> (pas la court-circuiter !).</li><li>Une source de courant en série avec une résistance : la résistance ne compte pas (le courant est imposé de toute façon).</li><li>Une source de tension en parallèle avec une résistance : la résistance ne change pas la tension vue de l'extérieur.</li></ul></div>
+
+<h2 id="superposition"><span class="h2num">1.6</span>Théorème de superposition</h2>
+<div class="card def"><span class="tag">Énoncé</span><p>Dans un circuit <b>linéaire</b> à sources <b>indépendantes</b>, chaque tension (ou courant) est la <b>somme des contributions</b> de chaque source prise seule, les autres étant éteintes (tension → fil, courant → ouvert).</p></div>
+<div class="card why"><span class="tag">Pourquoi ça marche</span><p>Toutes les lois (Ohm, nœuds, mailles) sont <b>linéaires</b> : si deux ensembles de courants/tensions sont solutions, leur somme l'est aussi. ⚠ Ne marche <b>pas</b> pour les puissances (quadratiques : $(a+b)^2\neq a^2+b^2$).</p></div>
+<div class="card ex"><span class="tag">Exemple du cours</span><p>Un nœud de tension V relié à $E_1$ par $R_1$, à $E_2$ par $R_2$, et une source de courant $I_1$ qui retire du courant du nœud.</p>
+<ul><li>$E_1$ seule : diviseur ⇒ $V_1=E_1\dfrac{R_2}{R_1+R_2}$</li><li>$E_2$ seule : $V_2=E_2\dfrac{R_1}{R_1+R_2}$</li><li>$I_1$ seule : $I_1$ traverse $R_1\parallel R_2$ en tirant le nœud vers le bas ⇒ $V_3=-I_1(R_1\parallel R_2)$</li></ul>
+$$V=E_1\frac{R_2}{R_1+R_2}+E_2\frac{R_1}{R_1+R_2}-I_1\,(R_1\parallel R_2)$$
+<p class="small">Vérif par Millman : $V=\dfrac{E_1/R_1+E_2/R_2-I_1}{1/R_1+1/R_2}$ donne exactement la même chose ✓.</p></div>
+
+<h2 id="millman"><span class="h2num">1.7</span>Théorème de Millman</h2>
+<div class="card key"><span class="tag">Énoncé</span>
+<p>Tension $U$ d'un nœud relié par N branches (chacune : source $E_k$ en série avec $R_k$) à un même nœud de référence :</p>
+$$U=\frac{\displaystyle\sum_{k=1}^N\frac{E_k}{R_k}}{\displaystyle\sum_{k=1}^N\frac1{R_k}}$$
+<p>Une branche sans source compte $0$ au numérateur mais $1/R_k$ au dénominateur. Une source de courant $I_k$ arrivant au nœud ajoute $+I_k$ au numérateur (et rien au dénominateur).</p></div>
+<div class="steps" data-start="Démontrer Millman (loi des nœuds)">
+<div class="step"><h4>Dans chaque branche</h4><p>$U=E_k-R_ki_k$ ⇒ $i_k=\dfrac{E_k-U}{R_k}$ (courant arrivant au nœud).</p></div>
+<div class="step"><h4>Loi des nœuds</h4><p>$\sum i_k=0$ ⇒ $\sum\dfrac{E_k-U}{R_k}=0$ ⇒ $U\sum\dfrac1{R_k}=\sum\dfrac{E_k}{R_k}$.</p></div>
+<div class="step"><h4>Autre vision (Norton)</h4><p>Chaque branche $(E_k,R_k)$ = Norton $(E_k/R_k,\ R_k)$. Les sources de courant en parallèle s'ajoutent, les résistances se mettent en parallèle : $U=\left(\sum\frac{E_k}{R_k}\right)R_{eq}$ avec $\frac1{R_{eq}}=\sum\frac1{R_k}$. Même formule.</p></div>
+</div>
+<div class="card rem"><span class="tag">Quand l'utiliser ?</span><p>Dès qu'on cherche <b>la tension d'un nœud</b> où convergent plusieurs branches parallèles : une ligne au lieu d'un système d'équations. C'est souvent le plus rapide en partiel.</p></div>
+
+<h2 id="choisir" data-nomaster>Quel outil choisir ?</h2>
+<div class="decision">
+<div class="row"><div class="if">Deux R en série, on veut la tension de l'une</div><div class="arrow">→</div><div>Diviseur de tension</div></div>
+<div class="row"><div class="if">Deux R en parallèle, on veut le courant dans l'une</div><div class="arrow">→</div><div>Diviseur de courant</div></div>
+<div class="row"><div class="if">Tension d'un nœud relié à plusieurs branches</div><div class="arrow">→</div><div>Millman</div></div>
+<div class="row"><div class="if">Plusieurs sources, une seule grandeur cherchée</div><div class="arrow">→</div><div>Superposition (ou Millman)</div></div>
+<div class="row"><div class="if">« Montrer que AB équivaut à un générateur » / on fait varier la charge</div><div class="arrow">→</div><div>Thévenin / Norton (conversions successives)</div></div>
+<div class="row"><div class="if">Rien de tout ça / circuit très maillé</div><div class="arrow">→</div><div>Lois des nœuds + mailles + Ohm (toujours ça marche)</div></div>
+</div>
+
+<h2 id="retenir" data-nomaster>À retenir</h2>
+<div class="card key"><span class="tag">À retenir — Chapitre 1</span><ul><li>Loi d'Ohm, loi des mailles, loi des nœuds.</li><li>Théorème de superposition, théorème de Millman.</li><li>Équivalences Thévenin – Norton : savoir déterminer l'équivalent de tout circuit.</li><li>Conventions récepteur / générateur et signe de la puissance.</li></ul></div>
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="el1"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="el1"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=lois+de+Kirchhoff+loi+des+mailles+exercice">▶ Lois de Kirchhoff</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=th%C3%A9or%C3%A8me+de+Th%C3%A9venin+Norton+m%C3%A9thode">▶ Thévenin / Norton</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=th%C3%A9or%C3%A8me+de+Millman+exercice">▶ Millman</a></p>
+</article>
+<script src="js/data.js"></script><script src="js/data-elec.js"></script><script src="js/anims-core.js"></script><script src="js/anims-elec.js"></script><script src="js/app.js"></script>
+</body></html>

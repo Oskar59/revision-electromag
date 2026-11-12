@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Élec TD 2 — Régime transitoire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="eltd2">
+<article class="content">
+<div class="kicker">Électronique · Travaux dirigés</div>
+<h1>TD 2 — Régime transitoire</h1>
+<p class="lead">RC, RL, ouverture d'un interrupteur « fermé depuis très longtemps », RLC série et parallèle, Thévenin vu par un condensateur. Le fil conducteur : <b>conditions initiales par continuité</b> + <b>EDO</b> + <b>τ</b>.</p>
+<div class="card rem"><span class="tag">Note</span><p>Pas de corrigé officiel fourni : correction rédigée à partir du cours. Les signes dépendent des orientations du schéma : elles sont précisées à chaque fois.</p></div>
+
+<section class="exo" id="exo1"><header><h2 id="e1">Exercice 1 — Charge d'un condensateur</h2><span class="time">15 min</span></header><div class="body">
+<div class="statement">C = 100 µF initialement déchargé, en série avec E = 6 V, un interrupteur et R = 100 Ω. 1. EDO de $u_C$ à la fermeture. 2. $u_C(t)$. 3. Tracer E(t), $u_C(t)$, i(t). 4. Intensité maximale ?</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> c'est LE cas du cours (charge RC) : mailles + Ohm + $i=C\,\mathrm du/\mathrm dt$ → forme $\tau u'+u=E$ → $u=E(1-e^{-t/\tau})$. Le courant est maximal à $t=0^+$ : $u_C=0$ (continuité), donc toute la tension E est aux bornes de R.</div></div>
+<div class="steps">
+<div class="step"><h4>1. Équation</h4><p>$E=Ri+u_C$ et $i=C\frac{\mathrm du_C}{\mathrm dt}$ ⇒ $RC\frac{\mathrm du_C}{\mathrm dt}+u_C=E$, $\tau=RC=100\times100\cdot10^{-6}=\boxed{10\ \mathrm{ms}}$.</p></div>
+<div class="step"><h4>2. Solution</h4><p>$u_C=Ae^{-t/\tau}+E$, $u_C(0^+)=u_C(0^-)=0$ ⇒ $A=-E$ : $\boxed{u_C(t)=6\left(1-e^{-t/10\,\mathrm{ms}}\right)\ \mathrm V}$.</p></div>
+<div class="step"><h4>3. Courbes</h4><p>E(t) : échelon 0 → 6 V à t = 0. $u_C$ : monte de 0 à 6 V (63 % à 10 ms, ≈ 6 V à 50 ms), tangente à l'origine qui atteint 6 V en τ. $i=\frac ERe^{-t/\tau}=60e^{-t/\tau}$ mA : saute à 60 mA puis décroît vers 0.</p></div>
+<div class="step"><h4>4. Courant max</h4><p>$i_{max}=i(0^+)=E/R=\boxed{60\ \mathrm{mA}}$.</p></div>
+</div>
+<figure class="anim tall" data-anim="rcrl" data-badge><figcaption>Règle R = 100 Ω et C = 100 µF : tu retrouves τ = 10 ms et les deux courbes.</figcaption></figure>
+</div></section>
+
+<section class="exo" id="exo2"><header><h2 id="e2">Exercice 2 — Établissement du courant dans une bobine</h2><span class="time">15 min</span></header><div class="body">
+<div class="statement">L = 100 mH, E = 6 V, R = 100 Ω en série, fermeture à t = 0. 1. EDO de i(t). 2. i(t). 3. Tracer E, $u_L$, i. 4. Tension maximale ?</div>
+<div class="steps">
+<div class="step"><h4>1. Équation</h4><p>$E=Ri+L\frac{\mathrm di}{\mathrm dt}$ ⇒ $\frac LR\frac{\mathrm di}{\mathrm dt}+i=\frac ER$ ; $\tau=\frac LR=\frac{0{,}1}{100}=\boxed{1\ \mathrm{ms}}$.</p></div>
+<div class="step"><h4>2. Solution</h4><p>$i(0^+)=i(0^-)=0$ (continuité du courant) ⇒ $\boxed{i(t)=\frac ER\left(1-e^{-t/\tau}\right)=60\left(1-e^{-t/1\,\mathrm{ms}}\right)\ \mathrm{mA}}$.</p></div>
+<div class="step"><h4>3. Courbes</h4><p>$u_L=L\frac{\mathrm di}{\mathrm dt}=Ee^{-t/\tau}$ : saute à 6 V puis décroît. i : monte de 0 à 60 mA. $u_R=Ri=E(1-e^{-t/\tau})$.</p></div>
+<div class="step"><h4>4. Tension max</h4><p>$u_{L,max}=u_L(0^+)=E=\boxed{6\ \mathrm V}$ : à l'instant initial, la bobine « bloque » le courant et prend toute la tension.</p></div>
+</div></div></section>
+
+<section class="exo" id="exo3"><header><h2 id="e3">Exercice 3 — Ouverture d'un circuit inductif</h2><span class="time">25 min</span></header><div class="body">
+<div class="statement">R = 5 Ω, r = 10 Ω, L = 25 mH, E = 10 V, bobine idéale. Interrupteur fermé depuis très longtemps, ouvert à t = 0. 1. u et i juste avant. 2. u(t), i(t). 3. Énergie perdue par la bobine. 4. Puissance P(t) et énergie dissipées par R pour t &gt; 0. 5. Comparer.</div>
+<img class="schema sm" src="img/el-td2-ex3.png" alt="Schéma de l'exercice 3">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> « fermé depuis très longtemps » = régime permanent continu ⇒ <b>bobine = fil</b>. À l'ouverture, la grandeur qui ne saute pas est le <b>courant dans L</b> ; la bobine se décharge alors dans la seule maille restante (L–R).</div></div>
+<div class="steps">
+<div class="step"><h4>1. Avant l'ouverture (t = 0⁻)</h4><p>L = fil ⇒ R est court-circuitée : $\boxed{u(0^-)=0}$. Tout le courant $E/r=1$ A passe dans L, <b>de haut en bas</b>. Avec l'orientation de la figure ($i$ vers le haut dans L) : $\boxed{i(0^-)=-1\ \mathrm A}$ (|i| = 1 A).</p></div>
+<div class="step"><h4>2. Équation pour t &gt; 0</h4><p>Seule reste la maille L–R. Le courant $i$ monte dans L puis descend dans R : $u=Ri$. Aux bornes de L (même tension u, orientation telle que $u=-L\frac{\mathrm di}{\mathrm dt}$) : $Ri=-L\frac{\mathrm di}{\mathrm dt}$ ⇒ $\frac LR\frac{\mathrm di}{\mathrm dt}+i=0$, $\tau=\frac LR=\boxed{5\ \mathrm{ms}}$.</p></div>
+<div class="step"><h4>Solution</h4><p>Continuité : $i(0^+)=-1$ A ⇒ $\boxed{i(t)=-\frac Er e^{-t/\tau}=-e^{-t/5\,\mathrm{ms}}\ \mathrm A}$ et $\boxed{u(t)=Ri=-5e^{-t/5\,\mathrm{ms}}\ \mathrm V}$.<br>u <b>saute</b> de 0 à −5 V à l'ouverture (c'est permis), le courant non.</p></div>
+<div class="step"><h4>3. Énergie perdue par la bobine</h4><p>Elle passe de $\frac12Li(0)^2$ à 0 : $W_L=\frac12\times0{,}025\times1^2=\boxed{12{,}5\ \mathrm{mJ}}$.</p></div>
+<div class="step"><h4>4. Puissance et énergie dans R</h4><p>$P(t)=Ri^2=R\left(\frac Er\right)^2e^{-2t/\tau}=5e^{-2t/\tau}$ W. $W_R=\int_0^\infty P\,\mathrm dt=R\frac{E^2}{r^2}\cdot\frac\tau2=5\times1\times0{,}0025=\boxed{12{,}5\ \mathrm{mJ}}$.</p></div>
+<div class="step"><h4>5. Comparaison</h4><p>$W_R=W_L$ : toute l'énergie magnétique stockée dans la bobine est dissipée par effet Joule dans R. (Sans R, l'ouverture provoquerait une surtension énorme : l'étincelle aux bornes d'un interrupteur.)</p></div>
+</div></div></section>
+
+<section class="exo" id="exo4"><header><h2 id="e4">Exercice 4 — Ouverture d'un circuit capacitif</h2><span class="time">20 min</span></header><div class="body">
+<div class="statement">R = 1 kΩ, r = 10 Ω, C = 2 µF, E = 10 V. Fermé depuis très longtemps, ouvert à t = 0. 1. u et i juste avant. 2. u(t), i(t).</div>
+<img class="schema sm" src="img/el-td2-ex4.png" alt="Schéma de l'exercice 4">
+<div class="steps">
+<div class="step"><h4>1. t = 0⁻ : condensateur = circuit ouvert</h4><p>$\boxed{i(0^-)=0}$. Le courant de la source passe par r puis R : diviseur ⇒ $\boxed{u(0^-)=E\frac{R}{R+r}=10\times\frac{1000}{1010}\approx9{,}90\ \mathrm V}$.</p></div>
+<div class="step"><h4>2. Équation pour t &gt; 0</h4><p>Il reste la maille C–R : C se décharge dans R. Avec i orienté de C vers le nœud (figure) : $i=-C\frac{\mathrm du}{\mathrm dt}$ et $u=Ri$ ⇒ $RC\frac{\mathrm du}{\mathrm dt}+u=0$, $\tau=RC=\boxed{2\ \mathrm{ms}}$.</p></div>
+<div class="step"><h4>Solution</h4><p>Continuité de u : $\boxed{u(t)=9{,}90\,e^{-t/2\,\mathrm{ms}}\ \mathrm V}$ ; $\boxed{i(t)=\frac uR=9{,}90\,e^{-t/2\,\mathrm{ms}}\ \mathrm{mA}}$. i saute de 0 à 9,9 mA à l'ouverture.</p></div>
+</div></div></section>
+
+<section class="exo" id="exo5"><header><h2 id="e5">Exercice 5 — Charge RC puis oscillations RLC</h2><span class="time">40 min</span></header><div class="body">
+<div class="statement">R = 8 Ω, r = 5 Ω, L = 50 mH, C = 0,3 µF, E = 10 V, bobine idéale, C déchargé.<br>1. Position 1 : (a) u(t) et τ ; (b) allure ; (c) durée pour que la charge diffère de 0,01 % de sa limite.<br>2. Position 2, C totalement chargé : (a) EDO de u ; (b) f₀ et durée de relaxation en énergie τₑ ; (c) u(t) avec u(0) = U₀ ; (d) pseudo-fréquence fₐ ; (e) durée pour diviser l'amplitude par 10 ; (f) comparer à Tₐ.</div>
+<img class="schema sm" src="img/el-td2-ex5.png" alt="Schéma de l'exercice 5">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> position 1 = charge RC classique. Position 2 = <b>RLC série libre</b> : écris λ = r/2L, ω₀ = 1/√(LC), Q, compare λ et ω₀ pour savoir le régime. « Divisée par 10 » ⇒ $e^{-\lambda t}=1/10$.</div></div>
+<div class="steps">
+<div class="step"><h4>1(a) Charge</h4><p>$E=Ri+u$, $i=C\frac{\mathrm du}{\mathrm dt}$ ⇒ $\boxed{u(t)=E\left(1-e^{-t/\tau}\right)}$, $\tau=RC=8\times0{,}3\cdot10^{-6}=\boxed{2{,}4\ \mu\mathrm s}$.</p></div>
+<div class="step"><h4>1(b) Allure</h4><p>Exponentielle croissante de 0 vers 10 V, 63 % à 2,4 µs, tangente à l'origine atteignant 10 V en τ.</p></div>
+<div class="step"><h4>1(c) Écart de 0,01 %</h4><p>$\frac{q_\infty-q}{q_\infty}=e^{-t/\tau}=10^{-4}$ ⇒ $t=\tau\ln10^4\approx9{,}2\,\tau\approx\boxed{22\ \mu\mathrm s}$.</p></div>
+<div class="step"><h4>2(a) Équation (C se décharge dans r + L)</h4><p>Mailles $u=ri+L\frac{\mathrm di}{\mathrm dt}$ avec $i=-C\frac{\mathrm du}{\mathrm dt}$ (C se vide) :
+$$LC\frac{\mathrm d^2u}{\mathrm dt^2}+rC\frac{\mathrm du}{\mathrm dt}+u=0\iff\ddot u+2\lambda\dot u+\omega_0^2u=0,\ \lambda=\frac r{2L},\ \omega_0=\frac1{\sqrt{LC}}$$</p></div>
+<div class="step"><h4>2(b) f₀ et τₑ</h4><p>$\omega_0=\frac1{\sqrt{0{,}05\times0{,}3\cdot10^{-6}}}\approx8165$ rad/s ⇒ $\boxed{f_0\approx1{,}30\ \mathrm{kHz}}$. $\lambda=\frac5{0{,}1}=50$ s⁻¹. L'amplitude décroît en $e^{-\lambda t}$, l'énergie (∝ u²) en $e^{-2\lambda t}$ ⇒ $\boxed{\tau_e=\frac1{2\lambda}=\frac Lr=10\ \mathrm{ms}}$. $Q=\frac1r\sqrt{\frac LC}\approx82\gg\frac12$ : <b>pseudo-périodique</b>.</p></div>
+<div class="step"><h4>2(c) u(t)</h4><p>$u=e^{-\lambda t}(A\cos\omega t+B\sin\omega t)$, $\omega=\sqrt{\omega_0^2-\lambda^2}$. $u(0)=U_0$ ⇒ $A=U_0$ ; $i(0)=0$ ⇒ $\dot u(0)=0$ ⇒ $-\lambda A+\omega B=0$ ⇒ $B=\frac\lambda\omega U_0$ :
+$$\boxed{u(t)=U_0\,e^{-t/(2\tau_e)}\left(\cos\omega t+\frac\lambda\omega\sin\omega t\right)}\quad(U_0=E=10\ \mathrm V)$$</p></div>
+<div class="step"><h4>2(d) Pseudo-fréquence</h4><p>$\omega=\omega_0\sqrt{1-\frac{\lambda^2}{\omega_0^2}}$ avec $\frac{\lambda^2}{\omega_0^2}\approx3{,}8\cdot10^{-5}$ ⇒ $f_a\approx f_0\approx\boxed{1{,}30\ \mathrm{kHz}}$ (écart relatif 2·10⁻⁵, indiscernable).</p></div>
+<div class="step"><h4>2(e) Amplitude divisée par 10</h4><p>$e^{-\lambda t}=\frac1{10}$ ⇒ $t=\frac{\ln10}{\lambda}=\frac{2{,}30}{50}\approx\boxed{46\ \mathrm{ms}}$.</p></div>
+<div class="step"><h4>2(f) Comparaison</h4><p>$T_a=1/f_a\approx0{,}77$ ms ⇒ $t\approx60\,T_a$ : il faut une soixantaine d'oscillations pour perdre un facteur 10. Cohérent avec $Q\approx82$ (un grand Q = beaucoup d'oscillations).</p></div>
+</div>
+<figure class="anim tall" data-anim="rlc" data-badge><figcaption>Même physique avec d'autres valeurs : avec R petit, oscillations peu amorties.</figcaption></figure>
+</div></section>
+
+<section class="exo" id="exo6"><header><h2 id="e6">Exercice 6 (bonus) — RLC série forcé</h2><span class="time">10 min</span></header><div class="body">
+<img class="schema sm" src="img/el-td2-ex6.png" alt="Schéma de l'exercice 6">
+<div class="steps">
+<div class="step"><h4>1. Équation</h4><p>$u(t)=Ri+L\frac{\mathrm di}{\mathrm dt}+u_C$, $i=C\frac{\mathrm du_C}{\mathrm dt}$ ⇒ $\boxed{LC\frac{\mathrm d^2u_C}{\mathrm dt^2}+RC\frac{\mathrm du_C}{\mathrm dt}+u_C=u(t)}$.</p></div>
+<div class="step"><h4>2. Les trois régimes</h4><p>Selon le discriminant de $LCr^2+RCr+1=0$, soit $Q=\frac1R\sqrt{\frac LC}$ : <b>apériodique</b> ($Q\lt\frac12$), <b>critique</b> ($Q=\frac12$), <b>pseudo-périodique</b> ($Q>\frac12$).</p></div>
+</div></div></section>
+
+<section class="exo" id="exo7"><header><h2 id="e7">Exercice 7 (bonus) — RLC parallèle</h2><span class="time">25 min</span></header><div class="body">
+<div class="statement">R = 10 kΩ, L = 10 mH, C = 1 µF en parallèle. Charge initiale du condensateur 1 µC, courant initial dans la bobine 0,1 mA. 1. EDO de u. 2. Définir Q. 3. u(t).</div>
+<img class="schema sm" src="img/el-td2-ex7.png" alt="Schéma de l'exercice 7">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> éléments en <b>parallèle</b> ⇒ même tension u ⇒ <b>loi des nœuds</b> (et non des mailles), puis on dérive pour éliminer $i_L$.</div></div>
+<div class="steps">
+<div class="step"><h4>1. Équation</h4><p>Courants descendant dans chaque branche (convention récepteur) : $\frac uR+C\frac{\mathrm du}{\mathrm dt}+i_L=0$ avec $L\frac{\mathrm di_L}{\mathrm dt}=u$. On dérive :
+$$\boxed{\frac{\mathrm d^2u}{\mathrm dt^2}+\frac1{RC}\frac{\mathrm du}{\mathrm dt}+\frac1{LC}u=0}$$</p></div>
+<div class="step"><h4>2. Facteur de qualité</h4><p>Par identification avec $\ddot u+\frac{\omega_0}Q\dot u+\omega_0^2u=0$ : $\omega_0=\frac1{\sqrt{LC}}=10^4$ rad/s et $\boxed{Q=RC\omega_0=R\sqrt{\frac CL}}=10^4\sqrt{\frac{10^{-6}}{10^{-2}}}=100$. ⚠ C'est l'<b>inverse</b> du cas série : ici une grande R amortit peu (elle dérive peu de courant).</p></div>
+<div class="step"><h4>3. Conditions initiales</h4><p>$u(0)=\frac qC=1$ V. $\dot u(0)=-\frac1C\left(\frac{u(0)}R+i_L(0)\right)=-\frac{10^{-4}+10^{-4}}{10^{-6}}=-200$ V/s (avec $i_L$ orienté vers le bas dans la bobine).</p></div>
+<div class="step"><h4>Solution (Q = 100 : pseudo-périodique)</h4><p>$\lambda=\frac1{2RC}=50$ s⁻¹, $\omega=\sqrt{\omega_0^2-\lambda^2}\approx10^4$ rad/s. $u=e^{-\lambda t}(A\cos\omega t+B\sin\omega t)$ ; $A=1$ ; $B=\frac{\dot u(0)+\lambda A}{\omega}=\frac{-200+50}{10^4}=-0{,}015$.
+$$\boxed{u(t)=e^{-50t}\big(\cos(10^4t)-0{,}015\sin(10^4t)\big)\approx e^{-50t}\cos(10^4t)\ \mathrm V}$$</p></div>
+</div></div></section>
+
+<section class="exo" id="exo8"><header><h2 id="e8">Exercice 8 (bonus) — Cellule RC complexe</h2><span class="time">30 min</span></header><div class="body">
+<div class="statement">R₁ = R₂ = R₃ = 10 kΩ, R₄ = 12 kΩ, C = 1 µF, E = 10 V, I₁ = 2 mA, I₂ = 5 mA. 1. Générateur de Thévenin vu par C. 2. $U_{AB}(t)$ si C est initialement déchargé.</div>
+<img class="schema sm" src="img/el-td2-ex8.png" alt="Schéma de l'exercice 8">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> « Thévenin vu par C » ⇒ on <b>retire C</b>, on calcule la tension à vide entre ses bornes (E_th) et la résistance vue (sources éteintes). Ensuite le circuit est un simple RC : $\tau=R_{th}C$, $u_\infty=E_{th}$.</div></div>
+<details class="hint"><summary>Indice : lecture du schéma</summary><div class="inner"><p>Nœud X (gauche de C) : branches (R₁ + I₁), (R₂ + E), R₃. Nœud Y (droite) : R₃, R₄, I₂. $U_{AB}=V_X-V_Y$ (flèche ← : pointe à gauche). La résistance R₁ en série avec la source de courant I₁ ne joue aucun rôle.</p></div></details>
+<div class="steps">
+<div class="step"><h4>E_th : nœuds X et Y (C retiré), unités kΩ, mA, V</h4><p>X : $I_1+\frac{E-V_X}{R_2}-\frac{V_X-V_Y}{R_3}=0$ ⇒ $2+\frac{10-V_X}{10}-\frac{V_X-V_Y}{10}=0$ ⇒ $2V_X-V_Y=30$.<br>
+Y : $I_2+\frac{V_X-V_Y}{R_3}-\frac{V_Y}{R_4}=0$ ⇒ $6V_X-11V_Y=-300$.<br>
+⇒ $V_X=39{,}4$ V, $V_Y=48{,}75$ V ⇒ $\boxed{E_{th}=V_X-V_Y=-9{,}375\ \mathrm V}$.</p></div>
+<div class="step"><h4>R_th : sources éteintes</h4><p>I₁, I₂ → ouverts (la branche R₁ disparaît), E → fil (R₂ relie X à la masse). Entre X et Y : R₃ en parallèle avec (R₂ + R₄) : $\boxed{R_{th}=10\parallel22=6{,}875\ \mathrm{k\Omega}}$.</p></div>
+<div class="step"><h4>2. U_AB(t)</h4><p>Circuit équivalent : $E_{th}$, $R_{th}$, C ⇒ $\tau=R_{th}C=6{,}875$ ms, $U_{AB}(0)=0$ :
+$$\boxed{U_{AB}(t)=E_{th}\left(1-e^{-t/\tau}\right)=-9{,}375\left(1-e^{-t/6{,}875\,\mathrm{ms}}\right)\ \mathrm V}$$</p></div>
+</div></div></section>
+
+<h2 id="bilan" data-nomaster>Bilan du TD 2 : les patterns</h2>
+<div class="decision">
+<div class="row"><div class="if">« On ferme l'interrupteur » (C vide / L sans courant)</div><div class="arrow">→</div><div>Charge : $y=y_\infty(1-e^{-t/\tau})$</div></div>
+<div class="row"><div class="if">« Fermé depuis très longtemps, on ouvre »</div><div class="arrow">→</div><div>Permanent : C ouvert, L fil ⇒ valeurs à 0⁻ ⇒ continuité ⇒ décharge dans la maille restante</div></div>
+<div class="row"><div class="if">Énergie perdue / dissipée</div><div class="arrow">→</div><div>½Li² ou ½Cu² initiale ; $\int Ri^2\,\mathrm dt$ ; elles sont égales</div></div>
+<div class="row"><div class="if">« Diffère de x % de sa limite »</div><div class="arrow">→</div><div>$e^{-t/\tau}=x/100$ ⇒ $t=\tau\ln(100/x)$</div></div>
+<div class="row"><div class="if">RLC</div><div class="arrow">→</div><div>λ, ω₀, Q ⇒ régime ; 2 conditions initiales (u et i)</div></div>
+<div class="row"><div class="if">Circuit compliqué autour d'un C</div><div class="arrow">→</div><div>Thévenin vu par C ⇒ τ = R_th·C</div></div>
+</div>
+<h2 id="quiz" data-nomaster>Quiz méthode</h2>
+<div class="quiz" data-quiz="eltd2"></div>
+<h2 id="flash" data-nomaster>Flashcards méthodes</h2>
+<div class="flash" data-cards="eltd2"></div>
+</article>
+<script src="js/data.js"></script><script src="js/data-elec.js"></script><script src="js/anims-core.js"></script><script src="js/anims-elec.js"></script><script src="js/app.js"></script>
+</body></html>

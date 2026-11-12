@@ -225,5 +225,13 @@ C.td2=[
 {f:`Ligne avec pertes : méthode`,b:`Tranche dx : loi d'Ohm sur chaque conducteur (dV/dx = ∓ρ i) + loi des nœuds (di_f = −di) + loi d'Ohm de l'isolant ⇒ EDO du 2nd ordre.`},
 ];
 
+
+Q.td3=[
+{q:r`Cylindre plein (rayon a, j uniforme) : B pour r < a`,o:[r`$\dfrac{\mu_0Ir}{2\pi a^2}$`,r`$\dfrac{\mu_0I}{2\pi r}$`,`0`,r`$\mu_0 jr^2$`],a:0,e:r`$i_{enl}=I\,r^2/a^2$ (fraction de la section), cercle de rayon r : $B\,2\pi r=\mu_0Ir^2/a^2$.`},
+{q:`Tore de N spires : B à l'intérieur`,o:[r`$\dfrac{\mu_0NI}{2\pi r}$, orthoradial`,r`$\mu_0NI$ uniforme`,`0`,r`$\dfrac{\mu_0I}{2\pi r}$`],a:0,e:`Le cercle de rayon r intérieur au tore est traversé N fois par le courant I.`},
+{q:`Coaxial (I aller, −I retour) : B pour r > c`,o:[`0`,r`$\mu_0I/2\pi r$`,r`$2\mu_0I/2\pi r$`,`infini`],a:0,e:`Courant enlacé total nul.`},
+{q:`Circuit LC : quand C est entièrement déchargé, le courant est…`,o:[`maximal`,`nul`,`en train de changer de sens`,`infini`],a:0,e:`Toute l'énergie est alors dans la bobine (½Li² maximal) ; la bobine maintient le courant qui recharge C à l'envers.`},
+{q:`Vitesse sur un coaxial à isolant εr = 2,25 :`,o:[`2,0×10⁸ m/s`,`3,0×10⁸ m/s`,`1,33×10⁸ m/s`,`dépend de b/a`],a:0,e:r`$L'C'=\mu_0\varepsilon_0\varepsilon_r$ ⇒ $v=c/\sqrt{\varepsilon_r}=c/1{,}5$. La géométrie disparaît.`},
+];
 window.EM_DATA={quiz:Q,cards:C};
 })();

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TD 3 — Magnétostatique : théorème d'Ampère</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="td3">
+<article class="content">
+<div class="kicker">Physique · Travaux dirigés</div>
+<h1>TD 3 — Magnétostatique : théorème d'Ampère</h1>
+<p class="lead">Fil, cylindre plein, coaxial, tore, solénoïde : à chaque fois les <b>5 étapes d'Ampère</b> avec les règles de symétrie <b>inversées</b> de $\vec B$. Puis le circuit LC, pont vers l'onde du Ch. 5.</p>
+<div class="card rem"><span class="tag">Note</span><p>La feuille annonce « exercices corrigés » mais ne contient que les énoncés : correction rédigée à partir du cours (<a href="ch3.html#ampere">Ch. 3</a>, <a href="ch4.html#lc">Ch. 4</a>, <a href="ch5.html#ligne">Ch. 5</a>).</p></div>
+<div class="card meth"><span class="tag">Rappel — Ampère en 5 étapes</span><ol><li>Symétries (plan de symétrie des courants ⇒ $\vec B$ ⟂) et invariances.</li><li>Contour = ligne de champ.</li><li>$\oint\vec B\cdot\mathrm d\vec\ell=B\mathcal L$.</li><li>$i_{enlacé}$ (avec signes).</li><li>Égaler.</li></ol></div>
+
+<section class="exo" id="exo1"><header><h2 id="e1">Exercice 1 — Fil rectiligne infini</h2><span class="time">15 min</span></header><div class="body">
+<div class="statement">Fil infini parcouru par I. Calculer $\vec B$ en M à la distance r.</div>
+<div class="steps">
+<div class="step"><h4>Symétries</h4><p>Invariances par translation selon $Oz$ et rotation autour de $Oz$ ⇒ $B(r)$. Le plan (M, fil) est plan de symétrie des courants ⇒ $\vec B$ lui est ⟂ ⇒ $\vec B=B(r)\vec u_\theta$.</p></div>
+<div class="step"><h4>Ampère</h4><p>Cercle de rayon r d'axe $Oz$, orienté selon $\vec u_\theta$ (I compté + vers $+\vec u_z$) : $B\cdot2\pi r=\mu_0I$ ⇒ $\boxed{\vec B=\dfrac{\mu_0I}{2\pi r}\vec u_\theta}$.</p></div>
+</div></div></section>
+
+<section class="exo" id="exo2"><header><h2 id="e2">Exercice 2 — Cylindre plein, puis câble coaxial</h2><span class="time">25 min</span></header><div class="body">
+<img class="schema sm" src="img/em-td3-ex2.png" alt="Conducteur cylindrique et gaine">
+<div class="statement">Cylindre infini de rayon a, courant I de densité j uniforme. 1. $\vec B$ pour $0\lt r\lt\infty$. 2. Avec une gaine coaxiale (rayons b, c) parcourue par −I : $\vec B$ pour $r\lt b$ et $r>c$.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> mêmes symétries que le fil ⇒ $\vec B=B(r)\vec u_\theta$, cercle de rayon r. Tout le travail est dans $i_{enlacé}$ : <b>fraction de la section</b> enlacée × courant (j uniforme ⇒ proportionnel à l'aire).</div></div>
+<div class="steps">
+<div class="step"><h4>1. r &lt; a</h4><p>$j=\frac{I}{\pi a^2}$ ⇒ $i_{enl}=j\pi r^2=I\frac{r^2}{a^2}$ ⇒ $B\cdot2\pi r=\mu_0I\frac{r^2}{a^2}$ ⇒ $\boxed{B=\dfrac{\mu_0Ir}{2\pi a^2}}$ (linéaire, nul sur l'axe).</p></div>
+<div class="step"><h4>1. r &gt; a</h4><p>$i_{enl}=I$ ⇒ $\boxed{B=\dfrac{\mu_0I}{2\pi r}}$ (comme un fil). Continu en $r=a$ ✓.</p></div>
+<div class="step"><h4>2. r &lt; b</h4><p>La gaine n'est pas enlacée : mêmes résultats qu'en 1 ($\frac{\mu_0Ir}{2\pi a^2}$ si $r\lt a$, $\frac{\mu_0I}{2\pi r}$ si $a\lt r\lt b$).</p></div>
+<div class="step"><h4>2. r &gt; c</h4><p>$i_{enl}=I-I=0$ ⇒ $\boxed{B=0}$ : le champ est confiné dans le câble (blindage, cf. <a href="ch3.html#ampere">fil rouge 2a</a>).</p></div>
+<div class="step"><h4>Bonus : b &lt; r &lt; c</h4><p>$i_{enl}=I-I\frac{r^2-b^2}{c^2-b^2}$ ⇒ $B=\dfrac{\mu_0I}{2\pi r}\cdot\dfrac{c^2-r^2}{c^2-b^2}$ (décroît jusqu'à 0 en c).</p></div>
+</div></div></section>
+
+<section class="exo" id="exo3"><header><h2 id="e3">Exercice 3 — Solénoïde torique</h2><span class="time">25 min</span></header><div class="body">
+<img class="schema sm" src="img/em-td3-ex3.png" alt="Tore">
+<div class="statement">Tore de rayon moyen R, section carrée a × a, N spires jointives, courant I. 1. $\vec B$ dans le solénoïde. 2. Flux à travers une spire.</div>
+<div class="steps">
+<div class="step"><h4>Symétries</h4><p>Invariance par rotation autour de l'axe du tore ⇒ pas de dépendance en θ. Tout plan contenant l'axe est plan de symétrie des courants (les spires sont dans ces plans) ⇒ $\vec B$ ⟂ ⇒ <b>orthoradial</b> : $\vec B=B(r,z)\vec u_\theta$.</p></div>
+<div class="step"><h4>Ampère sur un cercle de rayon r d'axe Oz</h4><p>À l'intérieur du tore ($R-\frac a2\lt r\lt R+\frac a2$) : le cercle est traversé par les N spires ⇒ $B\cdot2\pi r=\mu_0NI$ ⇒ $\boxed{\vec B=\dfrac{\mu_0NI}{2\pi r}\vec u_\theta}$.<br>À l'extérieur (r plus petit ou plus grand, ou hors de la section) : $i_{enl}=0$ (ou $NI-NI$) ⇒ $B=0$. Le champ est <b>entièrement confiné</b> dans le tore.</p></div>
+<div class="step"><h4>2. Flux à travers une spire (section carrée)</h4><p>B dépend de r ⇒ bandes $\mathrm dS=a\,\mathrm dr$ :
+$$\varphi_B=\int_{R-a/2}^{R+a/2}\frac{\mu_0NI}{2\pi r}a\,\mathrm dr=\boxed{\frac{\mu_0NIa}{2\pi}\ln\frac{2R+a}{2R-a}}$$
+Si $a\ll R$ : $\varphi_B\approx\frac{\mu_0NI}{2\pi R}a^2$ (B ≈ uniforme × aire).</p></div>
+</div></div></section>
+
+<section class="exo" id="exo4"><header><h2 id="e4">Exercice 4 — Solénoïde infini</h2><span class="time">20 min</span></header><div class="body">
+<div class="statement">n spires jointives par unité de longueur, rayon R, courant I. 1. $\vec B$ à l'extérieur. 2. $\vec B$ à l'intérieur.</div>
+<div class="steps">
+<div class="step"><h4>Symétries</h4><p>Tout plan ⟂ à l'axe est plan de symétrie des courants ⇒ $\vec B$ axial ; invariances ⇒ $\vec B=B(r)\vec u_z$.</p></div>
+<div class="step"><h4>1. Extérieur</h4><p>Rectangle entièrement extérieur : n'enlace aucun courant ⇒ $B(r_1)=B(r_2)$ : B uniforme dehors ; il doit s'annuler à l'infini ⇒ $\boxed{B_{ext}=0}$.</p></div>
+<div class="step"><h4>2. Intérieur</h4><p>Rectangle à cheval (longueur L) : $B_{int}L=\mu_0nLI$ ⇒ $\boxed{\vec B=\mu_0nI\,\vec u_z}$, uniforme (le tore de l'ex. 3 avec $R\to\infty$ redonne ce résultat : $\frac{N}{2\pi R}=n$).</p></div>
+</div>
+<figure class="anim" data-anim="solenoid" data-badge><figcaption>Glisse le rectangle d'Ampère : à cheval, seul le côté intérieur compte.</figcaption></figure>
+</div></section>
+
+<section class="exo" id="exo5"><header><h2 id="e5">Exercice 5 — Le circuit LC : de l'oscillateur à l'onde</h2><span class="time">30 min</span></header><div class="body">
+<img class="schema sm" src="img/em-td3-ex5.png" alt="Circuit LC">
+<div class="statement">C chargé sous U₀, branché à t = 0 sur L (résistance négligée). q : charge de l'armature supérieure, $i=\mathrm dq/\mathrm dt$. 1. EDO, ω₀, homogénéité. 2. q, u_C, i. 3. Pourquoi le courant ne s'arrête-t-il pas quand C est déchargé ? 4. Bilan énergétique. 5. A.N. L = 10 mH, C = 100 nF, U₀ = 5 V. 6. Vitesse sur une ligne LC.</div>
+<div class="steps">
+<div class="step"><h4>1. Équation</h4><p>Maille : $u_C+u_L=0$ avec $u_C=\frac qC$, $u_L=L\frac{\mathrm di}{\mathrm dt}=L\ddot q$ ⇒ $\boxed{\ddot q+\omega_0^2q=0}$, $\omega_0=\frac1{\sqrt{LC}}$. Homogénéité : $[LC]=\mathrm T^2$ (voir <a href="ch0.html#dims">Ch. 0</a>) ⇒ ω₀ en s⁻¹ ✓.</p></div>
+<div class="step"><h4>2. Solutions</h4><p>$q(0)=CU_0$, $i(0)=0$ (continuité dans L) ⇒ $q=CU_0\cos\omega_0t$, $u_C=U_0\cos\omega_0t$, $i=-CU_0\omega_0\sin\omega_0t$.</p></div>
+<div class="step"><h4>3. Rôle de l'induction</h4><p>Quand C est vide, l'énergie est toute dans la bobine ($\frac12Li^2$ maximale). La bobine s'oppose aux <b>variations</b> du courant (Lenz, $u_L=L\,\mathrm di/\mathrm dt$) : le courant ne peut pas chuter brutalement, il continue et <b>recharge C à l'envers</b>. L'induction joue le rôle de l'inertie (la masse d'un ressort).</p></div>
+<div class="step"><h4>4. Énergie</h4><p>$W=\frac{q^2}{2C}+\frac12Li^2=\frac12CU_0^2(\cos^2+\sin^2)=\frac12CU_0^2$ = constante. Chaque forme oscille en $\cos^2$ ou $\sin^2$, donc à la période $\frac{T_0}2=\frac\pi{\omega_0}$.</p></div>
+<div class="step"><h4>5. A.N.</h4><p>$\omega_0=\frac1{\sqrt{10^{-2}\times10^{-7}}}=31\,623$ rad/s ⇒ $f_0\approx\boxed{5{,}03\ \mathrm{kHz}}$ ; $I_{max}=CU_0\omega_0\approx\boxed{15{,}8\ \mathrm{mA}}$ ; $W=\frac12CU_0^2=\boxed{1{,}25\ \mu\mathrm J}$.</p></div>
+<div class="step"><h4>6. Ouverture : la ligne</h4><p>Coaxial : $L'=\frac{\mu_0}{2\pi}\ln\frac ba$, $C'=\frac{2\pi\varepsilon_0\varepsilon_r}{\ln(b/a)}$ ⇒ $L'C'=\mu_0\varepsilon_0\varepsilon_r$ : les ln (la géométrie) disparaissent ! $v=\frac1{\sqrt{L'C'}}=\frac{c}{\sqrt{\varepsilon_r}}=\frac{3\cdot10^8}{1{,}5}=\boxed{2{,}0\cdot10^8\ \mathrm{m/s}}$.</p></div>
+</div>
+<figure class="anim tall" data-anim="lc" data-badge><figcaption>L'énergie passe du condensateur à la bobine et revient : période d'échange T₀/2.</figcaption></figure>
+</div></section>
+
+<h2 id="quiz" data-nomaster>Quiz méthode</h2>
+<div class="quiz" data-quiz="td3"></div>
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

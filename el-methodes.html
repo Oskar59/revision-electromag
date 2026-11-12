@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Électronique — Patterns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="el-methodes">
+<article class="content">
+<div class="kicker">Électronique · Le cœur du site</div>
+<h1>Patterns : quand on te demande X, tu fais Y</h1>
+<p class="lead">Une douzaine de types de questions couvrent tout le programme. Pour chacun : le déclencheur, la méthode, le piège.</p>
+
+<h2 id="continu"><span class="h2num">A</span>Circuits en continu (Ch. 1)</h2>
+<div class="decision">
+<div class="row"><div class="if">Tension d'une R parmi plusieurs R parcourues par le même courant</div><div class="arrow">→</div><div><b>Diviseur de tension</b> $U_k=E\frac{R_k}{\sum R}$ (regrouper les parallèles avant ; rien ne doit sortir au milieu).</div></div>
+<div class="row"><div class="if">Courant dans une branche parmi deux en parallèle</div><div class="arrow">→</div><div><b>Diviseur de courant</b> $I_2=I\frac{R_1}{R_1+R_2}$ (l'autre R au numérateur).</div></div>
+<div class="row"><div class="if">Tension d'un nœud où arrivent plusieurs branches</div><div class="arrow">→</div><div><b>Millman</b> $U=\frac{\sum E_k/R_k+\sum I_k}{\sum1/R_k}$.</div></div>
+<div class="row"><div class="if">« Par superposition » / plusieurs sources</div><div class="arrow">→</div><div>Une source à la fois : tension → <b>fil</b>, courant → <b>ouvert</b>. Somme des contributions.</div></div>
+<div class="row"><div class="if">« Montrer que AB est équivalent à un générateur »</div><div class="arrow">→</div><div><b>Norton</b> pour chaque branche (E,R) ⇒ courants s'ajoutent, R en parallèle ⇒ reconvertir en Thévenin.</div></div>
+<div class="row"><div class="if">« Générateur de Thévenin vu par … »</div><div class="arrow">→</div><div>Retirer l'élément : $E_{th}$ = tension à vide ; $R_{th}$ = résistance vue, sources éteintes.</div></div>
+<div class="row"><div class="if">Voltmètre idéal / pont</div><div class="arrow">→</div><div>Aucun courant dans le voltmètre ⇒ deux diviseurs indépendants ; équilibre ⇔ produits en croix égaux.</div></div>
+<div class="row"><div class="if">Valeurs manquantes sur un schéma</div><div class="arrow">→</div><div>Nœuds (courants) et mailles (tensions), en respectant les flèches.</div></div>
+</div>
+
+<h2 id="transitoire"><span class="h2num">B</span>Régime transitoire (Ch. 2)</h2>
+<div class="card meth"><span class="tag">P1 — « Déterminer u_C(t) / i(t) après la fermeture/ouverture »</span>
+<ol><li><b>t = 0⁻</b> (« depuis très longtemps ») : C = ouvert, L = fil ⇒ $u_C(0^-)$, $i_L(0^-)$.</li><li><b>t = 0⁺</b> : $u_C$ et $i_L$ continus (les autres peuvent sauter).</li><li><b>EDO</b> pour t &gt; 0 (mailles/nœuds + Ohm + loi du composant), forme $\tau y'+y=y_\infty$.</li><li><b>Solution</b> $y=Ae^{-t/\tau}+y_\infty$, A par la condition initiale.</li><li><b>Déduire</b> les autres grandeurs ($i=C\dot u$, $u_L=L\dot i$, Ohm).</li></ol>
+<p class="small"><b>Raccourci :</b> $y(t)=y_\infty+(y(0^+)-y_\infty)e^{-t/\tau}$ ; τ = RC ou L/R (R vue par C ou L, sources éteintes).</p></div>
+<div class="card meth"><span class="tag">P2 — « Circuit compliqué + un seul C (ou L) »</span><p><b>Thévenin vu par C</b> ⇒ circuit RC simple : $\tau=R_{th}C$, $u_\infty=E_{th}$.</p></div>
+<div class="card meth"><span class="tag">P3 — « Énergie perdue / dissipée »</span><p>Énergie initiale stockée $\frac12Cu^2$ ou $\frac12Li^2$ ; énergie Joule $\int_0^\infty Ri^2\,\mathrm dt$ (avec $\int_0^\infty e^{-2t/\tau}\mathrm dt=\tau/2$). Elles sont égales en l'absence de source.</p></div>
+<div class="card meth"><span class="tag">P4 — « Au bout de combien de temps … x % »</span><p>$e^{-t/\tau}=\frac{x}{100}$ ⇒ $t=\tau\ln\frac{100}x$. (1 % ⇒ 4,6τ ; 0,01 % ⇒ 9,2τ.) Amplitude d'oscillation divisée par N ⇒ $t=\frac{\ln N}\lambda$.</p></div>
+<div class="card meth"><span class="tag">P5 — « RLC »</span>
+<ol><li>EDO : série → mailles ; parallèle → nœuds puis dériver.</li><li>Forme $\ddot y+2\lambda\dot y+\omega_0^2y=0$ (ou $\frac{\omega_0}Q\dot y$).</li><li>Série : $\lambda=\frac R{2L}$, $Q=\frac1R\sqrt{\frac LC}$ ; parallèle : $\lambda=\frac1{2RC}$, $Q=R\sqrt{\frac CL}$.</li><li>Régime selon Q vs 1/2.</li><li>Pseudo-périodique : $e^{-\lambda t}(A\cos\omega t+B\sin\omega t)$, $\omega=\sqrt{\omega_0^2-\lambda^2}$ ; A et B avec <b>deux</b> conditions initiales ($y(0)$ et $\dot y(0)$ via le courant).</li></ol></div>
+
+<h2 id="sinus"><span class="h2num">C</span>Régime sinusoïdal &amp; filtres (Ch. 3)</h2>
+<div class="decision">
+<div class="row"><div class="if">Oscillogramme</div><div class="arrow">→</div><div>T, $V_m$, $V_{eff}=V_m/\sqrt2$, $\Delta\phi=2\pi t_1/T$ (en avance = pic en premier).</div></div>
+<div class="row"><div class="if">« Déterminer u(t) » avec une source sinusoïdale</div><div class="arrow">→</div><div>Complexes : impédances ⇒ diviseur/Millman ⇒ $|\underline U|$ et $\arg\underline U$ ⇒ $u(t)=|\underline U|\cos(\omega t+\arg\underline U)$.</div></div>
+<div class="row"><div class="if">Sources à fréquences différentes</div><div class="arrow">→</div><div>Superposition, une fréquence à la fois, somme en temporel.</div></div>
+<div class="row"><div class="if">« Nature du filtre »</div><div class="arrow">→</div><div>BF : L fil, C ouvert ; HF : L ouvert, C fil ⇒ que vaut $v_s$ ?</div></div>
+<div class="row"><div class="if">« Fonction de transfert »</div><div class="arrow">→</div><div>Diviseur en sortie ouverte ⇒ forme canonique (1 + … au dénominateur, $x=\omega/\omega_0$) ⇒ $H_0$, ω₀, Q, ordre.</div></div>
+<div class="row"><div class="if">« Diagramme de Bode asymptotique »</div><div class="arrow">→</div><div>Terme dominant pour x ≪ 1 et x ≫ 1 ⇒ pentes (±20n dB/déc) et phases limites ; point x = 1.</div></div>
+<div class="row"><div class="if">« Pulsations de coupure »</div><div class="arrow">→</div><div>$G=G_{max}/\sqrt2$ ⇔ partie imaginaire du dénominateur (normalisé) = ±1.</div></div>
+<div class="row"><div class="if">« Expression approchée pour f = … »</div><div class="arrow">→</div><div>Calculer x ; si x ≪ 1 ou ≫ 1, approximation ; sinon calcul exact.</div></div>
+<div class="row"><div class="if">Créneau en entrée</div><div class="arrow">→</div><div>Harmoniques impairs ; zone en $1/(jx)$ ⇒ intégrateur (triangle) ; zone en $jx$ ⇒ dérivateur (pics) ; passe-bande sélectif ⇒ sinusoïde.</div></div>
+<div class="row"><div class="if">« Charge branchée en sortie »</div><div class="arrow">→</div><div>L'impédance de sortie change ⇒ H change : recalculer avec $Z\parallel R_L$.</div></div>
+</div>
+
+<h2 id="verifs"><span class="h2num">D</span>Check-list avant de rendre</h2>
+<div class="card key"><span class="tag">Les vérifications qui rattrapent les erreurs</span><ol>
+<li><b>Homogénéité</b> : RC, L/R en secondes ; LC en s² ; RCω, Lω/R sans unité.</li>
+<li><b>Cas limites</b> : R → 0, R → ∞, ω → 0, ω → ∞, t → ∞ redonnent-ils l'évidence ?</li>
+<li><b>Continuité</b> de $u_C$ et $i_L$ à t = 0 respectée par ta solution ?</li>
+<li><b>Valeur finale</b> = régime permanent (C ouvert, L fil) ?</li>
+<li><b>Sens</b> : un résultat négatif est-il cohérent avec la convention choisie ?</li>
+<li><b>Gain max</b> d'un filtre passif ≤ 1 (0 dB) ; phase dans le bon intervalle.</li></ol></div>
+
+<h2 id="entrainement" data-nomaster>Entraînement : reconnais le pattern</h2>
+<div class="quiz" data-quiz="elpat"></div>
+</article>
+<script src="js/data.js"></script><script src="js/data-elec.js"></script>
+<script>
+EM_DATA.quiz.elpat=[
+{q:`« Calculer la tension du nœud A, relié à trois sources par trois résistances et à la masse par R. »`,o:[`Millman`,`Diviseur de tension`,`Thévenin`,`EDO`],a:0,e:`Tension d'un nœud multi-branches : Millman en une ligne (la branche R compte 0/R et 1/R).`},
+{q:`« L'interrupteur est fermé depuis longtemps ; on l'ouvre à t = 0. Que vaut u juste après ? »`,o:[`Calculer le permanent (C ouvert, L fil), puis utiliser la continuité de u_C / i_L`,`u(0⁺) = 0 toujours`,`u(0⁺) = E toujours`,`Résoudre l'EDO sans condition`],a:0,e:`Pattern P1 du transitoire.`},
+{q:`« Déterminer u_s(t) quand u_e = U cos(ωt) traverse le filtre. »`,o:[`H(jω) ⇒ u_s = G U cos(ωt + φ)`,`Résoudre une EDO du 2ᵈ ordre`,`Superposition`,`Diviseur résistif`],a:0,e:`Gain = rapport des amplitudes, argument = déphasage.`},
+{q:`« Quelle est la nature de ce filtre ? »`,o:[`Remplacer L et C par fil/ouvert en BF puis en HF`,`Calculer τ`,`Appliquer Millman`,`Chercher les coupures d'abord`],a:0,e:`Réponse en 30 secondes, sans calcul.`},
+{q:`« e₁ = E cos ωt et e₂ = E sin 3ωt alimentent le circuit. »`,o:[`Superposition : une pulsation à la fois, somme en temporel`,`Additionner les amplitudes complexes`,`Prendre la fréquence moyenne`,`Impossible`],a:0,e:`Les amplitudes complexes n'existent qu'à une pulsation donnée.`},
+{q:`« Le circuit autour du condensateur est compliqué ; donner u_C(t). »`,o:[`Thévenin vu par C, puis τ = R_th C`,`Millman au cours du temps`,`Superposition des courants dans C`,`Bode`],a:0,e:`Pattern P2.`},
+];
+</script>
+<script src="js/app.js"></script>
+</body></html>

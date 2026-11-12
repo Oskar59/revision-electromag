@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Électronique analogique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="electronique">
+<article class="content" data-nopager>
+<section class="hero">
+  <div class="kicker">Électronique analogique · AP3 · J. Philippe</div>
+  <h1>Résoudre n'importe quel circuit.</h1>
+  <p class="lead">Trois chapitres qui s'enchaînent : les <b>lois</b> et outils pour le continu, le <b>transitoire</b> (ce qui se passe quand on bascule un interrupteur), puis le <b>sinusoïdal</b> et les <b>filtres</b>. Chaque fois : comprendre pourquoi, voir bouger, savoir quoi faire.</p>
+</section>
+
+<div class="card key"><span class="tag">🎯 Le fil rouge</span>
+<p>Une seule idée traverse le cours : <b>mettre le circuit en équation avec Ohm + nœuds + mailles + la loi de chaque composant</b>.</p>
+<div class="tablewrap"><table><tr><th>Régime</th><th>Lois des composants</th><th>On obtient</th><th>Outil</th></tr>
+<tr><td>Continu (Ch. 1)</td><td>$U=RI$ ; C ouvert, L fil</td><td>équations algébriques</td><td>diviseurs, Thévenin, Millman, superposition</td></tr>
+<tr><td>Transitoire (Ch. 2)</td><td>$i=C\dot u$, $u=L\dot i$</td><td>équation différentielle</td><td>continuité de $u_C$ et $i_L$, τ, Q</td></tr>
+<tr><td>Sinusoïdal (Ch. 3)</td><td>$Z_C=\frac1{jC\omega}$, $Z_L=jL\omega$</td><td>équations algébriques complexes</td><td>impédances, H(jω), Bode</td></tr></table></div></div>
+
+<h2 id="chapitres" data-nomaster>Chapitres &amp; progression</h2>
+<div class="chapgrid">
+  <a class="chapcard" href="el1.html"><div class="n">CHAPITRE 1</div><h3>Notions de base</h3><p>Conventions, Kirchhoff, diviseurs, Thévenin-Norton, superposition, Millman.</p><div class="pbar" data-progress="el1"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="el2.html"><div class="n">CHAPITRE 2</div><h3>Régime transitoire</h3><p>C et L, circuits RC, RL, RLC, τ, les 3 régimes, facteur Q.</p><div class="pbar" data-progress="el2"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="el3.html"><div class="n">CHAPITRE 3</div><h3>Sinusoïdal &amp; filtrage</h3><p>Complexes, impédances, fonction de transfert, Bode, coupure.</p><div class="pbar" data-progress="el3"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="eltd1.html"><div class="n">TD 1</div><h3>Notions de base</h3><p>8 exercices corrigés (Kirchhoff, Norton, Millman, Wheatstone…).</p><div class="pbar" data-progress="eltd1"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="eltd2.html"><div class="n">TD 2</div><h3>Régime transitoire</h3><p>8 exercices corrigés (RC, RL, ouverture, RLC série/parallèle, Thévenin).</p><div class="pbar" data-progress="eltd2"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="eltd3.html"><div class="n">TD 3</div><h3>Sinusoïdal &amp; transfert</h3><p>9 exercices corrigés (oscillogramme, impédances, filtres, Wien, créneau).</p><div class="pbar" data-progress="eltd3"><i></i></div><div class="plabel small muted"></div></a>
+</div>
+
+<div class="grid2">
+  <a class="card meth" href="el-methodes.html" style="display:block;color:inherit;text-decoration:none"><span class="tag">★ Patterns</span><p>Quand on te demande X, tu fais Y : la page à relire avant chaque TD et avant le partiel.</p></a>
+  <a class="card ex" href="el-quiz.html" style="display:block;color:inherit;text-decoration:none"><span class="tag">? Examen blanc</span><p>Questions tirées au hasard dans les 3 chapitres et les 3 TD, avec explications.</p></a>
+</div>
+
+<div class="card trap"><span class="tag">⚠ Les 6 erreurs qui coûtent le plus de points</span><ol>
+<li><b>Signes</b> : flèches de tension et conventions (récepteur/générateur) — un résultat négatif n'est pas faux.</li>
+<li><b>Diviseur appliqué alors qu'un courant sort</b> au point milieu (charge, autre branche).</li>
+<li><b>Éteindre une source de courant</b> en la court-circuitant (il faut l'ouvrir).</li>
+<li><b>Conditions initiales</b> : seules $u_C$ et $i_L$ sont continues, pas les autres grandeurs.</li>
+<li><b>Mélanger les fréquences</b> en complexe : une amplitude complexe = une seule pulsation.</li>
+<li><b>Argument</b> : arg(num) − arg(dén), et attention au quadrant (arctan seul ne suffit pas si la partie réelle est négative).</li></ol></div>
+</article>
+<script src="js/data.js"></script><script src="js/data-elec.js"></script><script src="js/app.js"></script>
+</body></html>

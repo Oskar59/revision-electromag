@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Physique — Électromagnétisme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="physique">
+<article class="content" data-nopager>
+
+<section class="hero">
+  <div class="kicker">Physique · AP3 · Électromagnétisme — Partie A</div>
+  <h1>Comprendre l'électromagnétisme, pas juste l'apprendre.</h1>
+  <p class="lead">Tout le cours (chapitres 0 à 5), chaque notion expliquée avec le <b>pourquoi</b>, des animations à manipuler, les TD 1 et 2 corrigés pas à pas, et surtout les <b>patterns</b> : quand on te pose telle question, quoi faire et pourquoi.</p>
+</section>
+
+<div class="card key"><span class="tag">🎯 La question du cours</span>
+<p>Ta fibre optique transporte de la lumière. La lumière est une <b>onde électromagnétique</b>. <b>Qu'est-ce qu'une onde EM et comment se propage-t-elle ?</b></p>
+<p>Pour y répondre, on construit pièce par pièce les <b>4 équations de Maxwell</b>. Chaque chapitre remplit une case du tableau ci-dessous ; à la fin, en les couplant, l'onde « tombe toute seule » avec une vitesse $c = 1/\sqrt{\varepsilon_0\mu_0}$.</p>
+<div class="tablewrap"><table>
+<tr><th></th><th>Flux (surface fermée)</th><th>Circulation (contour fermé)</th></tr>
+<tr><td><b style="color:var(--e)">$\vec E$</b></td><td><a href="ch1.html#gauss">Gauss</a> : $\mathrm{div}\,\vec E=\rho/\varepsilon_0$ <span class="pill">Ch. 1</span></td><td><a href="ch4.html#maxfar">Faraday</a> : $\overrightarrow{\mathrm{rot}}\,\vec E=-\partial_t\vec B$ <span class="pill">Ch. 1 → 4</span></td></tr>
+<tr><td><b style="color:var(--b)">$\vec B$</b></td><td><a href="ch3.html#divb">Pas de monopôle</a> : $\mathrm{div}\,\vec B=0$ <span class="pill">Ch. 3</span></td><td><a href="ch5.html#ampmax">Ampère-Maxwell</a> : $\overrightarrow{\mathrm{rot}}\,\vec B=\mu_0\vec j+\mu_0\varepsilon_0\partial_t\vec E$ <span class="pill">Ch. 3 → 5</span></td></tr>
+</table></div>
+</div>
+
+<h2 id="carte" data-nomaster>Carte du cours</h2>
+<p>Clique sur une case. Les flèches montrent ce qui sert à quoi : si un chapitre te bloque, c'est souvent la case d'avant qui n'est pas solide.</p>
+<svg class="mapsvg" viewBox="0 0 760 430" role="img" aria-label="Carte du cours">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--ink3)"/></marker></defs>
+  <g stroke="var(--ink3)" stroke-width="1.6" fill="none" marker-end="url(#ah)">
+    <path d="M190 60 H250"/><path d="M450 60 H510"/><path d="M350 100 V140"/><path d="M610 100 V140"/>
+    <path d="M110 100 C110 180 180 180 248 180"/><path d="M350 220 V268"/><path d="M560 220 L430 270"/><path d="M610 220 V268"/>
+    <path d="M450 310 H508"/><path d="M350 350 L440 382"/><path d="M610 350 L520 382"/>
+  </g>
+  <g font-family="Inter" text-anchor="middle">
+    <a href="ch0.html"><rect x="30" y="20" width="160" height="80" rx="12" fill="var(--def-bg)" stroke="var(--def)"/><text x="110" y="50" font-weight="800" fill="var(--ink)" font-size="15">Ch. 0</text><text x="110" y="70" fill="var(--ink2)" font-size="12">Vecteurs, coordonnées</text><text x="110" y="86" fill="var(--ink2)" font-size="12">gradient, flux, circulation</text></a>
+    <a href="ch1.html"><rect x="250" y="20" width="200" height="80" rx="12" fill="var(--def-bg)" stroke="var(--def)"/><text x="350" y="46" font-weight="800" fill="var(--ink)" font-size="15">Ch. 1 — Électrostatique</text><text x="350" y="66" fill="var(--ink2)" font-size="12">charges → champ E, potentiel V</text><text x="350" y="84" fill="var(--ink2)" font-size="12">Gauss (flux de E), div, rot</text></a>
+    <a href="ch3.html"><rect x="510" y="20" width="200" height="80" rx="12" fill="var(--def-bg)" stroke="var(--def)"/><text x="610" y="46" font-weight="800" fill="var(--ink)" font-size="15">Ch. 3 — Magnétostatique</text><text x="610" y="66" fill="var(--ink2)" font-size="12">courants → champ B</text><text x="610" y="84" fill="var(--ink2)" font-size="12">Ampère (circulation de B)</text></a>
+    <a href="ch2.html"><rect x="250" y="140" width="200" height="80" rx="12" fill="var(--ex-bg)" stroke="var(--ex)"/><text x="350" y="166" font-weight="800" fill="var(--ink)" font-size="15">Ch. 2 — Conducteurs</text><text x="350" y="186" fill="var(--ink2)" font-size="12">capacité C, courant j</text><text x="350" y="204" fill="var(--ink2)" font-size="12">résistance R (loi d'Ohm)</text></a>
+    <a href="ch3.html#inductance"><rect x="510" y="140" width="200" height="80" rx="12" fill="var(--ex-bg)" stroke="var(--ex)"/><text x="610" y="172" font-weight="800" fill="var(--ink)" font-size="15">Ch. 3 (suite)</text><text x="610" y="194" fill="var(--ink2)" font-size="12">flux propre → inductance L</text></a>
+    <a href="ch4.html"><rect x="250" y="270" width="200" height="80" rx="12" fill="var(--def-bg)" stroke="var(--def)"/><text x="350" y="296" font-weight="800" fill="var(--ink)" font-size="15">Ch. 4 — Induction</text><text x="350" y="316" fill="var(--ink2)" font-size="12">B variable → E (Faraday)</text><text x="350" y="334" fill="var(--ink2)" font-size="12">Lenz, rails, oscillateur LC</text></a>
+    <a href="ch5.html"><rect x="510" y="270" width="200" height="80" rx="12" fill="var(--def-bg)" stroke="var(--def)"/><text x="610" y="296" font-weight="800" fill="var(--ink)" font-size="15">Ch. 5 — Maxwell</text><text x="610" y="316" fill="var(--ink2)" font-size="12">E variable → B</text><text x="610" y="334" fill="var(--ink2)" font-size="12">courant de déplacement</text></a>
+    <rect x="380" y="382" width="200" height="44" rx="12" fill="var(--trap-bg)" stroke="var(--trap)"/><text x="480" y="401" font-weight="800" fill="var(--ink)" font-size="14">Partie B : propagation</text><text x="480" y="418" fill="var(--ink2)" font-size="12">c = 1/√(ε₀μ₀)</text>
+  </g>
+</svg>
+
+<h2 id="chapitres" data-nomaster>Chapitres &amp; progression</h2>
+<p class="muted small">Dans chaque chapitre, clique « Je maîtrise ? » à côté d'un titre quand tu sais le refaire <b>sans notes</b>. La barre verte se remplit (sauvegardée dans ton navigateur).</p>
+<div class="chapgrid">
+  <a class="chapcard" href="ch0.html"><div class="n">CHAPITRE 0</div><h3>Le langage de la physique</h3><p>Dimensions, vecteurs, coordonnées, dérivées, gradient, flux, circulation.</p><div class="pbar" data-progress="ch0"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="ch1.html"><div class="n">CHAPITRE 1</div><h3>Électrostatique</h3><p>Coulomb, champ, symétries, potentiel, Gauss, divergence, rotationnel.</p><div class="pbar" data-progress="ch1"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="ch2.html"><div class="n">CHAPITRE 2</div><h3>Conducteurs, condensateurs, courant</h3><p>Équilibre, théorème de Coulomb, capacité, j, Drude, loi d'Ohm.</p><div class="pbar" data-progress="ch2"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="ch3.html"><div class="n">CHAPITRE 3</div><h3>Magnétostatique</h3><p>Ørsted, Lorentz, Laplace, div B = 0, Ampère, solénoïde, inductance.</p><div class="pbar" data-progress="ch3"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="ch4.html"><div class="n">CHAPITRE 4</div><h3>Induction</h3><p>Faraday, Lenz, rails de Laplace, auto-induction, mutuelle.</p><div class="pbar" data-progress="ch4"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="ch5.html"><div class="n">CHAPITRE 5</div><h3>Maxwell &amp; onde EM</h3><p>Courant de déplacement, 4 équations, ligne LC, équation de d'Alembert.</p><div class="pbar" data-progress="ch5"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="td1.html"><div class="n">TD 1</div><h3>Électrostatique</h3><p>6 exercices corrigés pas à pas + le réflexe à avoir pour chacun.</p><div class="pbar" data-progress="td1"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="td2.html"><div class="n">TD 2</div><h3>Conducteurs &amp; courant</h3><p>5 exercices (influence, capacités, Drude, résistances, câble à fuite) entièrement corrigés.</p><div class="pbar" data-progress="td2"><i></i></div><div class="plabel small muted"></div></a>
+  <a class="chapcard" href="td3.html"><div class="n">TD 3</div><h3>Magnétostatique : Ampère</h3><p>Fil, cylindre, tore, solénoïde, circuit LC : corrigés pas à pas.</p><div class="pbar" data-progress="td3"><i></i></div><div class="plabel small muted"></div></a>
+</div>
+
+<h2 id="mode" data-nomaster>Comment réviser avec ce site</h2>
+<div class="grid2">
+  <div class="card why"><span class="tag">1 · Comprendre</span><p>Lis un chapitre <b>avec les animations</b> : bouge les curseurs, prédis ce qui va se passer <i>avant</i> de toucher. Les encadrés <b>« Pourquoi ? »</b> donnent l'origine physique de chaque formule.</p></div>
+  <div class="card meth"><span class="tag">2 · Savoir faire</span><p>Va sur <a href="methodes.html">Patterns</a> : pour chaque type de question, la méthode en étapes et le mot-clé qui doit la déclencher. Puis fais les TD en <b>cachant la correction</b> (révélée étape par étape).</p></div>
+  <div class="card ex"><span class="tag">3 · Retenir</span><p>Flashcards en fin de chapitre (« Je savais » / « À revoir ») et <a href="formulaire.html">formulaire</a> cherchable. Refais-les à J+1, J+3, J+7.</p></div>
+  <div class="card rem"><span class="tag">4 · Vérifier</span><p><a href="quiz.html">Examen blanc</a> : questions tirées au hasard dans tout le cours, avec l'explication de chaque réponse. Vise 90 % avant le partiel.</p></div>
+</div>
+
+<div class="card trap"><span class="tag">⚠ Les 6 erreurs qui coûtent le plus de points</span>
+<ol>
+<li><b>Unités</b> : nC, mm², cm… tout convertir en SI <i>avant</i> l'AN. Vérifier l'homogénéité de chaque résultat littéral.</li>
+<li><b>Sauter l'étude des symétries</b> avant Gauss/Ampère : sans elle, le théorème est inexploitable (et la rédaction perd des points).</li>
+<li><b>Confondre les règles de symétrie</b> de $\vec E$ (vrai vecteur) et $\vec B$ (pseudo-vecteur) : elles sont inversées.</li>
+<li><b>$Q_{int}$ / $i_{enlacé}$</b> : ne compter que ce qui est À L'INTÉRIEUR de la surface / qui TRAVERSE le contour.</li>
+<li><b>Signes en induction</b> : orienter le circuit d'abord, puis $e=-\mathrm d\Phi/\mathrm dt$ ; ne pas mélanger méthode algébrique et méthode « module + Lenz ».</li>
+<li><b>Potentiel</b> : oublier la constante (référence) ou la continuité de $V$ à une frontière.</li>
+</ol></div>
+
+</article>
+<script src="js/data.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/app.js"></script>
+</body></html>

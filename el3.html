@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Élec Ch. 3 — Régime sinusoïdal & filtrage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="el3">
+<article class="content">
+
+<div class="kicker">Électronique analogique · Chapitre 3</div>
+<h1>Régime sinusoïdal &amp; filtrage analogique</h1>
+<p class="lead">Quand toutes les sources sont sinusoïdales (de même fréquence), plus besoin de résoudre d'équation différentielle : grâce aux <b>nombres complexes</b>, R, L et C deviennent des « résistances complexes » (impédances) et tout le Ch. 1 s'applique. On en déduit les <b>filtres</b> et leur diagramme de <b>Bode</b>.</p>
+
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list">
+<li>lire amplitude, période, phase sur un oscillogramme</li><li>passer en complexe et revenir au réel</li>
+<li>impédances de R, L, C et leurs associations</li><li>résoudre un circuit en complexe (module + argument)</li>
+<li>établir une fonction de transfert H(jω)</li><li>deviner le type de filtre sans calcul</li>
+<li>tracer un diagramme de Bode asymptotique</li><li>trouver la coupure à −3 dB et la bande passante</li>
+</ul></div>
+
+<h2 id="signal"><span class="h2num">3.1</span>Le signal sinusoïdal</h2>
+<p>Trois régimes : <b>permanent</b> (tout constant), <b>transitoire</b> (passage d'un état à un autre, Ch. 2), <b>sinusoïdal</b> (signaux sinusoïdaux, après extinction du transitoire : on parle de régime sinusoïdal <b>forcé</b>).</p>
+<div class="card def"><span class="tag">Définition — tension sinusoïdale (GBF)</span>
+$$V(t)=V_m\cos(\omega t+\phi)+V_{DC}=\frac{V_{cc}}{2}\cos(2\pi ft+\phi)+V_{DC}$$
+<p>$V_m$ : amplitude (crête) ; $V_{cc}=2V_m$ : crête-à-crête ; $V_{DC}$ : offset (composante continue) ; $\phi$ : phase à l'origine (rad) ; $f=1/T$ (Hz) ; $\omega=2\pi f$ (rad/s).</p></div>
+<div class="card def"><span class="tag">Valeur efficace (utile en TD)</span><p>$V_{eff}=\dfrac{V_m}{\sqrt2}$ pour une sinusoïde sans offset : c'est la tension continue qui dissiperait la même puissance moyenne dans une résistance. Le « 230 V » du secteur est une valeur efficace (amplitude ≈ 325 V).</p></div>
+<div class="card def"><span class="tag">Déphasage</span>
+$$\Delta\phi=2\pi\frac dD\quad\text{(rad)}\qquad d\text{ : décalage temporel},\ D\text{ : période}$$
+<p>Compris entre $-\pi$ et $\pi$. <b>Signe :</b> si le signal $v_s$ atteint son maximum <b>avant</b> $v_e$, il est <b>en avance</b> : $\Delta\phi>0$. Après : en retard, $\Delta\phi\lt0$.</p></div>
+<figure class="anim" data-anim="phasor" data-badge><figcaption><b>Regarde :</b> chaque sinusoïde est la projection d'un vecteur qui tourne à ω. Le déphasage, c'est l'<b>angle entre les vecteurs</b> — constant. Coche « somme » : ajouter deux sinusoïdes de même fréquence = ajouter deux vecteurs.</figcaption></figure>
+
+<h2 id="complexes"><span class="h2num">3.2</span>La notation complexe</h2>
+<div class="card def"><span class="tag">Rappels</span>
+<p>$z=a+jb$ ($j^2=-1$) ; module $|z|=\sqrt{a^2+b^2}$ ; argument θ tel que $\cos\theta=\frac a{|z|}$, $\sin\theta=\frac b{|z|}$ ; forme polaire $z=re^{j\theta}$.</p>
+<p><b>Règles qui servent tout le temps :</b> $|z_1z_2|=|z_1||z_2|$, $\left|\frac{z_1}{z_2}\right|=\frac{|z_1|}{|z_2|}$, $\arg\frac{z_1}{z_2}=\arg z_1-\arg z_2$, $\arg(a+jb)=\arctan\frac ba$ si $a>0$, $\arg(j)=\frac\pi2$.</p></div>
+<div class="card def"><span class="tag">Aller-retour réel ↔ complexe</span>
+$$x(t)=X_m\cos(\omega t+\phi)\ \longrightarrow\ \underline x(t)=X_me^{j(\omega t+\phi)}=\underline Xe^{j\omega t},\quad\underline X=X_me^{j\phi}\ \text{(amplitude complexe)}$$
+<p>Retour : $x(t)=\mathrm{Re}\,\underline x(t)$, $X_m=|\underline X|$, $\phi=\arg\underline X$. <b>Toute l'information est dans $\underline X$.</b></p></div>
+<div class="card why"><span class="tag">Pourquoi c'est magique : dériver = multiplier par jω</span>
+$$\frac{\mathrm d\underline x}{\mathrm dt}=j\omega\,\underline x\qquad\int\underline x\,\mathrm dt=\frac{1}{j\omega}\underline x\qquad\frac{\mathrm d^2\underline x}{\mathrm dt^2}=(j\omega)^2\underline x$$
+<p>Une équation différentielle devient une équation <b>algébrique</b>. Exemple RC ($e=E\cos\omega t$) : $e=u_C+RC\frac{\mathrm du_C}{\mathrm dt}$ devient $Ee^{j\omega t}=\underline u_C(1+jRC\omega)$ ⇒ $\underline u_C=\dfrac{Ee^{j\omega t}}{1+jRC\omega}$. <b>Solution trouvée sans résoudre d'EDO !</b></p>
+<p>Retour au réel : $|\underline U|=\dfrac{E}{\sqrt{1+(RC\omega)^2}}$, $\arg\underline U=0-\arg(1+jRC\omega)=-\arctan(RC\omega)$ ⇒</p>
+$$u_C(t)=\frac{E}{\sqrt{1+(RC\omega)^2}}\cos\big(\omega t-\arctan(RC\omega)\big)$$</div>
+<div class="card def"><span class="tag">Impédance complexe</span>
+<p>En convention récepteur : $\underline Z=\dfrac{\underline u}{\underline i}$ (Ω) — la <b>loi d'Ohm en sinusoïdal</b> : $\underline u=\underline Z\,\underline i$.</p>
+$$Z_R=R\qquad Z_C=\frac{1}{jC\omega}\qquad Z_L=jL\omega$$
+<p>(Démo : $i=C\frac{\mathrm du}{\mathrm dt}$ ⇒ $\underline i=jC\omega\underline u$ ; $u=L\frac{\mathrm di}{\mathrm dt}$ ⇒ $\underline u=jL\omega\underline i$.)</p></div>
+<figure class="anim" data-anim="zfreq" data-badge><figcaption><b>Manipule :</b> déplace la fréquence. $|Z_C|=1/C\omega$ est énorme en basse fréquence (circuit ouvert) et minuscule en haute fréquence (fil) ; $|Z_L|=L\omega$ fait l'inverse. <b>C'est LE réflexe pour deviner un filtre.</b></figcaption></figure>
+<div class="card key"><span class="tag">Toutes les lois du Ch. 1 restent vraies en complexe</span><p>Série : $Z_{eq}=Z_1+Z_2$ ; parallèle : $\frac1{Z_{eq}}=\frac1{Z_1}+\frac1{Z_2}$. Nœuds, mailles, diviseurs de tension et de courant, Millman, superposition, Thévenin, Norton : il suffit de remplacer R par Z.</p></div>
+<div class="card trap"><span class="tag">⚠ Une seule fréquence à la fois</span><p>Les amplitudes complexes n'ont de sens que pour <b>une</b> pulsation ω. Avec deux sources de fréquences différentes (TD3 ex. 5) : <b>superposition</b>, on calcule chaque réponse en complexe, on revient au réel, puis on additionne <b>les signaux temporels</b>.</p></div>
+
+<h2 id="filtrage"><span class="h2num">3.3</span>Filtrage : fonction de transfert</h2>
+<p>Un signal réel est une <b>somme de sinusoïdes</b> de fréquences différentes. Un filtre <b>sélectionne</b> celles qu'on veut garder (il traite chacune avec son propre gain et déphasage).</p>
+<div class="card def"><span class="tag">Fonction de transfert, gain, déphasage</span>
+$$\underline H(j\omega)=\frac{\underline V_s}{\underline V_e},\qquad G(\omega)=|\underline H(j\omega)|=\frac{V_s}{V_e},\qquad\phi(\omega)=\arg\underline H(j\omega)$$
+<p>Le gain est le rapport des <b>amplitudes</b> ; l'argument est le déphasage de la sortie sur l'entrée. On calcule H « <b>en sortie ouverte</b> » (aucun courant ne sort) : c'est souvent un diviseur de tension avec des impédances.</p></div>
+<div class="grid2">
+<div class="card def"><span class="tag">Les 4 types</span>
+<svg viewBox="0 0 400 110" style="width:100%"><g fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M10 30 H45 Q60 30 70 70 L85 95"/><path d="M110 95 L125 70 Q135 30 150 30 H185"/><path d="M210 95 Q240 25 245 25 Q250 25 280 95"/><path d="M305 25 Q330 25 340 95 Q350 25 375 25"/></g><g font-size="11" fill="var(--ink2)" text-anchor="middle" font-family="Inter"><text x="48" y="108">passe-bas</text><text x="148" y="108">passe-haut</text><text x="245" y="108">passe-bande</text><text x="340" y="108">coupe-bande</text></g></svg>
+<p class="small">Passe-bas : garde les basses fréquences. Passe-haut : les hautes. Passe-bande : une bande. Coupe-bande (notch) : supprime une bande.</p></div>
+<div class="card meth"><span class="tag">Méthode — deviner le type sans calcul</span>
+<ol><li>ω → 0 : remplace <b>C par un interrupteur ouvert</b>, <b>L par un fil</b>. Que vaut $v_s$ ?</li><li>ω → ∞ : <b>C par un fil</b>, <b>L par un ouvert</b>. Que vaut $v_s$ ?</li><li>Passe en BF et pas en HF → passe-bas ; l'inverse → passe-haut ; ni BF ni HF → passe-bande ; les deux → coupe-bande.</li></ol>
+<p class="small">Ex. : R puis C en sortie : BF → C ouvert, $v_s=v_e$ ; HF → C fil, $v_s=0$ ⇒ passe-bas.</p></div>
+</div>
+
+<h2 id="bode"><span class="h2num">3.4</span>Diagramme de Bode</h2>
+<div class="card def"><span class="tag">Pourquoi des échelles logarithmiques</span><p>Sur une échelle linéaire, la courbe est écrasée (on étudie de 1 Hz à 1 MHz). En abscisse : $\log\omega$ — chaque graduation = une <b>décade</b> (×10). En ordonnée : le gain en <b>décibels</b> $G_{dB}=20\log G$. Bonus : les courbes deviennent des <b>droites</b> (asymptotes) en BF et HF.</p>
+<p>$G_{dB}=0$ : amplitude conservée ; $>0$ : amplifiée ; $\lt0$ : atténuée. ×10 ↔ +20 dB ; ×100 ↔ +40 dB ; /√2 ↔ −3 dB.</p></div>
+<div class="card def"><span class="tag">Définitions</span>
+<ul><li><b>Décade</b> : de ω à 10ω. <b>Octave</b> : de ω à 2ω. Les pentes s'expriment en dB/décade (20 dB/déc = 6 dB/oct).</li>
+<li><b>Ordre</b> d'un filtre : degré du polynôme (en $j\omega$ ou en $x$) au dénominateur de H.</li>
+<li><b>Pulsation de coupure à −3 dB</b> $\omega_c$ : $G(\omega_c)=\dfrac{G_{max}}{\sqrt2}$ ⇔ $G_{dB}(\omega_c)=G_{dB,max}-3$ (car $20\log\sqrt2=10\log2\approx3$).</li>
+<li><b>Bande passante</b> : intervalle où $G\ge G_{max}/\sqrt2$. Transmission en tension $1/\sqrt2$ = transmission en <b>puissance</b> de 1/2 : au-delà, on considère le signal perdu.</li></ul></div>
+<div class="card ex"><span class="tag">Étude complète — passe-bas RC (sortie sur C)</span>
+<div class="steps" data-start="Dérouler l'étude">
+<div class="step"><h4>Fonction de transfert (diviseur de tension en complexe)</h4><p>$\underline H=\dfrac{Z_C}{R+Z_C}=\dfrac{1/(jC\omega)}{R+1/(jC\omega)}=\dfrac{1}{1+jRC\omega}=\dfrac1{1+jx}$ avec $x=\dfrac\omega{\omega_c}$, $\omega_c=\dfrac1{RC}$. Ordre 1.</p></div>
+<div class="step"><h4>Gain et phase</h4><p>$G=\dfrac1{\sqrt{1+x^2}}$, $G_{dB}=-10\log(1+x^2)$, $\phi=-\arctan x$.</p></div>
+<div class="step"><h4>Asymptotes</h4><p>$x\ll1$ : $\underline H\approx1$ ⇒ $G_{dB}\approx0$, $\phi\approx0$. $x\gg1$ : $\underline H\approx\frac1{jx}$ ⇒ $G_{dB}\approx-20\log x$ (droite de pente −20 dB/déc), $\phi\approx-90°$. Les deux droites se coupent en $x=1$.</p></div>
+<div class="step"><h4>Point particulier</h4><p>$x=1$ : $G=1/\sqrt2$ ⇒ $-3$ dB, $\phi=-45°$. C'est la coupure : bande passante $[0,\omega_c]$.</p></div>
+</div></div>
+<figure class="anim tall" data-anim="bode" data-badge><figcaption><b>Manipule :</b> choisis le filtre, déplace x. Gris = asymptotes, couleur = vraie courbe ; à droite, l'entrée et la sortie au point choisi (amplitude = G, décalage = φ). Pour le passe-bande, augmente Q : le filtre devient plus sélectif.</figcaption></figure>
+<div class="tablewrap"><table>
+<tr><th>Filtre</th><th>Forme canonique</th><th>Asymptotes de $G_{dB}$</th><th>Phase</th></tr>
+<tr><td>Passe-bas 1ᵉʳ ordre</td><td>$\dfrac{H_0}{1+jx}$</td><td>0 puis −20 dB/déc</td><td>0 → −90° (−45° à x=1)</td></tr>
+<tr><td>Passe-haut 1ᵉʳ ordre</td><td>$H_0\dfrac{jx}{1+jx}$</td><td>+20 dB/déc puis 0</td><td>+90° → 0 (+45° à x=1)</td></tr>
+<tr><td>Passe-bande 2ᵈ ordre</td><td>$\dfrac{H_0}{1+jQ\left(x-\frac1x\right)}$</td><td>+20 puis −20 dB/déc, max en x=1</td><td>+90° → −90° (0 à x=1)</td></tr>
+<tr><td>Passe-bas 2ᵈ ordre</td><td>$\dfrac{H_0}{1-x^2+j\frac xQ}$</td><td>0 puis −40 dB/déc</td><td>0 → −180°</td></tr>
+</table></div>
+<div class="card meth"><span class="tag">Méthode — étudier un filtre (le plan type de TD)</span>
+<ol><li><b>Nature</b> par les comportements BF/HF (L, C → fil ou ouvert).</li>
+<li><b>H(jω)</b> par diviseur de tension (impédances), puis forme canonique : faire apparaître « 1 + … » au dénominateur, poser $x=\omega/\omega_0$, identifier $H_0$, ω₀ (et Q).</li>
+<li><b>G et φ</b> : module et argument (arg num − arg dén).</li>
+<li><b>Asymptotes</b> : garder le terme dominant pour $x\ll1$ et $x\gg1$ ⇒ droites en dB/déc, phases limites.</li>
+<li><b>Point x = 1</b> (et coupures : résoudre $G=G_{max}/\sqrt2$). Tracer.</li></ol></div>
+<div class="card why"><span class="tag">Intégrateur et dérivateur</span><p>Dans la zone où $\underline H\approx\frac{K}{jx}$ (passe-bas en HF), diviser par $j\omega$ = <b>intégrer</b> : un créneau devient un triangle. Où $\underline H\approx Kjx$ (passe-haut en BF), multiplier par $j\omega$ = <b>dériver</b> : un créneau devient des impulsions. Un passe-bande sélectif réglé sur la fréquence du créneau ne garde que le fondamental : une sinusoïde.</p></div>
+<figure class="anim" data-anim="square" data-badge><figcaption><b>Manipule :</b> un créneau = somme de sinusoïdes (harmoniques impairs). Le filtre traite chacune séparément. Passe-bas avec f ≫ f₀ → triangle ; passe-haut avec f ≪ f₀ → pics ; passe-bande à f = f₀ → sinusoïde pure (TD3 ex. 6 et 7).</figcaption></figure>
+
+<h2 id="retenir" data-nomaster>À retenir</h2>
+<div class="card key"><span class="tag">À retenir — Chapitre 3</span><ul><li>Impédances complexes de R, L, C.</li><li>Méthode des complexes (aller-retour réel ↔ complexe, module et argument).</li><li>Notion de filtrage, fonction de transfert, gain, déphasage.</li><li>Diagramme de Bode : dB, décades, asymptotes, coupure à −3 dB, bande passante, ordre.</li></ul></div>
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="el3"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="el3"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=imp%C3%A9dance+complexe+r%C3%A9gime+sinuso%C3%AFdal+cours">▶ Impédances complexes</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=diagramme+de+Bode+filtre+passe-bas+RC+asymptotes">▶ Diagramme de Bode</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=s%C3%A9rie+de+Fourier+signal+carr%C3%A9+harmoniques+filtre">▶ Créneau et harmoniques</a></p>
+</article>
+<script src="js/data.js"></script><script src="js/data-elec.js"></script><script src="js/anims-core.js"></script><script src="js/anims-elec.js"></script><script src="js/app.js"></script>
+</body></html>

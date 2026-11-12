@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Électronique — Formulaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="el-formulaire">
+<article class="content">
+<div class="kicker">Électronique · Mémo</div>
+<h1>Formulaire complet</h1>
+<p class="lead">Tape un mot (« thévenin », « rc », « bode », « impédance »…) pour filtrer.</p>
+<input class="searchbox" data-filter=".frow" placeholder="Rechercher une formule…" autocomplete="off">
+
+<div class="fgroup"><h2 id="f1" data-nomaster>Ch. 1 — Notions de base</h2><div class="fbox">
+<div class="frow" data-k="courant intensite"><div class="fname">Courant</div><div>$I=\Delta Q/\Delta t$ (A), sens inverse des électrons</div></div>
+<div class="frow" data-k="tension potentiel fleche"><div class="fname">Tension</div><div>$U_{AB}=V_A-V_B$, flèche de B vers A</div></div>
+<div class="frow" data-k="ohm resistance"><div class="fname">Loi d'Ohm</div><div>$U=RI$ (convention récepteur)</div></div>
+<div class="frow" data-k="puissance joule"><div class="fname">Puissance</div><div>$p=ui$ ; $P=UI$ ; résistance $P=RI^2=U^2/R$</div></div>
+<div class="frow" data-k="serie parallele association resistances"><div class="fname">Associations R</div><div>Série $R_1+R_2$ ; parallèle $\frac{R_1R_2}{R_1+R_2}$</div></div>
+<div class="frow" data-k="noeuds mailles kirchhoff"><div class="fname">Kirchhoff</div><div>Nœuds : $\sum I_{entrants}=\sum I_{sortants}$ ; mailles : $\sum U=0$</div></div>
+<div class="frow" data-k="diviseur tension"><div class="fname">Diviseur de tension</div><div>$U_2=E\frac{R_2}{R_1+R_2}$</div></div>
+<div class="frow" data-k="diviseur courant"><div class="fname">Diviseur de courant</div><div>$I_2=I\frac{R_1}{R_1+R_2}$</div></div>
+<div class="frow" data-k="thevenin norton equivalent"><div class="fname">Thévenin / Norton</div><div>$E_{th}$ = tension à vide ; $I_N$ = courant de court-circuit ; $R_{th}=R_N$ (sources éteintes) ; $E_{th}=R_{th}I_N$</div></div>
+<div class="frow" data-k="source reelle"><div class="fname">Source réelle</div><div>$V=E-RI$ (Thévenin) ⟺ $I=I_N-V/R$ (Norton)</div></div>
+<div class="frow" data-k="millman"><div class="fname">Millman</div><div>$U=\dfrac{\sum E_k/R_k+\sum I_k}{\sum 1/R_k}$</div></div>
+<div class="frow" data-k="superposition"><div class="fname">Superposition</div><div>Somme des contributions de chaque source seule (tension → fil, courant → ouvert)</div></div>
+<div class="frow" data-k="wheatstone pont"><div class="fname">Pont de Wheatstone</div><div>Équilibre ⇔ $R_1R_3=R_2R_4$</div></div>
+</div></div>
+
+<div class="fgroup"><h2 id="f2" data-nomaster>Ch. 2 — Régime transitoire</h2><div class="fbox">
+<div class="frow" data-k="condensateur capacite"><div class="fname">Condensateur</div><div>$q=Cu$, $i=C\frac{\mathrm du}{\mathrm dt}$, $u_C$ continue, $E=\frac12Cu^2$</div></div>
+<div class="frow" data-k="bobine inductance"><div class="fname">Bobine</div><div>$u=L\frac{\mathrm di}{\mathrm dt}$, $i_L$ continu, $E=\frac12Li^2$</div></div>
+<div class="frow" data-k="association condensateurs bobines"><div class="fname">Associations</div><div>C : parallèle $\sum C$, série $\frac1{C}=\sum\frac1{C_k}$ ; L : comme R</div></div>
+<div class="frow" data-k="permanent continu"><div class="fname">Permanent continu</div><div>C = circuit ouvert ; L = fil</div></div>
+<div class="frow" data-k="rc constante de temps tau"><div class="fname">τ</div><div>RC : $\tau=RC$ ; RL : $\tau=L/R$</div></div>
+<div class="frow" data-k="premier ordre solution generale"><div class="fname">1ᵉʳ ordre</div><div>$\tau\dot y+y=y_\infty$ ⇒ $y=y_\infty+(y(0^+)-y_\infty)e^{-t/\tau}$</div></div>
+<div class="frow" data-k="charge rc"><div class="fname">Charge RC</div><div>$u_C=E(1-e^{-t/\tau})$, $i=\frac ERe^{-t/\tau}$</div></div>
+<div class="frow" data-k="decharge rc"><div class="fname">Décharge RC</div><div>$u_C=Ee^{-t/\tau}$, $i=-\frac ERe^{-t/\tau}$</div></div>
+<div class="frow" data-k="rl etablissement"><div class="fname">Établissement RL</div><div>$i=\frac ER(1-e^{-t/\tau})$, $u_L=Ee^{-t/\tau}$</div></div>
+<div class="frow" data-k="63 95 99 tau"><div class="fname">Repères</div><div>τ : 63 % ; 3τ : 95 % ; 5τ : 99 %</div></div>
+<div class="frow" data-k="rlc serie equation"><div class="fname">RLC série</div><div>$LC\ddot u_C+RC\dot u_C+u_C=e$ ; $\omega_0=\frac1{\sqrt{LC}}$, $\lambda=\frac R{2L}$, $Q=\frac1R\sqrt{\frac LC}$</div></div>
+<div class="frow" data-k="rlc parallele"><div class="fname">RLC parallèle</div><div>$\ddot u+\frac1{RC}\dot u+\frac1{LC}u=0$ ; $Q=R\sqrt{\frac CL}$</div></div>
+<div class="frow" data-k="regimes aperiodique critique pseudo"><div class="fname">Régimes</div><div>$r^2+2\lambda r+\omega_0^2=0$ ; Q &lt; ½ apériodique, Q = ½ critique, Q &gt; ½ pseudo-périodique, $\omega=\sqrt{\omega_0^2-\lambda^2}$</div></div>
+<div class="frow" data-k="pseudo periodique solution"><div class="fname">Pseudo-périodique (décharge)</div><div>$u_C=E\left(\cos\omega t+\frac\lambda\omega\sin\omega t\right)e^{-\lambda t}$</div></div>
+<div class="frow" data-k="critique solution"><div class="fname">Critique</div><div>$u_C=E(1+\lambda t)e^{-\lambda t}$</div></div>
+</div></div>
+
+<div class="fgroup"><h2 id="f3" data-nomaster>Ch. 3 — Sinusoïdal &amp; filtrage</h2><div class="fbox">
+<div class="frow" data-k="sinusoide signal pulsation frequence"><div class="fname">Signal</div><div>$V_m\cos(\omega t+\phi)+V_{DC}$, $\omega=2\pi f$, $T=1/f$, $V_{cc}=2V_m$</div></div>
+<div class="frow" data-k="valeur efficace"><div class="fname">Valeur efficace</div><div>$V_{eff}=V_m/\sqrt2$</div></div>
+<div class="frow" data-k="dephasage"><div class="fname">Déphasage</div><div>$\Delta\phi=2\pi\,d/T$</div></div>
+<div class="frow" data-k="complexe module argument"><div class="fname">Complexes</div><div>$|a+jb|=\sqrt{a^2+b^2}$ ; $\arg\frac{z_1}{z_2}=\arg z_1-\arg z_2$</div></div>
+<div class="frow" data-k="amplitude complexe retour reel"><div class="fname">Aller-retour</div><div>$\underline X=X_me^{j\phi}$ ; $x(t)=|\underline X|\cos(\omega t+\arg\underline X)$</div></div>
+<div class="frow" data-k="derivee integrale jw"><div class="fname">Dériver / intégrer</div><div>× $j\omega$ / ÷ $j\omega$</div></div>
+<div class="frow" data-k="impedance r l c"><div class="fname">Impédances</div><div>$Z_R=R$, $Z_L=jL\omega$, $Z_C=\frac1{jC\omega}$</div></div>
+<div class="frow" data-k="fonction de transfert gain phase"><div class="fname">Transfert</div><div>$\underline H=\frac{\underline V_s}{\underline V_e}$, $G=|\underline H|$, $\phi=\arg\underline H$</div></div>
+<div class="frow" data-k="decibel db"><div class="fname">Décibels</div><div>$G_{dB}=20\log G$ ; −3 dB ⇔ $G_{max}/\sqrt2$</div></div>
+<div class="frow" data-k="passe bas premier ordre rc"><div class="fname">Passe-bas 1ᵉʳ ordre</div><div>$\frac{1}{1+jx}$, $x=RC\omega$ : 0 puis −20 dB/déc, −45° à x=1</div></div>
+<div class="frow" data-k="passe haut premier ordre rl"><div class="fname">Passe-haut 1ᵉʳ ordre</div><div>$\frac{jx}{1+jx}$ : +20 dB/déc puis 0, +45° à x=1</div></div>
+<div class="frow" data-k="passe bande second ordre q"><div class="fname">Passe-bande 2ᵈ ordre</div><div>$\frac{H_0}{1+jQ(x-1/x)}$ ; bande passante $\Delta x=1/Q$</div></div>
+<div class="frow" data-k="wien pont"><div class="fname">Pont de Wien</div><div>$\frac{1/3}{1+\frac j3(x-\frac1x)}$, coupures 0,30 et 3,30</div></div>
+<div class="frow" data-k="r lc parallele passe bande"><div class="fname">R + (L ∥ C)</div><div>$\frac{1}{1+jR(C\omega-\frac1{L\omega})}$, $Q=R\sqrt{C/L}$</div></div>
+<div class="frow" data-k="creneau harmoniques fourier"><div class="fname">Créneau ±U</div><div>$\frac{4U}{\pi}\left(\sin\omega t+\frac{\sin3\omega t}3+\frac{\sin5\omega t}5+\dots\right)$</div></div>
+</div></div>
+</article>
+<script src="js/data.js"></script><script src="js/data-elec.js"></script><script src="js/app.js"></script>
+</body></html>

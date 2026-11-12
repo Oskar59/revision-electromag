@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Élec TD 1 — Notions de base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="eltd1">
+<article class="content">
+<div class="kicker">Électronique · Travaux dirigés</div>
+<h1>TD 1 — Notions de base</h1>
+<p class="lead">Lois de Kirchhoff, diviseurs, Thévenin-Norton, Millman, superposition. Pour chaque exercice : le réflexe, des indices, puis la correction étape par étape. <b>Cherche avant de révéler.</b></p>
+<div class="card rem"><span class="tag">Note</span><p>Pas de corrigé officiel fourni : correction rédigée à partir du cours. Compare avec la séance.</p></div>
+
+<section class="exo" id="exo1"><header><h2 id="e1">Exercice 1 — Valeurs non définies</h2><span class="time">15 min</span></header><div class="body">
+<div class="statement">Déterminer les valeurs non définies dans les schémas suivants.</div>
+<img class="schema lg" src="img/el-td1-ex1.png" alt="Schémas de l'exercice 1">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> un nœud avec un courant inconnu → <b>loi des nœuds</b> (entrants = sortants, d'après les flèches). Une boucle avec une tension inconnue → <b>loi des mailles</b> : choisis un sens de parcours, + si la flèche va dans ce sens, − sinon. Un résultat négatif n'est pas une erreur : la grandeur réelle est dans l'autre sens.</div></div>
+<div class="steps">
+<div class="step"><h4>Schéma 1 (nœud N)</h4><p>Entrent : $I_A$ (de A vers N) et 1000 A (de E). Sortent : 1 A (vers B), 10 A (vers C), 100 A (vers D).
+$$I_A+1000=1+10+100\Rightarrow\boxed{I_A=-889\ \mathrm A}$$ Le courant réel va de N vers A (889 A).</p></div>
+<div class="step"><h4>Schéma 2 (maille) — méthode des potentiels</h4><p>Une flèche de tension pointe vers le potentiel le plus haut ($U_{AB}=V_A-V_B$, pointe sur A). Pars du coin haut gauche, $V_0$ :
+D₁ (5 V, flèche ←) : $V_1=V_0-5$ ; D₂ (2 V, →) : $V_2=V_1+2=V_0-3$ ; D₃ (−2 V, ←) : $V_3=V_2+2=V_0-1$ ; D₄ (3 V, ↑) : bas = $V_0-4$ ; D₅ (−15 V, ←) : gauche de D₅ = $V_0-4-15=V_0-19$.<br>
+D₆ : $U_6$ (→) = $V_{droite}-V_{gauche}=(V_0-19)-V_0$ ⇒ $\boxed{U_6=-19\ \mathrm V}$.</p></div>
+<div class="step"><h4>Schéma 3 (nœud N')</h4><p>Entre : 1 A (par D₁). Sortent : $I_2$ (vers le haut par D₂) et 1 A (vers le bas par D₃) ⇒ $1=I_2+1$ ⇒ $\boxed{I_2=0}$. Le courant de D₃ continue dans D₄ (pas d'autre chemin) ⇒ $\boxed{I_4=1\ \mathrm A}$.</p></div>
+</div>
+<div class="card trap"><span class="tag">⚠ Piège</span><p>Les valeurs négatives sur le schéma (−2 V, −15 V) : on les garde avec leur signe dans la loi des mailles, elles signifient juste que la vraie tension est dans l'autre sens.</p></div>
+</div></section>
+
+<section class="exo" id="exo2"><header><h2 id="e2">Exercice 2 — Diviseur de tension</h2><span class="time">10 min</span></header><div class="body">
+<div class="statement">Exprimer $U_1$ en fonction de U, R₁, R₂, R₃ ; et $V_6$ en fonction de V, R₄, R₅, R₆. A.N. U = 12 V, R₁ = R₂ = R₃ = 1 kΩ ; V = 4 V, R₄ = 100 Ω, R₅ = R₆ = 600 Ω.</div>
+<img class="schema lg" src="img/el-td1-ex2.png" alt="Schémas de l'exercice 2">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> résistances parcourues par le même courant + on veut la tension de l'une ⇒ <b>diviseur de tension</b>. S'il y a une branche en parallèle, <b>regroupe-la d'abord</b> en une seule résistance.</div></div>
+<div class="steps">
+<div class="step"><h4>Circuit 1</h4><p>R₃, R₂, R₁ en série (même courant) : $U_1=U\dfrac{R_1}{R_1+R_2+R_3}$. A.N. : $U_1=12\times\frac13=\boxed{4\ \mathrm V}$.</p></div>
+<div class="step"><h4>Circuit 2 : regrouper d'abord</h4><p>R₅ et R₆ sont en parallèle (mêmes nœuds) : $R_{56}=\dfrac{R_5R_6}{R_5+R_6}$. Puis diviseur entre R₄ et $R_{56}$ :
+$$V_6=V\frac{R_{56}}{R_4+R_{56}}=V\frac{R_5R_6}{R_4(R_5+R_6)+R_5R_6}$$
+A.N. : $R_{56}=300$ Ω ⇒ $V_6=4\times\frac{300}{400}=\boxed{3\ \mathrm V}$.</p></div>
+</div></div></section>
+
+<section class="exo" id="exo3"><header><h2 id="e3">Exercice 3 — Dipôle AB équivalent</h2><span class="time">25 min</span></header><div class="body">
+<div class="statement">Avec les lois d'association de générateurs idéaux et les modèles de Thévenin et Norton, montrer que le dipôle AB est équivalent à un générateur réel dont on précisera les caractéristiques.</div>
+<img class="schema lg" src="img/el-td1-ex3.png" alt="Schéma de l'exercice 3">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> tout est en <b>parallèle</b> entre deux rails ⇒ convertis chaque branche « source de tension + résistance » en <b>Norton</b> ; les sources de courant en parallèle s'<b>ajoutent</b>, les résistances se mettent en parallèle. Une branche série de plusieurs sources et résistances : on additionne algébriquement les fem et les résistances.</div></div>
+<details class="hint"><summary>Indice</summary><div class="inner"><p>La grande boucle de gauche (100 V, 40 V, 20 V, 40 Ω, 15 Ω, 25 Ω) est UNE branche entre le nœud du haut (X) et celui du bas (Y). Calcule $V_X-V_Y$ à vide en suivant les flèches.</p></div></details>
+<div class="steps">
+<div class="step"><h4>Branche de gauche → un Thévenin</h4><p>À vide, aucun courant dans la branche. On part de Y (0 V) : source 20 V du bas (flèche ← : pointe à gauche) ⇒ +20 V ; résistance 25 Ω : pas de chute ; source 100 V (↑) ⇒ 120 V ; 40 Ω, 15 Ω : rien ; source 40 V du haut (flèche ← : pointe vers la gauche, donc côté X plus bas de 40 V) ⇒ $V_X=80$ V.<br>
+Branche gauche ≡ <b>E = 80 V</b> (X au +) en série avec <b>R = 40 + 15 + 25 = 80 Ω</b>.</p></div>
+<div class="step"><h4>Branche du milieu</h4><p>Source 20 V (↑) en série avec 40 Ω : Thévenin $E=20$ V, $R=40$ Ω, X au +.</p></div>
+<div class="step"><h4>Tout en Norton</h4><p>Gauche : $I=80/80=1$ A vers X, ∥ 80 Ω. Milieu : $I=20/40=0{,}5$ A vers X, ∥ 40 Ω. Sources de courant : 0,6 A et 0,4 A vers A. Résistance 80 Ω.</p></div>
+<div class="step"><h4>Association</h4><p>Courants en parallèle : $I_N=1+0{,}5+0{,}6+0{,}4=2{,}5$ A. Résistances en parallèle : $\frac1{R_N}=\frac1{80}+\frac1{40}+\frac1{80}=\frac4{80}$ ⇒ $R_N=20$ Ω.</p></div>
+<div class="step"><h4>Résultat</h4><p>Le dipôle AB est un générateur réel : <b>Norton $I_N=2{,}5$ A ∥ $R_N=20$ Ω</b>, soit <b>Thévenin $E_{th}=R_NI_N=50$ V en série avec $R_{th}=20$ Ω</b> (A au +).</p></div>
+</div>
+<div class="card trap"><span class="tag">⚠ Pièges</span><p>Les sens des flèches des sources (celle de 40 V et celle de 20 V du bas pointent vers la gauche : elles ne s'ajoutent pas toutes dans le même sens). Et ne pas oublier la résistance de 80 Ω de droite dans le parallèle.</p></div>
+</div></section>
+
+<section class="exo" id="exo4"><header><h2 id="e4">Exercice 4 (bonus) — Résistances équivalentes</h2><span class="time">15 min</span></header><div class="body">
+<img class="schema lg" src="img/el-td1-ex4.png" alt="Schémas de l'exercice 4">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> partir du plus « profond » (le plus loin des bornes) et remonter. Un <b>fil</b> qui relie deux points les met au même potentiel : on peut les fusionner.</div></div>
+<div class="steps">
+<div class="step"><h4>A–B</h4><p>Trois 30 Ω en parallèle : 10 Ω. En série avec 10 Ω : 20 Ω. En parallèle avec 20 Ω : 10 Ω. En série avec le 10 Ω d'entrée : $\boxed{R_{AB}=20\ \Omega}$.</p></div>
+<div class="step"><h4>C–D (avec le fil vertical)</h4><p>Le fil relie les deux points milieux : ils sont confondus. On a donc (10 ∥ 30) en série avec (50 ∥ 30) : $7{,}5+18{,}75=\boxed{26{,}25\ \Omega}$.</p></div>
+<div class="step"><h4>E–F (sans fil)</h4><p>Deux branches série en parallèle : $(10+50)\parallel(30+30)=60\parallel60=\boxed{30\ \Omega}$.</p></div>
+</div>
+<div class="card why"><span class="tag">Morale</span><p>C–D et E–F ont les mêmes résistances, mais un simple fil change tout : il force l'égalité des potentiels au milieu. Toujours chercher d'abord les nœuds réellement distincts.</p></div>
+</div></section>
+
+<section class="exo" id="exo5"><header><h2 id="e5">Exercice 5 — Millman</h2><span class="time">10 min</span></header><div class="body">
+<div class="statement">Calculer $V_N$ aux bornes de R, puis le courant I dans R. A.N. R = 25 Ω, R₁ = R₂ = R₃ = 10 Ω, E₁ = E₂ = E₃ = 4 V.</div>
+<img class="schema md" src="img/el-td1-ex5.png" alt="Schéma de l'exercice 5">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> on cherche la <b>tension d'un nœud</b> où arrivent plusieurs branches parallèles ⇒ <b>Millman</b>, en une ligne. La branche R (sans source) compte 0 au numérateur et 1/R au dénominateur.</div></div>
+<div class="steps">
+<div class="step"><h4>Millman</h4><p>$$V_N=\frac{\frac{E_1}{R_1}+\frac{E_2}{R_2}+\frac{E_3}{R_3}+\frac0R}{\frac1{R_1}+\frac1{R_2}+\frac1{R_3}+\frac1R}$$</p></div>
+<div class="step"><h4>A.N.</h4><p>$V_N=\dfrac{3\times0{,}4}{0{,}3+0{,}04}=\dfrac{1{,}2}{0{,}34}\approx\boxed{3{,}53\ \mathrm V}$ ; $I=\dfrac{V_N}R\approx\boxed{0{,}141\ \mathrm A}$.</p></div>
+<div class="step"><h4>Vérification de bon sens</h4><p>Sans R, $V_N$ vaudrait 4 V (trois sources identiques). R « tire » du courant ⇒ $V_N$ un peu inférieur à 4 V ✓.</p></div>
+</div></div></section>
+
+<section class="exo" id="exo6"><header><h2 id="e6">Exercice 6 — Superposition</h2><span class="time">20 min</span></header><div class="body">
+<div class="statement">Calculer la tension U aux bornes de R par le théorème de superposition. A.N. E = 5 V, I = 0,2 A, R = 5 Ω.</div>
+<img class="schema md" src="img/el-td1-ex6.png" alt="Schéma de l'exercice 6">
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> deux sources ⇒ une à la fois. <b>E éteinte = fil</b>, <b>I éteinte = circuit ouvert</b>. Dans chaque sous-circuit, utilise Thévenin / diviseurs. Puis $U=U_E+U_I$.</div></div>
+<details class="hint"><summary>Indice : lecture du schéma</summary><div class="inner"><p>Nœud P (gauche de R) : relié à la masse par 2R (milieu) et par la branche « 2R + source E » (gauche). Nœud Q (droite de R) : relié à la masse par 3R et par la source de courant I (qui retire I de Q). $U=V_P-V_Q$ (flèche ←, pointe à gauche).</p></div></details>
+<div class="steps">
+<div class="step"><h4>Source E seule (I ouverte)</h4><p>Vu de P, la branche (E, 2R) et le 2R du milieu forment un Thévenin : $E_{th}=E\frac{2R}{2R+2R}=\frac E2$, $R_{th}=2R\parallel2R=R$. Puis la maille $R_{th}$ – R – 3R : $i=\dfrac{E/2}{R+R+3R}=\dfrac{E}{10R}$ de P vers Q.
+$$U_E=Ri=\frac E{10}$$</p></div>
+<div class="step"><h4>Source I seule (E = fil)</h4><p>Le courant I est retiré de Q. Il arrive de la masse par deux chemins : 3R, et R + (2R ∥ 2R) = 2R. Diviseur de courant : le chemin par R reçoit $I\frac{3R}{3R+2R}=\frac{3I}5$, de P vers Q.
+$$U_I=R\cdot\frac{3I}5=\frac{3RI}5$$</p></div>
+<div class="step"><h4>Somme</h4><p>$$U=\frac E{10}+\frac{3RI}{5}=0{,}5+0{,}6=\boxed{1{,}1\ \mathrm V}$$</p></div>
+</div></div></section>
+
+<section class="exo" id="exo7"><header><h2 id="e7">Exercice 7 (bonus) — Détection de température</h2><span class="time">10 min</span></header><div class="body">
+<img class="schema sm" src="img/el-td1-ex7.png" alt="Schéma de l'exercice 7">
+<div class="statement">1. $U_{R_T}$ en fonction de R, R_T, E. 2. Compléter le tableau (R = 100 kΩ, E = 5 V) avec la datasheet : 10 °C → 200 kΩ ; 30 °C → 90 kΩ ; 50 °C → 35 kΩ ; 80 °C → 12 kΩ.</div>
+<details><summary>Voir la datasheet</summary><div class="inner"><img class="schema md" src="img/el-td1-datasheet.png" alt="Datasheet thermistance"></div></details>
+<div class="steps">
+<div class="step"><h4>Diviseur de tension</h4><p>$U_{R_T}=E\dfrac{R_T}{R+R_T}$</p></div>
+<div class="step"><h4>Tableau</h4><div class="tablewrap"><table><tr><th>T (°C)</th><td>10</td><td>30</td><td>50</td><td>80</td></tr><tr><th>R_T (kΩ)</th><td>200</td><td>90</td><td>35</td><td>12</td></tr><tr><th>U_RT (V)</th><td>3,33</td><td>2,37</td><td>1,30</td><td>0,54</td></tr></table></div>
+<p>La tension diminue quand la température monte : thermistance à coefficient négatif (CTN). On a un capteur : mesurer U ⇒ connaître T.</p></div>
+</div></div></section>
+
+<section class="exo" id="exo8"><header><h2 id="e8">Exercice 8 — Pont de Wheatstone</h2><span class="time">20 min</span></header><div class="body">
+<img class="schema sm" src="img/el-td1-ex8.png" alt="Schéma de l'exercice 8">
+<div class="statement">1. U en fonction de E, R₁…R₄ (voltmètre idéal). 2. Relation quand U = 0. 3. R₂ = R₃ = 50 kΩ, R₄ thermistance : R₁ pour équilibrer le pont à 10, 30, 50, 80 °C.</div>
+<div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> voltmètre idéal = <b>aucun courant</b> ⇒ les deux branches verticales sont deux <b>diviseurs de tension indépendants</b>. U = différence des deux potentiels milieux.</div></div>
+<div class="steps">
+<div class="step"><h4>Potentiels des points milieux (bas = 0, haut = E)</h4><p>Gauche (entre R₁ et R₂) : $V_M=E\dfrac{R_2}{R_1+R_2}$. Droite (entre R₄ et R₃) : $V_N=E\dfrac{R_3}{R_3+R_4}$.</p></div>
+<div class="step"><h4>U (flèche ← : $U=V_M-V_N$)</h4><p>$$U=E\left(\frac{R_2}{R_1+R_2}-\frac{R_3}{R_3+R_4}\right)$$</p></div>
+<div class="step"><h4>Équilibre</h4><p>$U=0$ ⇔ $R_2(R_3+R_4)=R_3(R_1+R_2)$ ⇔ $\boxed{R_2R_4=R_1R_3}$ (produits « en croix » égaux). Indépendant de E !</p></div>
+<div class="step"><h4>Application</h4><p>$R_1=\dfrac{R_2R_4}{R_3}=R_4$ (car R₂ = R₃) : R₁ = 200 kΩ (10 °C), 90 kΩ (30 °C), 35 kΩ (50 °C), 12 kΩ (80 °C). On lit la résistance du capteur sur le potentiomètre quand le voltmètre affiche 0 : méthode de zéro, très précise.</p></div>
+</div></div></section>
+
+<h2 id="bilan" data-nomaster>Bilan du TD 1 : les patterns</h2>
+<div class="decision">
+<div class="row"><div class="if">Courant inconnu sur un nœud</div><div class="arrow">→</div><div>Loi des nœuds avec les sens des flèches</div></div>
+<div class="row"><div class="if">Tension inconnue dans une boucle</div><div class="arrow">→</div><div>Loi des mailles (ou « marche des potentiels »)</div></div>
+<div class="row"><div class="if">Tension d'une R parmi des R en série</div><div class="arrow">→</div><div>Diviseur de tension (regrouper les parallèles avant)</div></div>
+<div class="row"><div class="if">« Équivalent à un générateur réel »</div><div class="arrow">→</div><div>Conversions Thévenin ↔ Norton, sommer les courants en parallèle</div></div>
+<div class="row"><div class="if">Tension d'un nœud multi-branches</div><div class="arrow">→</div><div>Millman</div></div>
+<div class="row"><div class="if">« Par superposition »</div><div class="arrow">→</div><div>Une source à la fois (tension → fil, courant → ouvert), puis somme</div></div>
+<div class="row"><div class="if">Voltmètre idéal / sortie ouverte</div><div class="arrow">→</div><div>Aucun courant ⇒ diviseurs indépendants</div></div>
+</div>
+<h2 id="quiz" data-nomaster>Quiz méthode</h2>
+<div class="quiz" data-quiz="eltd1"></div>
+<h2 id="flash" data-nomaster>Flashcards méthodes</h2>
+<div class="flash" data-cards="eltd1"></div>
+</article>
+<script src="js/data.js"></script><script src="js/data-elec.js"></script><script src="js/anims-core.js"></script><script src="js/anims-elec.js"></script><script src="js/app.js"></script>
+</body></html>

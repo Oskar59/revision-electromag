@@ -1,25 +1,43 @@
 /* ============ Shell, navigation, KaTeX, quiz, flashcards, progression ============ */
 (function(){
+const SUBJ = {phys:{t:"Physique — Électromagnétisme", short:"Physique", home:"physique.html", ico:"∇"}, elec:{t:"Électronique analogique", short:"Électronique", home:"electronique.html", ico:"Ω"}};
 const NAV = [
-  {h:"Démarrer"},
-  {id:"index", href:"index.html", n:"⌂", t:"Accueil & carte du cours"},
-  {id:"methodes", href:"methodes.html", n:"★", t:"Patterns : quoi faire quand…"},
-  {h:"Cours — Partie A"},
-  {id:"ch0", href:"ch0.html", n:"0", t:"Le langage de la physique"},
-  {id:"ch1", href:"ch1.html", n:"1", t:"Électrostatique : charges, champ, potentiel, Gauss"},
-  {id:"ch2", href:"ch2.html", n:"2", t:"Conducteurs, condensateurs, courant"},
-  {id:"ch3", href:"ch3.html", n:"3", t:"Magnétostatique"},
-  {id:"ch4", href:"ch4.html", n:"4", t:"Induction électromagnétique"},
-  {id:"ch5", href:"ch5.html", n:"5", t:"Équations de Maxwell & onde EM"},
-  {h:"Travaux dirigés"},
-  {id:"td1", href:"td1.html", n:"T1", t:"TD 1 — Électrostatique"},
-  {id:"td2", href:"td2.html", n:"T2", t:"TD 2 — Conducteurs & courant"},
-  {h:"S'entraîner"},
-  {id:"formulaire", href:"formulaire.html", n:"Σ", t:"Formulaire complet"},
-  {id:"quiz", href:"quiz.html", n:"?", t:"Examen blanc & flashcards"},
+  {s:"phys",h:"Démarrer"},
+  {s:"phys",id:"physique", href:"physique.html", n:"⌂", t:"Accueil Physique & carte"},
+  {s:"phys",id:"methodes", href:"methodes.html", n:"★", t:"Patterns : quoi faire quand…"},
+  {s:"phys",h:"Cours — Partie A"},
+  {s:"phys",id:"ch0", href:"ch0.html", n:"0", t:"Le langage de la physique"},
+  {s:"phys",id:"ch1", href:"ch1.html", n:"1", t:"Électrostatique : charges, champ, potentiel, Gauss"},
+  {s:"phys",id:"ch2", href:"ch2.html", n:"2", t:"Conducteurs, condensateurs, courant"},
+  {s:"phys",id:"ch3", href:"ch3.html", n:"3", t:"Magnétostatique"},
+  {s:"phys",id:"ch4", href:"ch4.html", n:"4", t:"Induction électromagnétique"},
+  {s:"phys",id:"ch5", href:"ch5.html", n:"5", t:"Équations de Maxwell & onde EM"},
+  {s:"phys",h:"Travaux dirigés"},
+  {s:"phys",id:"td1", href:"td1.html", n:"T1", t:"TD 1 — Électrostatique"},
+  {s:"phys",id:"td2", href:"td2.html", n:"T2", t:"TD 2 — Conducteurs & courant"},
+  {s:"phys",id:"td3", href:"td3.html", n:"T3", t:"TD 3 — Magnétostatique (Ampère)"},
+  {s:"phys",h:"S'entraîner"},
+  {s:"phys",id:"formulaire", href:"formulaire.html", n:"Σ", t:"Formulaire complet"},
+  {s:"phys",id:"quiz", href:"quiz.html", n:"?", t:"Examen blanc & flashcards"},
+  {s:"elec",h:"Démarrer"},
+  {s:"elec",id:"electronique", href:"electronique.html", n:"⌂", t:"Accueil Électronique & carte"},
+  {s:"elec",id:"el-methodes", href:"el-methodes.html", n:"★", t:"Patterns : quoi faire quand…"},
+  {s:"elec",h:"Cours"},
+  {s:"elec",id:"el1", href:"el1.html", n:"1", t:"Notions de base : lois, diviseurs, Thévenin, Millman"},
+  {s:"elec",id:"el2", href:"el2.html", n:"2", t:"Régime transitoire : RC, RL, RLC"},
+  {s:"elec",id:"el3", href:"el3.html", n:"3", t:"Régime sinusoïdal & filtrage (Bode)"},
+  {s:"elec",h:"Travaux dirigés"},
+  {s:"elec",id:"eltd1", href:"eltd1.html", n:"T1", t:"TD 1 — Notions de base"},
+  {s:"elec",id:"eltd2", href:"eltd2.html", n:"T2", t:"TD 2 — Régime transitoire"},
+  {s:"elec",id:"eltd3", href:"eltd3.html", n:"T3", t:"TD 3 — Sinusoïdal & fonction de transfert"},
+  {s:"elec",h:"S'entraîner"},
+  {s:"elec",id:"el-formulaire", href:"el-formulaire.html", n:"Σ", t:"Formulaire complet"},
+  {s:"elec",id:"el-quiz", href:"el-quiz.html", n:"?", t:"Examen blanc & flashcards"},
 ];
 window.EM_NAV = NAV;
 const page = document.body.dataset.page || "index";
+const cur = NAV.find(n=>n.id===page);
+const subj = cur ? cur.s : null;
 const LS = {
   get(k,d){try{const v=localStorage.getItem("em:"+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
   set(k,v){try{localStorage.setItem("em:"+k,JSON.stringify(v))}catch(e){}}
@@ -35,14 +53,15 @@ const article = document.querySelector("article.content");
 const top = document.createElement("header");
 top.className="topbar";
 top.innerHTML = `<button class="iconbtn" id="menuBtn" aria-label="Menu">☰</button>
-  <a class="brand" href="index.html"><span class="logo">∇</span>Électromag · Révisions</a>
+  <a class="brand" href="index.html"><span class="logo">${subj?SUBJ[subj].ico:"∇"}</span>Révisions AP3${subj?` <span class="brand-sub">· ${SUBJ[subj].short}</span>`:""}</a>
   <span class="spacer"></span>
-  <a class="iconbtn" href="formulaire.html" title="Formulaire" style="display:grid;place-items:center;text-decoration:none">Σ</a>
+  <a class="iconbtn" href="${subj==="elec"?"el-formulaire.html":"formulaire.html"}" title="Formulaire" style="display:grid;place-items:center;text-decoration:none">Σ</a>
   <button class="iconbtn" id="themeBtn" title="Thème clair/sombre">◐</button>`;
 const layout = document.createElement("div"); layout.className="layout";
 const side = document.createElement("nav"); side.className="sidebar";
-let sh = "";
+let sh = `<a href="index.html" class="${page==="index"?"active":""}"><span class="num">⌂</span><span>Accueil (toutes les matières)</span></a><div class="subjsw">${Object.entries(SUBJ).map(([k,v])=>`<a href="${v.home}" class="${k===subj?"on":""}">${v.ico} ${v.short}</a>`).join("")}</div>`;
 NAV.forEach(it=>{
+  if(subj ? it.s!==subj : true) return;
   if(it.h){sh+=`<h4>${it.h}</h4>`;return;}
   const pct = progressOf(it.id);
   sh+=`<a href="${it.href}" class="${it.id===page?"active":""}"><span class="num">${it.n}</span><span>${it.t}</span>${pct!==null?`<span class="pbar" title="${pct}% maîtrisé"><i style="width:${pct}%"></i></span>`:""}</a>`;
@@ -104,7 +123,7 @@ function refreshSide(){
 }
 
 /* ---- pager ---- */
-const flat = NAV.filter(n=>n.id);
+const flat = NAV.filter(n=>n.id && n.s===subj);
 const idx = flat.findIndex(n=>n.id===page);
 if(idx>=0 && !article.hasAttribute("data-nopager")){
   const pv=flat[idx-1], nx=flat[idx+1];
@@ -163,7 +182,7 @@ article.querySelectorAll(".quiz[data-quiz]").forEach(el=>{
   el._pool=pool; el._n=+el.dataset.n||pool.length;
   buildQuiz(el, keys.length>1||el.dataset.n?pickPool(el):pool, el.dataset.quiz);
 });
-function chapName(k){ return {ch0:"Ch. 0",ch1:"Ch. 1",ch2:"Ch. 2",ch3:"Ch. 3",ch4:"Ch. 4",ch5:"Ch. 5",td1:"TD1",td2:"TD2"}[k]||k; }
+function chapName(k){ return {ch0:"Ch. 0",ch1:"Ch. 1",ch2:"Ch. 2",ch3:"Ch. 3",ch4:"Ch. 4",ch5:"Ch. 5",td1:"TD1",td2:"TD2",td3:"TD3",el1:"Ch. 1",el2:"Ch. 2",el3:"Ch. 3",eltd1:"TD1",eltd2:"TD2",eltd3:"TD3"}[k]||k; }
 
 /* ---- flashcards ---- */
 article.querySelectorAll(".flash[data-cards]").forEach(el=>{
@@ -200,7 +219,8 @@ initMath();
 
 /* ---- home progress cards ---- */
 document.querySelectorAll("[data-progress]").forEach(el=>{
-  const p=progressOf(el.dataset.progress); const i=el.querySelector("i"); if(i) i.style.width=(p||0)+"%";
+  const ks=el.dataset.progress.split(","); const vals=ks.map(progressOf); const seen=vals.filter(v=>v!==null);
+  const p=seen.length?Math.round(vals.reduce((a,v)=>a+(v||0),0)/ks.length):null; const i=el.querySelector("i"); if(i) i.style.width=(p||0)+"%";
   const lab=el.parentNode.querySelector(".plabel"); if(lab) lab.textContent = p===null?"Pas encore ouvert":`${p}% maîtrisé`;
 });
 

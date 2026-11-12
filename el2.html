@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Élec Ch. 2 — Régime transitoire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="el2">
+<article class="content">
+
+<div class="kicker">Électronique analogique · Chapitre 2</div>
+<h1>Régime transitoire : RC, RL, RLC</h1>
+<p class="lead">Quand on ferme un interrupteur, le circuit ne passe pas instantanément au nouvel état : condensateurs et bobines <b>stockent de l'énergie</b> et ne peuvent pas la changer d'un coup. On étudie cette <b>transition</b>, décrite par une équation différentielle.</p>
+
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list">
+<li>lois et propriétés de C et L (continuité, énergie)</li><li>trouver les conditions initiales (0⁻, 0⁺)</li>
+<li>établir l'EDO d'un circuit RC / RL / RLC</li><li>résoudre une EDO du 1ᵉʳ ordre</li>
+<li>tracer les courbes et lire τ</li><li>reconnaître les 3 régimes d'un RLC (Q, Δ)</li>
+<li>résoudre le cas pseudo-périodique</li><li>faire un bilan énergétique</li>
+</ul></div>
+
+<h2 id="composants"><span class="h2num">2.1</span>Condensateur et bobine</h2>
+<div class="grid2">
+<div class="card def"><span class="tag">Le condensateur (C, en farads)</span>
+<p>Deux armatures séparées par un isolant ; la charge stockée est proportionnelle à la tension : $q=Cu_C$, donc</p>
+$$i_C=C\frac{\mathrm du_C}{\mathrm dt}$$
+<ul><li>$u_C$ variable ⇒ courant non nul.</li><li>$u_C$ constante ⇒ $i_C=0$ : charge terminée.</li><li><b>Pas de discontinuité de $u_C$</b> (un condensateur ne se vide pas instantanément).</li></ul></div>
+<div class="card def"><span class="tag">La bobine (L, en henrys)</span>
+<p>Enroulement de fil ; n'a d'effet que si le courant varie :</p>
+$$u_L=L\frac{\mathrm di_L}{\mathrm dt}$$
+<ul><li>$i_L$ constant ⇒ $u_L=0$ : la bobine est un fil.</li><li><b>Pas de discontinuité de $i_L$</b> (le courant dans un circuit inductif ne peut pas s'interrompre instantanément).</li></ul></div>
+</div>
+<div class="card why"><span class="tag">Pourquoi ces continuités ? (le point clé du chapitre)</span><p>Si $u_C$ sautait, $\mathrm du_C/\mathrm dt$ serait infini ⇒ courant infini : impossible. Si $i_L$ sautait, $u_L$ serait infinie. Physiquement : un saut serait un changement instantané de l'<b>énergie stockée</b> ($\frac12Cu^2$, $\frac12Li^2$), donc une puissance infinie. <b>Ces continuités donnent les conditions initiales.</b> (Origine physique : <a href="ch2.html#condensateur">condensateur</a>, <a href="ch4.html#auto">auto-induction</a> en électromagnétisme.)</p></div>
+<div class="card def"><span class="tag">Énergie stockée</span>
+<p>Condensateur : $P=u_Ci=u_C\,C\frac{\mathrm du_C}{\mathrm dt}=\frac{\mathrm d}{\mathrm dt}\left(\frac12Cu_C^2\right)$ ⇒ $E_C=\frac12Cu_C^2$. Bobine : de même $E_L=\frac12Li^2$. Une bobine (un condensateur) <b>idéale</b> ne dissipe rien : elle stocke puis restitue. Une bobine réelle a une petite résistance qui dissipe par effet Joule.</p></div>
+<div class="card def"><span class="tag">Associations</span>
+<p><b>Condensateurs</b> : parallèle $C_{eq}=C_1+C_2+\dots$ (même tension, charges qui s'ajoutent) ; série $\frac1{C_{eq}}=\frac1{C_1}+\frac1{C_2}+\dots$ (même courant, mêmes charges). <b>Bobines</b> : comme les résistances (série : somme ; parallèle : inverses).</p></div>
+<div class="card rem"><span class="tag">En régime permanent continu (à retenir par cœur)</span><p><b>Condensateur = circuit ouvert</b> ($i=0$) ; <b>bobine = fil</b> ($u=0$). C'est ce qu'on utilise pour « fermé depuis très longtemps ».</p></div>
+
+<h2 id="methode"><span class="h2num">2.2</span>La méthode générale</h2>
+<div class="card meth"><span class="tag">Méthode — régime transitoire (5 étapes)</span>
+<ol><li><b>Avant ($t=0^-$)</b> : régime permanent ⇒ C ouvert, L fil ⇒ calcule $u_C(0^-)$ et $i_L(0^-)$.</li>
+<li><b>Juste après ($t=0^+$)</b> : $u_C(0^+)=u_C(0^-)$, $i_L(0^+)=i_L(0^-)$ (les autres grandeurs peuvent sauter).</li>
+<li><b>Équation différentielle</b> pour $t>0$ : mailles + nœuds + Ohm + $i=C\,\mathrm du/\mathrm dt$ ou $u=L\,\mathrm di/\mathrm dt$. Mets-la sous forme canonique $\tau\frac{\mathrm dy}{\mathrm dt}+y=y_\infty$.</li>
+<li><b>Résolution</b> : solution homogène $Ae^{-t/\tau}$ + solution particulière (constante $y_\infty$ si second membre constant).</li>
+<li><b>Constante A</b> avec la condition initiale de l'étape 2. Puis déduis les autres grandeurs (Ohm, loi du composant).</li></ol></div>
+<div class="card key"><span class="tag">Le raccourci du 1ᵉʳ ordre</span>
+$$y(t)=y_\infty+\big(y(0^+)-y_\infty\big)\,e^{-t/\tau}$$
+<p>Il suffit de connaître la valeur initiale, la valeur finale et τ. (Mais en partiel, sauf mention contraire, il faut <b>établir et résoudre</b> l'EDO.)</p></div>
+
+<h2 id="rc"><span class="h2num">2.3</span>Circuit RC</h2>
+<p><b>Charge :</b> source E, résistance R, condensateur C déchargé, interrupteur fermé à $t=0$. On cherche $u_C(t)$.</p>
+<div class="steps" data-start="Résoudre la charge pas à pas">
+<div class="step"><h4>Lois</h4><p>Mailles $E=u_R+u_C$ ; Ohm $u_R=Ri$ ; condensateur $i=C\frac{\mathrm du_C}{\mathrm dt}$.</p></div>
+<div class="step"><h4>Équation différentielle</h4><p>$$E=RC\frac{\mathrm du_C}{\mathrm dt}+u_C\quad\Longleftrightarrow\quad\tau\frac{\mathrm du_C}{\mathrm dt}+u_C=E,\qquad\boxed{\tau=RC}$$ EDO du 1ᵉʳ ordre en tension.</p></div>
+<div class="step"><h4>Conditions initiales</h4><p>$t=0^-$ : C non chargé ⇒ $u_C=0$, $i=0$. $t=0^+$ : continuité ⇒ $u_C(0^+)=0$ ; donc toute la tension est sur R : $i(0^+)=E/R$ (saut !).</p></div>
+<div class="step"><h4>Résolution</h4><p>Homogène : $Ae^{-t/RC}$ ; particulière : $E$ ; générale : $u_C=Ae^{-t/\tau}+E$. Avec $u_C(0)=0$ : $A=-E$.
+$$\boxed{u_C(t)=E\left(1-e^{-t/\tau}\right)}$$</p></div>
+<div class="step"><h4>Les autres grandeurs</h4><p>$u_R=E-u_C=Ee^{-t/\tau}$ ; $i=\frac{u_R}{R}=\frac ER e^{-t/\tau}$. Courant maximal à $t=0^+$ : $E/R$, puis il s'annule (C = circuit ouvert).</p></div>
+</div>
+<figure class="anim tall" data-anim="rcrl" data-badge><figcaption><b>Manipule :</b> en haut la grandeur <b>continue</b> ($u_C$ ou $i_L$), en bas celle qui <b>saute</b> à $t=0$ ($i$ ou $u_L$). Change R et C : τ change, la forme reste la même. Repère la tangente à l'origine qui coupe l'asymptote en $t=\tau$.</figcaption></figure>
+<div class="card ex"><span class="tag">Décharge</span><p>C chargé à E, on le referme sur R à $t=0$. Mailles $u_R+u_C=0$ ⇒ $\tau\frac{\mathrm du_C}{\mathrm dt}+u_C=0$. Solution $Ae^{-t/\tau}$ avec $u_C(0)=E$ :</p>
+$$u_C(t)=Ee^{-t/\tau},\qquad u_R=-Ee^{-t/\tau},\qquad i=-\frac ER e^{-t/\tau}$$
+<p>Le courant est négatif : il circule dans l'autre sens (le condensateur se comporte en générateur).</p></div>
+<div class="card rem"><span class="tag">Lire τ sur une courbe</span><ul><li>À $t=\tau$ : 63 % du chemin parcouru (charge) / 37 % restant (décharge).</li><li>À $3\tau$ : 95 % ; à $5\tau$ : 99 % → on considère le régime permanent atteint.</li><li>La tangente à l'origine coupe l'asymptote en $t=\tau$.</li></ul></div>
+
+<h2 id="rl"><span class="h2num">2.4</span>Circuit RL</h2>
+<div class="card ex"><span class="tag">Établissement du courant</span>
+<p>Mailles $E=Ri+L\frac{\mathrm di}{\mathrm dt}$ ⇒ $\frac ER=\tau\frac{\mathrm di}{\mathrm dt}+i$ avec $\boxed{\tau=\dfrac LR}$ (EDO en <b>courant</b>).</p>
+<p>$t=0^-$ : pas d'énergie ⇒ $i=0$. $t=0^+$ : continuité ⇒ $i(0^+)=0$ ; donc $u_R=0$ et $u_L(0^+)=E$ (saut).</p>
+$$i(t)=\frac ER\left(1-e^{-t/\tau}\right),\qquad u_R=E\left(1-e^{-t/\tau}\right),\qquad u_L=L\frac{\mathrm di}{\mathrm dt}=Ee^{-t/\tau}$$
+<p>En régime permanent la bobine devient un fil : $i\to E/R$, $u_L\to0$.</p></div>
+<div class="card ex"><span class="tag">Extinction</span><p>Courant initial $E/R$, on court-circuite : $\tau\frac{\mathrm di}{\mathrm dt}+i=0$ ⇒ $i=\frac ERe^{-t/\tau}$, $u_R=Ee^{-t/\tau}$, $u_L=-Ee^{-t/\tau}$.</p></div>
+<div class="card why"><span class="tag">RC vs RL : la symétrie</span>
+<div class="tablewrap"><table><tr><th></th><th>RC</th><th>RL</th></tr>
+<tr><td>Grandeur continue</td><td>tension $u_C$</td><td>courant $i_L$</td></tr>
+<tr><td>τ</td><td>$RC$ (grand R ⇒ lent)</td><td>$L/R$ (grand R ⇒ rapide !)</td></tr>
+<tr><td>Permanent continu</td><td>circuit ouvert</td><td>fil</td></tr>
+<tr><td>Énergie</td><td>$\frac12Cu^2$ (champ E)</td><td>$\frac12Li^2$ (champ B)</td></tr></table></div></div>
+
+<h2 id="rlc"><span class="h2num">2.5</span>Circuit RLC série (2ᵈ ordre)</h2>
+<p>Condensateur chargé à E, on ferme le circuit R–L–C à $t=0$ (décharge libre). On cherche $u_C(t)$.</p>
+<div class="steps" data-start="Établir l'équation">
+<div class="step"><h4>Lois</h4><p>Mailles $0=u_R+u_L+u_C$ ; $u_R=Ri$ ; $i=C\frac{\mathrm du_C}{\mathrm dt}$ ; $u_L=L\frac{\mathrm di}{\mathrm dt}=LC\frac{\mathrm d^2u_C}{\mathrm dt^2}$.</p></div>
+<div class="step"><h4>Équation du 2ᵈ ordre</h4><p>$$LC\frac{\mathrm d^2u_C}{\mathrm dt^2}+RC\frac{\mathrm du_C}{\mathrm dt}+u_C=0\iff\frac{\mathrm d^2u_C}{\mathrm dt^2}+\frac RL\frac{\mathrm du_C}{\mathrm dt}+\frac1{LC}u_C=0$$</p></div>
+<div class="step"><h4>Polynôme caractéristique</h4><p>On cherche $u=Ae^{rt}$ : $r^2+\frac RLr+\frac1{LC}=0$, soit avec les <b>variables réduites</b>
+$$\omega_0=\frac1{\sqrt{LC}}\ \text{(pulsation propre)},\qquad\lambda=\frac R{2L}\ \text{(amortissement)}:\qquad r^2+2\lambda r+\omega_0^2=0$$
+Discriminant $\Delta=4(\lambda^2-\omega_0^2)$.</p></div>
+</div>
+<figure class="anim tall" data-anim="rlc" data-badge><figcaption><b>Manipule :</b> diminue R : les racines quittent l'axe réel et deviennent complexes (−λ ± jω) → oscillations dans une enveloppe $e^{-\lambda t}$. Au critique (R = 316 Ω ici), retour le plus rapide sans dépasser.</figcaption></figure>
+<div class="grid3">
+<div class="card def"><span class="tag">Δ > 0 : apériodique</span><p>$r_{1,2}=-\lambda\pm\sqrt{\lambda^2-\omega_0^2}$ (deux racines réelles <b>négatives</b>).</p><p>$u_C=A_1e^{r_1t}+A_2e^{r_2t}$. Avec $u_C(0)=E$, $i(0)=0$ : $A_1=\frac{-r_2E}{r_1-r_2}$, $A_2=\frac{r_1E}{r_1-r_2}$.</p><p>Retour lent, sans oscillation. $Q\lt\frac12$.</p></div>
+<div class="card def"><span class="tag">Δ = 0 : critique</span><p>Racine double $r=-\lambda$.</p><p>$u_C=(A_1t+A_2)e^{-\lambda t}=E(1+\lambda t)e^{-\lambda t}$ ; $i=-EC\lambda^2te^{-\lambda t}$.</p><p>Retour le plus rapide sans oscillation. $Q=\frac12$.</p></div>
+<div class="card def"><span class="tag">Δ &lt; 0 : pseudo-périodique</span><p>$r=-\lambda\pm j\omega$ avec $\boxed{\omega=\sqrt{\omega_0^2-\lambda^2}}$ (pseudo-pulsation).</p><p>$u_C=E\left(\cos\omega t+\frac\lambda\omega\sin\omega t\right)e^{-\lambda t}$ ; $i=-CE\frac{\omega^2+\lambda^2}{\omega}e^{-\lambda t}\sin\omega t$.</p><p>Oscillations amorties, pseudo-période $T=2\pi/\omega$. $Q>\frac12$.</p></div>
+</div>
+<div class="card key"><span class="tag">Facteur de qualité — savoir dans quel régime on est</span>
+<p>Critique ⇔ $\lambda=\omega_0$ ⇔ $\frac{R^2}{4L^2}=\frac1{LC}$ ⇔ $\frac1R\sqrt{\frac LC}=\frac12$. On définit</p>
+$$Q=\frac1R\sqrt{\frac LC}=\frac{\omega_0}{2\lambda}:\qquad Q\lt\tfrac12\ \text{apériodique},\quad Q=\tfrac12\ \text{critique},\quad Q>\tfrac12\ \text{pseudo-périodique}$$
+<p>Résistance critique : $R_c=2\sqrt{L/C}$.</p></div>
+<div class="card why"><span class="tag">Interprétation physique</span><p>L'énergie fait des allers-retours entre le condensateur ($\frac12Cu^2$) et la bobine ($\frac12Li^2$) — c'est l'<a href="ch4.html#lc">oscillateur LC</a> — pendant que R en dissipe un peu à chaque passage. Peu de R (Q grand) : beaucoup d'oscillations. Beaucoup de R : l'énergie est dissipée avant de pouvoir osciller. L'énergie décroît en $e^{-2\lambda t}$ : durée de relaxation en énergie $\tau_e=\frac1{2\lambda}=\frac LR$.</p></div>
+<div class="card trap"><span class="tag">⚠ Pièges</span><ul><li>Les conditions initiales d'un 2ᵈ ordre : il en faut <b>deux</b> ($u_C(0)$ et $\frac{\mathrm du_C}{\mathrm dt}(0)=\frac{i(0)}{C}$).</li><li>Pseudo-pulsation ≠ pulsation propre : $\omega=\sqrt{\omega_0^2-\lambda^2}\lt\omega_0$ (très proches si Q ≫ 1).</li><li>Un RLC <b>parallèle</b> a $Q=R\sqrt{C/L}$ (l'inverse !) — voir TD2 ex. 7.</li></ul></div>
+
+<h2 id="retenir" data-nomaster>À retenir</h2>
+<div class="card key"><span class="tag">À retenir — Chapitre 2</span><ul><li>Équations caractéristiques de la bobine et du condensateur, continuité de $u_C$ et $i_L$.</li><li>Résolution d'EDO du 1ᵉʳ et du 2ᵈ ordre.</li><li>Notions de régime transitoire et permanent.</li><li>Comportement des circuits RC, RL et RLC (τ, ω₀, λ, Q).</li></ul></div>
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="el2"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="el2"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=charge+d%C3%A9charge+condensateur+circuit+RC+%C3%A9quation+diff%C3%A9rentielle">▶ Circuit RC</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=circuit+RLC+s%C3%A9rie+r%C3%A9gimes+ap%C3%A9riodique+critique+pseudo-p%C3%A9riodique">▶ RLC : les 3 régimes</a></p>
+</article>
+<script src="js/data.js"></script><script src="js/data-elec.js"></script><script src="js/anims-core.js"></script><script src="js/anims-elec.js"></script><script src="js/app.js"></script>
+</body></html>
