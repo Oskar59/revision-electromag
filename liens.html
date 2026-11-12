@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Les mêmes équations partout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="liens">
+<article class="content" data-nopager>
+<div class="kicker">Physique × Électronique</div>
+<h1>Tu n'as pas appris 40 formules, mais 5 idées.</h1>
+<p class="lead">La même structure mathématique revient sans cesse, avec des noms différents. Reconnaître la structure, c'est comprendre d'un coup tous les systèmes qui la partagent — et pouvoir deviner la réponse avant de calculer.</p>
+
+<h2 id="dico" data-nomaster><span class="h2num">0</span>Le dictionnaire de l'image mentale</h2>
+<p>Garde ces images en tête : elles marchent dans les deux matières.</p>
+<div class="tablewrap"><table>
+<tr><th>Électricité</th><th>Image : l'eau</th><th>Image : le paysage</th></tr>
+<tr><td>Potentiel V, tension U</td><td>pression / hauteur d'eau</td><td>altitude</td></tr>
+<tr><td>Champ E</td><td>ce qui pousse l'eau</td><td>pente (vers le bas)</td></tr>
+<tr><td>Courant i</td><td>débit</td><td>billes qui roulent</td></tr>
+<tr><td>Résistance R</td><td>tuyau étroit</td><td>terrain boueux (frottement)</td></tr>
+<tr><td>Générateur</td><td>pompe</td><td>remonte-pente</td></tr>
+<tr><td>Condensateur C</td><td>ballon élastique (réservoir)</td><td>bassin qui se remplit</td></tr>
+<tr><td>Bobine L</td><td>roue à aubes lourde (inertie)</td><td>chariot lourd</td></tr>
+<tr><td>Loi des nœuds</td><td>l'eau ne disparaît pas aux carrefours</td><td>—</td></tr>
+<tr><td>Loi des mailles</td><td>—</td><td>une randonnée en boucle revient à la même altitude</td></tr>
+<tr><td>Charge + / −</td><td>robinet / bonde</td><td>colline / cuvette</td></tr>
+<tr><td>Champ B</td><td>tourbillon autour du courant</td><td>—</td></tr>
+</table></div>
+<figure class="anim tall" data-anim="hydro" data-badge><figcaption>Le circuit hydraulique : les modes ballon (C), roue (L) et LC montrent sans aucune formule pourquoi $u_C$ et $i_L$ ne sautent pas, et pourquoi un LC oscille.</figcaption></figure>
+
+<h2 id="expo" data-nomaster><span class="h2num">1</span>L'exponentielle : « je reviens vers l'équilibre d'autant plus vite que j'en suis loin »</h2>
+<div class="card key"><span class="tag">La structure</span>
+$$\tau\frac{\mathrm dy}{\mathrm dt}+y=y_\infty\quad\Longrightarrow\quad y(t)=y_\infty+\big(y_0-y_\infty\big)e^{-t/\tau}$$
+<p>Dès que la <b>vitesse de variation est proportionnelle à l'écart à l'équilibre</b>, c'est cette courbe. Il suffit d'identifier trois choses : la valeur de départ, la valeur d'arrivée, et τ.</p></div>
+<figure class="anim" data-anim="universal" data-badge><figcaption><b>Change de système</b> avec le curseur : la courbe ne bouge pas, seule la traduction change. Charge RC, bobine RL, frein magnétique des rails, électron de Drude, chute dans le miel, café qui refroidit.</figcaption></figure>
+<div class="card why"><span class="tag">Pourquoi c'est toujours la même chose</span><p>Dans tous ces cas, il y a <b>quelque chose qui stocke</b> (charge, courant, vitesse, chaleur) et <b>quelque chose qui freine proportionnellement</b> (R, frottement, collisions). Le stock se remplit vite au début (grand écart) puis de plus en plus doucement. τ = « capacité de stockage × résistance au passage » : RC, L/R, m/k…</p></div>
+
+<h2 id="oscill" data-nomaster><span class="h2num">2</span>L'oscillateur : « un ressort + une inertie »</h2>
+<div class="card key"><span class="tag">La structure</span>
+$$\ddot y+\frac{\omega_0}{Q}\dot y+\omega_0^2\,y=0$$
+<p><b>Ressort</b> (qui ramène vers l'équilibre) : condensateur, ressort, gravité. <b>Inertie</b> (qui fait dépasser l'équilibre) : bobine, masse. <b>Frottement</b> : résistance. Q grand ⇒ beaucoup d'oscillations ; Q &lt; ½ ⇒ aucune.</p></div>
+<p>Passe l'animation ci-dessus en mode « Oscillateur » : LC, masse-ressort, pendule, ballon + roue, onde : même courbe.</p>
+<div class="tablewrap"><table><tr><th>Système</th><th>ressort</th><th>inertie</th><th>frottement</th><th>ω₀</th></tr>
+<tr><td>LC / RLC (élec Ch. 2, physique Ch. 4)</td><td>condensateur $q/C$</td><td>bobine $L\ddot q$</td><td>R</td><td>$1/\sqrt{LC}$</td></tr>
+<tr><td>Masse-ressort</td><td>$kx$</td><td>$m\ddot x$</td><td>frottement fluide</td><td>$\sqrt{k/m}$</td></tr>
+<tr><td>Pendule</td><td>$mg\theta$</td><td>$m\ell\ddot\theta$</td><td>air</td><td>$\sqrt{g/\ell}$</td></tr></table></div>
+
+<h2 id="dual" data-nomaster><span class="h2num">3</span>Électrique ↔ magnétique : deux colonnes jumelles</h2>
+<div class="tablewrap"><table>
+<tr><th></th><th>Électrique</th><th>Magnétique</th></tr>
+<tr><td>Source</td><td>charge immobile</td><td>courant (charges qui bougent)</td></tr>
+<tr><td>Théorème « facile »</td><td>Gauss (flux de E)</td><td>Ampère (circulation de B)</td></tr>
+<tr><td>Méthode</td><td colspan="2">les <b>mêmes 5 étapes</b> : symétries → surface/contour → flux/circulation → ce qui est enfermé → égaler</td></tr>
+<tr><td>Composant</td><td>condensateur $Q=CU$</td><td>bobine $\Phi=Li$</td></tr>
+<tr><td>Ce qui est continu</td><td>$u_C$</td><td>$i_L$</td></tr>
+<tr><td>Énergie</td><td>$\frac12CU^2$, $\frac12\varepsilon_0E^2$</td><td>$\frac12Li^2$, $\frac{B^2}{2\mu_0}$</td></tr>
+<tr><td>Impédance</td><td>$\frac1{jC\omega}$ (ouvert en BF)</td><td>$jL\omega$ (fil en BF)</td></tr>
+<tr><td>Fil infini</td><td>$E=\frac{\lambda}{2\pi\varepsilon_0r}$</td><td>$B=\frac{\mu_0i}{2\pi r}$</td></tr>
+</table></div>
+
+<h2 id="kirch" data-nomaster><span class="h2num">4</span>Kirchhoff = Maxwell en version circuit</h2>
+<div class="grid2">
+<div class="card def"><span class="tag">Loi des nœuds</span><p>= conservation de la charge = $\oiint\vec j\cdot\mathrm d\vec S=0$ (physique Ch. 2). Rien ne s'accumule dans un fil.</p></div>
+<div class="card def"><span class="tag">Loi des mailles</span><p>= $\oint\vec E\cdot\mathrm d\vec\ell=0$ (physique Ch. 1, rot E = 0). En régime variable, une bobine ajoute exactement le terme $-\mathrm d\Phi/\mathrm dt$ : c'est Faraday, qu'on écrit $u_L=L\,\mathrm di/\mathrm dt$.</p></div>
+</div>
+<div class="card why"><span class="tag">Linéarité : superposition partout</span><p>Le champ de plusieurs charges = somme des champs (physique Ch. 1). La réponse d'un circuit à plusieurs sources = somme des réponses (élec Ch. 1). Un créneau dans un filtre = somme des réponses à chaque harmonique (élec Ch. 3). Même idée : <b>les équations sont linéaires, donc on découpe le problème</b>.</p></div>
+
+<h2 id="prop" data-nomaster><span class="h2num">5</span>La propagation : des cellules LC jusqu'à la lumière</h2>
+<p>Un LC isolé oscille sur place. Mets-en une infinité à la suite : l'oscillation se transmet de cellule en cellule, c'est une <b>onde</b>.</p>
+$$\frac{\partial^2V}{\partial z^2}=\mathcal{LC}\frac{\partial^2V}{\partial t^2}\qquad\longleftrightarrow\qquad\frac{\partial^2E}{\partial z^2}=\varepsilon_0\mu_0\frac{\partial^2E}{\partial t^2}$$
+<p>Sur un câble coaxial, $\mathcal{LC}=\varepsilon_0\mu_0\varepsilon_r$ : le signal dans le câble et la lumière dans la fibre obéissent à la <b>même équation</b>. C'est la réponse à la question du tout premier cours. → <a href="ch5.html#ligne">Physique Ch. 5</a></p>
+<figure class="anim" data-anim="line" data-badge><figcaption>Une impulsion sur une chaîne de cellules LC.</figcaption></figure>
+</article>
+<script src="js/data.js"></script><script src="js/learn-data.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-1.js"></script><script src="js/anims-2.js"></script><script src="js/anims-3.js"></script><script src="js/anims-analog.js"></script><script src="js/app.js"></script>
+</body></html>

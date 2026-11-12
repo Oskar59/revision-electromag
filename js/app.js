@@ -17,6 +17,7 @@ const NAV = [
   {s:"phys",id:"td2", href:"td2.html", n:"T2", t:"TD 2 — Conducteurs & courant"},
   {s:"phys",id:"td3", href:"td3.html", n:"T3", t:"TD 3 — Magnétostatique (Ampère)"},
   {s:"phys",h:"S'entraîner"},
+  {s:"phys",id:"liens", href:"liens.html", n:"∞", t:"Les mêmes équations partout"},
   {s:"phys",id:"formulaire", href:"formulaire.html", n:"Σ", t:"Formulaire complet"},
   {s:"phys",id:"quiz", href:"quiz.html", n:"?", t:"Examen blanc & flashcards"},
   {s:"elec",h:"Démarrer"},
@@ -31,13 +32,14 @@ const NAV = [
   {s:"elec",id:"eltd2", href:"eltd2.html", n:"T2", t:"TD 2 — Régime transitoire"},
   {s:"elec",id:"eltd3", href:"eltd3.html", n:"T3", t:"TD 3 — Sinusoïdal & fonction de transfert"},
   {s:"elec",h:"S'entraîner"},
+  {s:"elec",id:"liens", href:"liens.html", n:"∞", t:"Les mêmes équations partout"},
   {s:"elec",id:"el-formulaire", href:"el-formulaire.html", n:"Σ", t:"Formulaire complet"},
   {s:"elec",id:"el-quiz", href:"el-quiz.html", n:"?", t:"Examen blanc & flashcards"},
 ];
 window.EM_NAV = NAV;
 const page = document.body.dataset.page || "index";
 const cur = NAV.find(n=>n.id===page);
-const subj = cur ? cur.s : null;
+const subj = page==="liens" ? null : (cur ? cur.s : null);
 const LS = {
   get(k,d){try{const v=localStorage.getItem("em:"+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
   set(k,v){try{localStorage.setItem("em:"+k,JSON.stringify(v))}catch(e){}}
@@ -59,7 +61,7 @@ top.innerHTML = `<button class="iconbtn" id="menuBtn" aria-label="Menu">☰</but
   <button class="iconbtn" id="themeBtn" title="Thème clair/sombre">◐</button>`;
 const layout = document.createElement("div"); layout.className="layout";
 const side = document.createElement("nav"); side.className="sidebar";
-let sh = `<a href="index.html" class="${page==="index"?"active":""}"><span class="num">⌂</span><span>Accueil (toutes les matières)</span></a><div class="subjsw">${Object.entries(SUBJ).map(([k,v])=>`<a href="${v.home}" class="${k===subj?"on":""}">${v.ico} ${v.short}</a>`).join("")}</div>`;
+let sh = `<a href="index.html" class="${page==="index"?"active":""}"><span class="num">⌂</span><span>Accueil (toutes les matières)</span></a><a href="liens.html" class="${page==="liens"?"active":""}"><span class="num">∞</span><span>Les mêmes équations partout</span></a><div class="subjsw">${Object.entries(SUBJ).map(([k,v])=>`<a href="${v.home}" class="${k===subj?"on":""}">${v.ico} ${v.short}</a>`).join("")}</div>`;
 NAV.forEach(it=>{
   if(subj ? it.s!==subj : true) return;
   if(it.h){sh+=`<h4>${it.h}</h4>`;return;}
@@ -210,7 +212,7 @@ article.querySelectorAll(".flash[data-cards]").forEach(el=>{
 function renderMath(node){
   if(window.renderMathInElement){
     renderMathInElement(node,{delimiters:[{left:"$$",right:"$$",display:true},{left:"\\[",right:"\\]",display:true},{left:"$",right:"$",display:false},{left:"\\(",right:"\\)",display:false}],
-      throwOnError:false, macros:{"\\vec":"\\overrightarrow{#1}","\\rot":"\\overrightarrow{\\mathrm{rot}}\\,","\\dive":"\\mathrm{div}\\,","\\grad":"\\overrightarrow{\\mathrm{grad}}\\,","\\d":"\\mathrm{d}","\\ur":"\\overrightarrow{e_r}","\\uz":"\\overrightarrow{e_z}","\\ut":"\\overrightarrow{e_\\theta}","\\ux":"\\overrightarrow{e_x}","\\uy":"\\overrightarrow{e_y}"}});
+      throwOnError:false, strict:false, trust:(c)=>c.command==="\\htmlClass", macros:{"\\vec":"\\overrightarrow{#1}","\\rot":"\\overrightarrow{\\mathrm{rot}}\\,","\\dive":"\\mathrm{div}\\,","\\grad":"\\overrightarrow{\\mathrm{grad}}\\,","\\d":"\\mathrm{d}","\\ur":"\\overrightarrow{e_r}","\\uz":"\\overrightarrow{e_z}","\\ut":"\\overrightarrow{e_\\theta}","\\ux":"\\overrightarrow{e_x}","\\uy":"\\overrightarrow{e_y}"}});
   }
 }
 window.EM_renderMath=renderMath;

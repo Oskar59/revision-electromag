@@ -247,3 +247,74 @@ figure.anim figcaption b{color:var(--ink)}
 .subject ul{margin:0;padding-left:1.1em;color:var(--ink2);font-size:14.5px}
 .elec-ico{background:linear-gradient(135deg,#f0a020,#e2552b)}
 .phys-ico{background:linear-gradient(135deg,var(--e),var(--accent) 55%,var(--b))}
+
+/* ================= Composants d'apprentissage ================= */
+/* formules annotées */
+.annot{border-radius:var(--radius);padding:14px 18px 12px;margin:18px 0;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--shadow)}
+.annot>.tag{font-size:12px;font-weight:750;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.annot .katex .c1{color:#e2552b}.annot .katex .c2{color:#1597a6}.annot .katex .c3{color:#6a3fbf}.annot .katex .c4{color:#2c8a4b}.annot .katex .c5{color:#c2185b}.annot .katex .c6{color:#b26a12}
+:root[data-theme="dark"] .annot .katex .c1{color:#ff7a4d} :root[data-theme="dark"] .annot .katex .c2{color:#3cc7d6} :root[data-theme="dark"] .annot .katex .c3{color:#c0a4ff} :root[data-theme="dark"] .annot .katex .c4{color:#6fd394} :root[data-theme="dark"] .annot .katex .c5{color:#ff7fb0} :root[data-theme="dark"] .annot .katex .c6{color:#ffc061}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .annot .katex .c1{color:#ff7a4d}:root:not([data-theme="light"]) .annot .katex .c2{color:#3cc7d6}:root:not([data-theme="light"]) .annot .katex .c3{color:#c0a4ff}:root:not([data-theme="light"]) .annot .katex .c4{color:#6fd394}:root:not([data-theme="light"]) .annot .katex .c5{color:#ff7fb0}:root:not([data-theme="light"]) .annot .katex .c6{color:#ffc061}}
+.annot .katex [class*=" c"],.annot .katex [class^="c"]{cursor:help;transition:background .15s;border-radius:4px}
+.annot .hl{background:color-mix(in srgb,currentColor 18%,transparent);outline:2px solid color-mix(in srgb,currentColor 45%,transparent)}
+.annot .legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.annot .chip{font-size:13px;font-weight:650;padding:4px 10px;border-radius:20px;border:1.5px solid currentColor;background:transparent;cursor:pointer;font-family:var(--font)}
+.annot .chip.on{background:color-mix(in srgb,currentColor 14%,transparent)}
+.annot .chip.k1{color:#e2552b}.annot .chip.k2{color:#1597a6}.annot .chip.k3{color:#6a3fbf}.annot .chip.k4{color:#2c8a4b}.annot .chip.k5{color:#c2185b}.annot .chip.k6{color:#b26a12}
+.annot .expl{min-height:1.6em;margin-top:8px;font-size:15px;color:var(--ink2)}
+.annot .sentence{margin-top:8px;padding:8px 12px;border-radius:10px;background:var(--bg3);font-size:15px}
+/* image mentale */
+.card.img{background:linear-gradient(135deg,color-mix(in srgb,#f0a020 12%,var(--bg2)),var(--bg2));border-color:color-mix(in srgb,#f0a020 40%,transparent)}
+.card.img>.tag{color:#c47a00}
+:root[data-theme="dark"] .card.img>.tag{color:#ffc061}
+/* carte logique */
+.lmap{margin:22px 0;padding:16px;border-radius:18px;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--shadow)}
+.lmap>h3{margin:0 0 4px;font-size:18px}
+.lmap .sub{font-size:14px;color:var(--ink3);margin-bottom:10px}
+.lnode{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 14px;cursor:pointer;font:inherit;color:var(--ink);position:relative}
+.lnode:hover{border-color:var(--accent)}
+.lnode b{font-size:15.5px}
+.lnode .k{font-family:var(--mono);font-size:11px;color:var(--accent);margin-right:6px}
+.lnode .det{display:none;margin-top:6px;font-size:14.5px;color:var(--ink2)}
+.lnode.open{border-color:var(--accent);background:var(--accent-soft)}
+.lnode.open .det{display:block}
+.larrow{display:flex;align-items:center;gap:10px;margin:2px 0 2px 22px;color:var(--ink3);font-size:13.5px;min-height:34px}
+.larrow::before{content:"";width:2px;align-self:stretch;background:var(--accent);opacity:.5;margin-right:4px}
+.larrow i{font-style:normal;color:var(--accent);font-weight:800}
+/* prédiction */
+.predict{border-radius:var(--radius);padding:14px 18px;margin:18px 0 8px;background:color-mix(in srgb,#c2185b 7%,var(--bg2));border:1px dashed color-mix(in srgb,#c2185b 45%,transparent)}
+.predict .tag{font-size:12px;font-weight:750;letter-spacing:.06em;text-transform:uppercase;color:#c2185b}
+:root[data-theme="dark"] .predict .tag{color:#ff7fb0}
+.predict .q{font-weight:600;margin:4px 0 10px}
+.predict .opts{display:grid;gap:7px}
+.predict .opt{text-align:left;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:8px 12px;cursor:pointer;font:inherit;font-size:15px}
+.predict .opt.good{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 13%,transparent)}
+.predict .opt.badc{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.predict .res{display:none;margin-top:10px;font-size:15px}
+.predict.done .res{display:block}
+figure.anim.flash{animation:flashfig 1.4s}
+@keyframes flashfig{0%,100%{box-shadow:var(--shadow)}30%{box-shadow:0 0 0 4px #c2185b}}
+/* TD guidé */
+.guided{border-radius:14px;padding:12px 16px;margin:14px 0;background:var(--meth-bg);border:1px solid color-mix(in srgb,var(--meth) 30%,transparent)}
+.guided>.tag{font-size:12px;font-weight:750;letter-spacing:.06em;text-transform:uppercase;color:var(--meth)}
+.guided .gstep{margin-top:10px;padding-top:10px;border-top:1px dashed color-mix(in srgb,var(--meth) 30%,transparent)}
+.guided .gq{font-weight:650;margin-bottom:8px}
+.guided .opts{display:flex;flex-wrap:wrap;gap:7px}
+.guided .opt{border:1.5px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:10px;padding:7px 12px;cursor:pointer;font:inherit;font-size:14.5px;text-align:left}
+.guided .opt.good{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 13%,transparent)}
+.guided .opt.badc{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.guided .ge{display:none;margin-top:8px;font-size:14.5px;padding:8px 12px;border-radius:10px;background:var(--bg2)}
+.guided .gstep.done .ge{display:block}
+.guided .gend{margin-top:10px;font-weight:650;color:var(--ok);display:none}
+.guided.fin .gend{display:block}
+/* animation commentée */
+.storybar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--accent) 7%,var(--bg2));flex-wrap:wrap}
+.storybar .sb{border:0;border-radius:9px;padding:7px 13px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
+.storybar .sb.ghost{background:transparent;color:var(--ink2);border:1px solid var(--line)}
+.storybar .dots{display:flex;gap:4px;margin-left:auto}
+.storybar .dots i{width:9px;height:9px;border-radius:50%;background:var(--line);display:block}
+.storybar .dots i.on{background:var(--accent)}
+.storycap{position:absolute;left:12px;right:12px;bottom:12px;padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--bg2) 92%,transparent);box-shadow:var(--shadow);font-size:15px;line-height:1.45;color:var(--ink);border-left:4px solid var(--accent);display:none;backdrop-filter:blur(4px)}
+.storycap.on{display:block;animation:fadein .35s}
+
+.annot .katex-display{font-size:1.22em;margin:.4em 0}
