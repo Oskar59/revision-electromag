@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maths Ch. 3 — Équations différentielles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ma3">
+<article class="content">
+<div class="kicker">Mathématiques · Analyse · Chapitre 3</div>
+<h1>Équations différentielles linéaires</h1>
+<p class="lead">Une équation différentielle relie une fonction inconnue à ses dérivées : « la vitesse à laquelle u change dépend de u ». C'est le langage de <b>tout ce qui évolue</b> : la charge d'un condensateur, une balle lancée, un amortisseur. La structure de la solution est toujours la même : <b>régime libre (qui s'éteint) + régime forcé (imposé par l'extérieur)</b>.</p>
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list"><li>résoudre l'équation homogène du 1ᵉʳ ordre</li><li>trouver une solution particulière (polynôme, exp, trig)</li><li>utiliser le principe de superposition</li><li>résoudre un problème de Cauchy</li><li>écrire et résoudre l'équation caractéristique</li><li>reconnaître les 3 cas selon Δ</li><li>gérer la résonance (second membre solution de l'homogène)</li><li>passer par la forme complexe</li></ul></div>
+
+<h2 id="intro"><span class="h2num">3.1</span>D'où viennent ces équations</h2>
+<div class="grid3">
+<div class="card ex"><span class="tag">Circuit RC</span><p>$Rq'+\frac1Cq=u(t)$ : la charge q est l'inconnue.</p></div>
+<div class="card ex"><span class="tag">Balistique</span><p>$m\dfrac{\mathrm d\vec v}{\mathrm dt}=m\vec g-k\vec v$ : frottement proportionnel à la vitesse.</p></div>
+<div class="card ex"><span class="tag">RLC série</span><p>$Lq''+Rq'+\frac1Cq=u(t)$ : un oscillateur amorti.</p></div></div>
+<div class="card def"><span class="tag">Vocabulaire</span><p>Linéaire à coefficients constants : $a_nu^{(n)}+\dots+a_1u'+a_0u=f(t)$. Ordre = plus haute dérivée. <b>Homogène</b> (ou sans second membre) : $f=0$. <b>Problème de Cauchy</b> : équation + conditions initiales ($u(t_0)$ pour l'ordre 1 ; $u(t_0)$ et $u'(t_0)$ pour l'ordre 2) ⇒ solution <b>unique</b>.</p></div>
+
+<h2 id="ordre1"><span class="h2num">3.2</span>Premier ordre : $au'+bu=f(t)$</h2>
+<div class="card def"><span class="tag">Équation homogène $au'+bu=0$</span>$$u_h(t)=C\,e^{-\frac bat},\qquad C\in\mathbb R$$<p>Pourquoi : $\frac{u'}u=-\frac ba$ (constante), donc $\ln|u|=-\frac bat+\text{cte}$. Une quantité dont la vitesse de variation est <b>proportionnelle à elle-même</b> évolue en exponentielle.</p></div>
+<div class="card key"><span class="tag">La structure qui revient partout</span>$$u=\underbrace{u_h}_{\text{toutes les solutions homogènes}}+\underbrace{u_p}_{\text{UNE solution particulière}}$$<p>Pourquoi : si u et $u_p$ sont deux solutions, leur différence vérifie l'équation homogène (linéarité). Image : $u_h$ = le « souvenir » de la condition initiale (qui s'efface si $b/a>0$), $u_p$ = ce que l'extérieur impose.</p></div>
+<figure class="anim tall" data-anim="slope" data-badge><figcaption>Chaque petit trait donne la pente imposée par l’équation. Clique pour lancer des solutions : avec a > 0, elles convergent toutes vers la même courbe (la solution particulière). Le terme Ce^(−at) est ce qui les distingue… et il s’éteint.</figcaption></figure>
+<div class="card meth"><span class="tag">Trouver $u_p$ : on imite le second membre</span>
+<div class="tablewrap"><table><tr><th>Second membre $f(t)$</th><th>On cherche $u_p$ de la forme</th><th>Exception (résonance)</th></tr>
+<tr><td>polynôme de degré n</td><td>polynôme de degré n</td><td>degré n+1 si $b=0$</td></tr>
+<tr><td>$P(t)\,e^{mt}$</td><td>$Q(t)\,e^{mt}$, deg Q = deg P</td><td>$t\,Q(t)e^{mt}$ si $m=-\frac ba$</td></tr>
+<tr><td>$\alpha\cos\omega t+\beta\sin\omega t$</td><td>$A\cos\omega t+B\sin\omega t$ (les DEUX)</td><td>—</td></tr></table></div>
+<p>Puis on remplace dans l'équation et on <b>identifie</b> les coefficients. <b>Superposition</b> : si $f=f_1+f_2$, on cherche $u_{p1}$ pour $f_1$, $u_{p2}$ pour $f_2$ et on additionne.</p></div>
+<div class="card trap"><span class="tag">⚠ Pièges</span><ul><li>Avec $\sin\omega t$ seul au second membre, il faut quand même chercher $A\cos+B\sin$ (la dérivée mélange les deux).</li><li>La condition initiale s'applique à la solution <b>générale</b> ($u_h+u_p$), jamais à $u_h$ seule.</li></ul></div>
+<div class="inline-gen" data-gen="e-o1"></div>
+
+<h2 id="ordre2"><span class="h2num">3.3</span>Second ordre : $au''+bu'+cu=f(t)$</h2>
+<div class="card def"><span class="tag">Équation caractéristique</span><p>On cherche des solutions $e^{rt}$ de l'homogène : $(ar^2+br+c)e^{rt}=0$ ⇒ $\boxed{ar^2+br+c=0}$. Selon $\Delta=b^2-4ac$ :</p>
+<div class="tablewrap"><table><tr><th>Δ</th><th>Racines</th><th>Solution homogène</th><th>Allure (si amorti)</th></tr>
+<tr><td>$\Delta>0$</td><td>$r_1\ne r_2$ réelles</td><td>$\lambda e^{r_1t}+\mu e^{r_2t}$</td><td>apériodique</td></tr>
+<tr><td>$\Delta=0$</td><td>$r$ double</td><td>$(\lambda+\mu t)e^{rt}$</td><td>critique</td></tr>
+<tr><td>$\Delta<0$</td><td>$\alpha\pm i\beta$</td><td>$e^{\alpha t}(\lambda\cos\beta t+\mu\sin\beta t)$</td><td>pseudo-périodique</td></tr></table></div></div>
+<div class="card why"><span class="tag">Image : où sont les racines ?</span><p>Place les racines dans le plan complexe. <b>Partie réelle</b> = vitesse d'extinction (négative : ça s'amortit ; positive : ça explose). <b>Partie imaginaire</b> = pulsation des oscillations. Racines réelles : pas d'oscillation.</p></div>
+<figure class="anim tall" data-anim="ode2" data-badge><figcaption>À gauche, les racines de r² + 2λr + ω₀². À droite, la solution avec u(0) = 1, u′(0) = 0. Diminue λ : les racines se rejoignent (critique) puis deviennent complexes (oscillations).</figcaption></figure>
+<div class="card meth"><span class="tag">Solution particulière (second membre $P(t)e^{mt}$)</span><ul><li>m n'est pas racine : $u_p=Q(t)e^{mt}$, deg Q = deg P.</li><li>m racine simple : $u_p=t\,Q(t)e^{mt}$.</li><li>m racine double : $u_p=t^2Q(t)e^{mt}$.</li></ul>
+<p><b>Second membre trigonométrique</b> $e^{\alpha t}\cos\omega t$ : c'est $\mathrm{Re}\big(e^{(\alpha+i\omega)t}\big)$ ⇒ on résout avec $e^{(\alpha+i\omega)t}$ (un seul coefficient complexe à trouver) puis on prend la partie réelle. C'est le « passage par la forme complexe » du cours (et exactement la méthode des impédances en électronique).</p></div>
+<div class="inline-gen" data-gen="e-o2h,e-o2s"></div>
+<div class="card why"><span class="tag">Lien direct avec l'électronique</span><p>RLC série : $q''+\frac RLq'+\frac1{LC}q=\frac uL$, soit $q''+2\lambda q'+\omega_0^2q=\dots$ avec $\lambda=\frac R{2L}$, $\omega_0=\frac1{\sqrt{LC}}$. Les trois régimes du <a href="el2.html">chapitre 2 d'électronique</a> sont les trois cas de Δ. Et le principe « homogène + particulière » = « régime transitoire + régime permanent ».</p></div>
+
+<h2 id="exos"><span class="h2num">3.4</span>Exercices du cours corrigés</h2>
+<section class="exo" id="exo1"><header><h3 id="e1">Premier ordre (Ex. 3.1 et 3.2)</h3><span class="time">25 min</span></header><div class="body">
+<div class="statement">1. $3u'+2u=t^3+6t+1$. 2. $u'-3u=\sin3t$ avec $u(0)=0$. 3. $u'+u=te^{-t}+1$ avec $u(0)=0$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> homogène d’abord ; second membre = somme ⇒ <b>superposition</b> ; exponentielle déjà dans $u_h$ ⇒ <b>multiplier par t</b>.</div></div>
+<div class="steps"><div class="step"><h4>1. Homogène et forme de $u_p$</h4><p>$u_h=Ce^{-2t/3}$. Second membre polynôme de degré 3 ⇒ $u_p=at^3+bt^2+ct+d$.</p></div><div class="step"><h4>1. Identification</h4><p>$3(3at^2+2bt+c)+2(at^3+bt^2+ct+d)=t^3+6t+1$ : $2a=1$, $9a+2b=0$, $6b+2c=6$, $3c+2d=1$ ⇒ $a=\frac12$, $b=-\frac94$, $c=\frac{39}4$, $d=-\frac{113}8$.</p></div><div class="step"><h4>1. Solution</h4><p>$\boxed{u=Ce^{-2t/3}+\frac{t^3}2-\frac{9t^2}4+\frac{39t}4-\frac{113}8}$.</p></div><div class="step"><h4>2. Trigonométrique</h4><p>$u_h=Ce^{3t}$ ; $u_p=A\cos3t+B\sin3t$ : $(3B-3A)\cos3t+(-3A-3B)\sin3t=\sin3t$ ⇒ $A=B=-\frac16$. $u(0)=C-\frac16=0$ ⇒ $\boxed{u=\frac{e^{3t}-\cos3t-\sin3t}6}$.</p></div><div class="step"><h4>3. Résonance + superposition</h4><p>$te^{-t}$ : $-1$ est la racine ⇒ $u_{p1}=(at^2+bt)e^{-t}$, on trouve $(2at+b)e^{-t}=te^{-t}$ ⇒ $a=\frac12$, $b=0$. Pour le « +1 » : $u_{p2}=1$.</p></div><div class="step"><h4>3. Cauchy</h4><p>$u=\left(C+\frac{t^2}2\right)e^{-t}+1$, $u(0)=C+1=0$ ⇒ $\boxed{u=\left(\frac{t^2}2-1\right)e^{-t}+1}$.</p></div></div></div></section>
+<section class="exo" id="exo2"><header><h3 id="e2">Circuit RC (Ex. 3.3)</h3><span class="time">15 min</span></header><div class="body">
+<div class="statement">$Rq'+\frac1Cq=u$, $q(0)=0$. Cas 1 : $u=u_0$ constant. Montrer $q=Cu_0(1-e^{-t/RC})$ et $i=\frac{u_0}Re^{-t/RC}$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> c’est exactement la charge RC de l’électronique : $\tau y'+y=y_\infty$.</div></div>
+<div class="steps"><div class="step"><h4>Homogène</h4><p>$q_h=Ke^{-t/RC}$ ($\tau=RC$).</p></div><div class="step"><h4>Particulière</h4><p>Constante : $\frac1Cq_p=u_0$ ⇒ $q_p=Cu_0$ (condensateur chargé).</p></div><div class="step"><h4>Cauchy</h4><p>$q(0)=K+Cu_0=0$ ⇒ $K=-Cu_0$ ⇒ $\boxed{q=Cu_0(1-e^{-t/RC})}$ et $i=q'=\boxed{\frac{u_0}Re^{-t/RC}}$.</p></div></div></div></section>
+<section class="exo" id="exo3"><header><h3 id="e3">Second ordre avec résonance (Ex. 3.4.1)</h3><span class="time">25 min</span></header><div class="body">
+<div class="statement">$u''+5u'+4u=6e^{-t}-10e^{-2t}\cos t$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> un terme par morceau du second membre ; trig × exp ⇒ <b>forme complexe</b> et une seule division.</div></div>
+<div class="steps"><div class="step"><h4>Caractéristique</h4><p>$r^2+5r+4=0$ ⇒ $r=-1$, $r=-4$ ⇒ $u_h=\lambda e^{-t}+\mu e^{-4t}$.</p></div><div class="step"><h4>$6e^{-t}$ : −1 est racine simple</h4><p>$u_{p1}=Ate^{-t}$ : $u'=A(1-t)e^{-t}$, $u''=A(t-2)e^{-t}$ ⇒ $A[(t-2)+5(1-t)+4t]e^{-t}=3Ae^{-t}=6e^{-t}$ ⇒ $A=2$.</p></div><div class="step"><h4>$-10e^{-2t}\cos t$ : forme complexe</h4><p>$=\mathrm{Re}\big(-10e^{(-2+i)t}\big)$. $m=-2+i$ : $m^2+5m+4=-3+i$ ⇒ $A=\frac{-10}{-3+i}=3+i$.</p></div><div class="step"><h4>Partie réelle</h4><p>$\mathrm{Re}\big((3+i)e^{-2t}(\cos t+i\sin t)\big)=e^{-2t}(3\cos t-\sin t)$.</p></div><div class="step"><h4>Solution</h4><p>$\boxed{u=(2t+\lambda)e^{-t}+\mu e^{-4t}+(3\cos t-\sin t)e^{-2t}}$ ✓ (résultat du cours).</p></div></div></div></section>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ma3"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ma3"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=%C3%A9quation+diff%C3%A9rentielle+lin%C3%A9aire+premier+ordre+m%C3%A9thode">▶ Équations différentielles intuition</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=%C3%A9quation+diff%C3%A9rentielle+second+ordre+%C3%A9quation+caract%C3%A9ristique">▶ Second ordre équation caractéristique</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=champ+de+directions+%C3%A9quation+diff%C3%A9rentielle">▶ Champ de directions</a></p>
+</article>
+<script src="js/data-math.js"></script><script src="js/learn-math.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-math.js"></script><script src="js/gen-math.js"></script><script src="js/app.js"></script>
+</body></html>

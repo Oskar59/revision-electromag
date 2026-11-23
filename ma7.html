@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maths Ch. 7 — Intégrales généralisées et transformée de Fourier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ma7">
+<article class="content">
+<div class="kicker">Mathématiques · Analyse de Fourier · Chapitre 7</div>
+<h1>Intégrales généralisées et transformée de Fourier</h1>
+<p class="lead">Un signal qui ne se répète pas (une impulsion, un bip) a lui aussi un contenu en fréquences — mais au lieu de raies séparées, on obtient un <b>spectre continu</b>. Pour le calculer il faut intégrer sur $]-\infty,+\infty[$ : d'où les <b>intégrales généralisées</b>, qu'on étudie d'abord.</p>
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list"><li>définir une intégrale généralisée comme une limite</li><li>utiliser les intégrales de Riemann de référence</li><li>appliquer comparaison / équivalence</li><li>calculer la TF d'une porte, d'une exponentielle</li><li>utiliser retard, dilatation, dérivation</li><li>exploiter la parité</li><li>appliquer la formule d'inversion</li><li>appliquer Plancherel-Parseval</li></ul></div>
+
+<h2 id="gen"><span class="h2num">7.1</span>Intégrales généralisées</h2>
+<div class="card def"><span class="tag">Définition</span><p>$\displaystyle\int_a^{+\infty}f(t)\,\mathrm dt=\lim_{X\to+\infty}\int_a^Xf(t)\,\mathrm dt$ si cette limite existe et est finie : l'intégrale <b>converge</b>. Sinon elle <b>diverge</b>. Même idée sur $]a,b]$ quand f explose en a : $\lim_{\varepsilon\to0^+}\int_{a+\varepsilon}^b$.</p></div>
+<figure class="anim " data-anim="improper" data-badge><figcaption>Pousse la borne vers l’infini (ou vers 0) : l’aire se stabilise-t-elle ? Joue avec α autour de 1.</figcaption></figure>
+<div class="card key"><span class="tag">Les références (Riemann)</span>
+<div class="tablewrap"><table><tr><th>Intégrale</th><th>Converge si et seulement si</th><th>Valeur</th></tr>
+<tr><td>$\int_1^{+\infty}\frac{\mathrm dt}{t^\alpha}$</td><td>$\alpha>1$</td><td>$\frac1{\alpha-1}$</td></tr>
+<tr><td>$\int_0^1\frac{\mathrm dt}{t^\alpha}$</td><td>$\alpha<1$</td><td>$\frac1{1-\alpha}$</td></tr>
+<tr><td>$\int_0^{+\infty}e^{-at}\,\mathrm dt$</td><td>$a>0$</td><td>$\frac1a$</td></tr></table></div>
+<p>Image : en $+\infty$ la courbe doit tomber <b>assez vite</b> ; en 0 elle ne doit pas monter <b>trop vite</b>. $\frac1t$ est pile à la frontière : diverge des deux côtés.</p></div>
+<div class="card meth"><span class="tag">Critères (fonctions positives)</span><ul><li><b>Comparaison</b> : $0\le f\le g$ ; si $\int g$ converge alors $\int f$ converge (et si $\int f$ diverge, $\int g$ diverge).</li><li><b>Équivalence</b> : si $f\sim g$ en $+\infty$ (f, g > 0), elles ont la même nature. Ex. $\frac{1}{t^2+3t}\sim\frac1{t^2}$ ⇒ converge.</li><li><b>Fonctions quelconques</b> : si $\int|f|$ converge (convergence absolue), alors $\int f$ converge. Ex. $\left|\frac{\sin t}{t^2}\right|\le\frac1{t^2}$.</li></ul></div>
+<div class="inline-gen" data-gen="t-imp"></div>
+
+<h2 id="tf"><span class="h2num">7.2</span>Transformée de Fourier</h2>
+<div class="card def"><span class="tag">Définition (convention du cours)</span>$$\hat f(\lambda)=\mathcal F(f)(\lambda)=\int_{-\infty}^{+\infty}f(t)\,e^{-2i\pi\lambda t}\,\mathrm dt$$<p>Définie pour $f\in L^1$ : $\int_{-\infty}^{+\infty}|f|<\infty$ (car $|e^{-2i\pi\lambda t}|=1$). λ est une <b>fréquence</b> (en Hz si t en s). $|\hat f(\lambda)|$ = spectre d'amplitude, $\arg\hat f(\lambda)$ = spectre de phase.</p></div>
+<div class="card why"><span class="tag">D'où ça vient ?</span><p>C'est le coefficient $c_n$ de la série de Fourier quand la période $T\to\infty$ : les raies $n/T$ se rapprochent jusqu'à former un continuum. $\hat f(\lambda)$ mesure « combien » de la fréquence λ contient le signal — on projette sur $e^{2i\pi\lambda t}$.</p></div>
+<figure class="anim tall" data-anim="ftrans" data-badge><figcaption>Rétrécis le signal : son spectre s’élargit (et réciproquement). Principe d’incertitude : un signal bref contient beaucoup de fréquences.</figcaption></figure>
+<div class="card ex"><span class="tag">Exemples de référence</span><ul>
+<li><b>Porte</b> $\Pi(t)$ (1 sur $]-\frac12,\frac12[$) : $\hat\Pi(\lambda)=\int_{-1/2}^{1/2}e^{-2i\pi\lambda t}\mathrm dt=\frac{\sin\pi\lambda}{\pi\lambda}$ (sinus cardinal), $\hat\Pi(0)=1$.</li>
+<li>$e^{-a|t|}$ ($a>0$) : $\frac{2a}{a^2+4\pi^2\lambda^2}$.</li>
+<li>$e^{-at}U(t)$ : $\frac1{a+2i\pi\lambda}$.</li>
+<li>Contre-exemple : l'échelon $U(t)$ n'est pas dans $L^1$ (aire infinie) : pas de TF au sens des fonctions.</li></ul></div>
+<div class="inline-gen" data-gen="t-ft"></div>
+
+<h2 id="prop"><span class="h2num">7.3</span>Propriétés</h2>
+<div class="tablewrap"><table><tr><th>Signal</th><th>Transformée</th><th>À retenir</th></tr>
+<tr><td>$\alpha f+\beta g$</td><td>$\alpha\hat f+\beta\hat g$</td><td>linéarité</td></tr>
+<tr><td>$f(t-a)$</td><td>$e^{-2i\pi\lambda a}\hat f(\lambda)$</td><td>retard ⇒ la phase tourne, le module ne change pas</td></tr>
+<tr><td>$e^{2i\pi\lambda_0t}f(t)$</td><td>$\hat f(\lambda-\lambda_0)$</td><td>modulation ⇒ spectre décalé</td></tr>
+<tr><td>$f(at)$</td><td>$\frac1{|a|}\hat f\!\left(\frac\lambda a\right)$</td><td>compresser le temps = dilater le spectre</td></tr>
+<tr><td>$f'(t)$</td><td>$2i\pi\lambda\hat f(\lambda)$</td><td>dériver = multiplier</td></tr>
+<tr><td>$-2i\pi t\,f(t)$</td><td>$\hat f'(\lambda)$</td><td></td></tr>
+<tr><td>$f*g$</td><td>$\hat f\,\hat g$</td><td>convolution = produit</td></tr></table></div>
+<div class="card rem"><span class="tag">Parité et régularité</span><ul><li>f paire réelle ⇒ $\hat f$ paire réelle : $\hat f(\lambda)=2\int_0^\infty f(t)\cos(2\pi\lambda t)\mathrm dt$.</li><li>f impaire réelle ⇒ $\hat f$ impaire imaginaire pure.</li><li>$\hat f$ est continue, bornée par $\int|f|$, et tend vers 0 en ±∞.</li></ul></div>
+
+<h2 id="inv"><span class="h2num">7.4</span>Inversion et Plancherel-Parseval</h2>
+<div class="card def"><span class="tag">Formule d'inversion</span>$$f(t)=\int_{-\infty}^{+\infty}\hat f(\lambda)\,e^{2i\pi\lambda t}\,\mathrm d\lambda$$<p>(aux points de continuité ; la moyenne des limites aux sauts). Même formule avec $+$ : c'est la symétrie de la convention en $2\pi\lambda$. Conséquence : $\mathcal F(\hat f)(t)=f(-t)$ (réciprocité).</p></div>
+<div class="card def"><span class="tag">Plancherel-Parseval</span>$$\int_{-\infty}^{+\infty}|f(t)|^2\,\mathrm dt=\int_{-\infty}^{+\infty}|\hat f(\lambda)|^2\,\mathrm d\lambda$$<p>L'énergie est la même vue en temps ou en fréquence.</p></div>
+<div class="card ex"><span class="tag">Deux intégrales célèbres</span><p>Inversion appliquée à $\Pi$ en $t=0$ : $\int\frac{\sin\pi\lambda}{\pi\lambda}\mathrm d\lambda=\Pi(0)=1$ ⇒ $\int_0^{+\infty}\frac{\sin x}x\mathrm dx=\frac\pi2$. Parseval : $\int\left(\frac{\sin\pi\lambda}{\pi\lambda}\right)^2=\int\Pi^2=1$ ⇒ $\int_0^{+\infty}\left(\frac{\sin x}x\right)^2\mathrm dx=\frac\pi2$.</p></div>
+
+<h2 id="exos"><span class="h2num">7.5</span>Exercices du cours corrigés</h2>
+<section class="exo" id="exo1"><header><h3 id="e1">Fonction impaire (Ex. 2.1)</h3><span class="time">15 min</span></header><div class="body">
+<div class="statement">$\rho_a(t)=-a$ sur $]-\frac T2,0[$, $a$ sur $]0,\frac T2[$, 0 sinon. Calculer $\hat\rho_a$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> <b>parité</b> : impaire ⇒ $\hat f=-2i\int_0^\infty f\sin(2\pi\lambda t)$ ; paire ⇒ $2\int_0^\infty f\cos(2\pi\lambda t)$.</div></div>
+<div class="steps"><div class="step"><h4>Classe et intégrabilité</h4><p>$C^1$ par morceaux, nulle hors d’un intervalle borné ⇒ $\int|\rho_a|=aT<\infty$ : $\rho_a\in L^1$.</p></div><div class="step"><h4>Impaire ⇒ ne garder que le sinus</h4><p>$\hat\rho_a(\lambda)=-2i\int_0^{T/2}a\sin(2\pi\lambda t)\,\mathrm dt=-2ia\left[\frac{-\cos2\pi\lambda t}{2\pi\lambda}\right]_0^{T/2}$.</p></div><div class="step"><h4>Résultat</h4><p>$\hat\rho_a(\lambda)=-\frac{ia}{\pi\lambda}\big(1-\cos(\pi\lambda T)\big)=\boxed{-\frac{2ia}{\pi\lambda}\sin^2\left(\frac{\pi\lambda T}2\right)}$ : impaire et imaginaire pure ✓.</p></div></div></div></section>
+<section class="exo" id="exo2"><header><h3 id="e2">Impulsion et Dirac (Ex. 2.2)</h3><span class="time">20 min</span></header><div class="body">
+<div class="statement">$\Pi_a(t)=\frac1a$ sur $]-\frac a2,\frac a2[$, 0 sinon. 3. $\hat\Pi_a$. 4. Limite $a\to0$. 6. $\int_0^\infty\frac{\sin x}x$. 7. $\int_0^\infty\left(\frac{\sin x}x\right)^2$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> calculer une intégrale « impossible » ⇒ la reconnaître comme une <b>TF inverse</b> ou un <b>Parseval</b> d’un signal simple.</div></div>
+<div class="steps"><div class="step"><h4>3.</h4><p>$\hat\Pi_a(\lambda)=\frac1a\int_{-a/2}^{a/2}e^{-2i\pi\lambda t}\mathrm dt=\frac{\sin(\pi a\lambda)}{\pi a\lambda}$.</p></div><div class="step"><h4>4. Le Dirac</h4><p>Quand $a\to0$ : $\frac{\sin(\pi a\lambda)}{\pi a\lambda}\to1$ pour tout λ. L’impulsion infiniment brève d’aire 1 (le Dirac δ) contient <b>toutes les fréquences avec le même poids</b> : $\hat\delta=1$.</p></div><div class="step"><h4>6. Inversion en t = 0</h4><p>$\int\frac{\sin\pi a\lambda}{\pi a\lambda}\mathrm d\lambda=\Pi_a(0)=\frac1a$ ; avec $x=\pi a\lambda$ : $\frac1{\pi a}\int\frac{\sin x}x\mathrm dx=\frac1a$ ⇒ $\int_{-\infty}^{\infty}\frac{\sin x}x=\pi$ ⇒ $\boxed{\int_0^\infty\frac{\sin x}x\mathrm dx=\frac\pi2}$.</p></div><div class="step"><h4>7. Parseval (a = 1)</h4><p>$\int\Pi_1^2=1=\int\left(\frac{\sin\pi\lambda}{\pi\lambda}\right)^2\mathrm d\lambda=\frac1\pi\int\left(\frac{\sin x}x\right)^2\mathrm dx$ ⇒ $\boxed{\int_0^\infty\left(\frac{\sin x}x\right)^2=\frac\pi2}$.</p></div></div></div></section>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ma7"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ma7"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=transform%C3%A9e+de+fourier+intuition+visuelle">▶ Transformée de Fourier intuition</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=int%C3%A9grales+g%C3%A9n%C3%A9ralis%C3%A9es+riemann+convergence">▶ Intégrales de Riemann</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=transform%C3%A9e+de+fourier+fonction+porte+sinus+cardinal">▶ Sinus cardinal porte</a></p>
+</article>
+<script src="js/data-math.js"></script><script src="js/learn-math.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-math.js"></script><script src="js/gen-math.js"></script><script src="js/app.js"></script>
+</body></html>

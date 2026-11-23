@@ -1,5 +1,5 @@
-/* ============ Électromag — site de révision ============ */
-:root{
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&display=swap");
+/* ============ Atlas — le site pour tout réviser (AP3) ============ */:root{
   --bg:#f6f5f1; --bg2:#ffffff; --bg3:#eeece6; --ink:#1b1d29; --ink2:#4a4d5e; --ink3:#7a7d8c;
   --line:#dddad1; --accent:#5a3fd6; --accent-soft:#ece8ff;
   --e:#e2552b; --b:#1597a6; --qp:#d93a3a; --qn:#2f6ad6; --ok:#1f9d55; --bad:#d23c3c;
@@ -318,3 +318,75 @@ figure.anim.flash{animation:flashfig 1.4s}
 .storycap.on{display:block;animation:fadein .35s}
 
 .annot .katex-display{font-size:1.22em;margin:.4em 0}
+
+/* =================================================================== */
+/*          ATLAS — identité : une couleur par matière                 */
+/* =================================================================== */
+:root{--display:"Fraunces",Georgia,"Times New Roman",serif; --phys:#5a3fd6; --elec:#d9631e; --math:#0d8a6a;}
+:root[data-subj="elec"]{--accent:#c8571a;--accent-soft:#fdeee4}
+:root[data-subj="math"]{--accent:#0d8a6a;--accent-soft:#e2f5ee}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--phys:#9d8bff;--elec:#ff9a5c;--math:#45d1a5}
+ :root:not([data-theme="light"])[data-subj="elec"]{--accent:#ff9a5c;--accent-soft:#3a2418}
+ :root:not([data-theme="light"])[data-subj="math"]{--accent:#45d1a5;--accent-soft:#143229}}
+:root[data-theme="dark"]{--phys:#9d8bff;--elec:#ff9a5c;--math:#45d1a5}
+:root[data-theme="dark"][data-subj="elec"]{--accent:#ff9a5c;--accent-soft:#3a2418}
+:root[data-theme="dark"][data-subj="math"]{--accent:#45d1a5;--accent-soft:#143229}
+h1,.hero h1,.subject h2{font-family:var(--display);font-weight:700;letter-spacing:-.02em}
+h1{font-size:clamp(32px,4.6vw,48px)}
+.brand .logo{background:linear-gradient(135deg,var(--phys),var(--elec) 50%,var(--math))}
+:root[data-subj="phys"] .brand .logo{background:linear-gradient(135deg,#7a5cff,var(--phys))}
+:root[data-subj="elec"] .brand .logo{background:linear-gradient(135deg,#f0a020,var(--elec))}
+:root[data-subj="math"] .brand .logo{background:linear-gradient(135deg,#29c28f,var(--math))}
+.topbar .brand{font-family:var(--display);font-size:19px;font-weight:800}
+.brand-sub{font-family:var(--font);font-size:15px}
+.math-ico{background:linear-gradient(135deg,#29c28f,#0d8a6a)}
+.elec-ico{background:linear-gradient(135deg,#f0a020,#d9631e)}
+.phys-ico{background:linear-gradient(135deg,#7a5cff,#5a3fd6)}
+
+/* ---- hub ---- */
+.atlas-hero{position:relative;padding:34px 0 6px}
+.atlas-hero h1{font-size:clamp(38px,6vw,64px);line-height:1.02;margin:.15em 0 .3em}
+.atlas-hero h1 em{font-style:italic;background:linear-gradient(90deg,var(--phys),var(--elec),var(--math));-webkit-background-clip:text;background-clip:text;color:transparent}
+.atlas-hero .orbit{position:absolute;right:-10px;top:10px;width:190px;height:190px;opacity:.9;pointer-events:none}
+@media (max-width:760px){.atlas-hero .orbit{display:none}}
+.subjects.three{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.subject{border-top:4px solid var(--sc,var(--accent))}
+.subject.s-phys{--sc:var(--phys)} .subject.s-elec{--sc:var(--elec)} .subject.s-math{--sc:var(--math)}
+.subject:hover{border-color:var(--sc)}
+.subject .pbar i{background:var(--sc)!important}
+.subject .plabel{font-size:12.5px;color:var(--ink3);margin-top:6px;display:block}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0 8px}
+.quick a{display:block;padding:16px 18px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);color:var(--ink);box-shadow:var(--shadow)}
+.quick a:hover{text-decoration:none;border-color:var(--accent);transform:translateY(-2px)}
+.quick a b{display:block;font-size:15.5px;margin-bottom:2px}
+.quick a span{font-size:13.5px;color:var(--ink2)}
+.quick .qi{font-size:22px;display:block;margin-bottom:6px}
+.method-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0}
+.method-strip div{padding:12px 14px;border-radius:12px;background:var(--bg3);font-size:14px;color:var(--ink2)}
+.method-strip b{display:block;color:var(--ink);font-size:14.5px}
+
+/* ---- générateur d'exercices ---- */
+.gen-pick{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+.gen-pick button{border:1px solid var(--line);background:var(--bg2);color:var(--ink2);border-radius:999px;padding:7px 14px;font:inherit;font-size:14px;cursor:pointer}
+.gen-pick button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.gen-pick button:hover{border-color:var(--accent)}
+.genbox{border:1px solid var(--line);background:var(--bg2);border-radius:var(--radius);box-shadow:var(--shadow);margin:16px 0;overflow:hidden}
+.genbox .gh{display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:14px;flex-wrap:wrap}
+.genbox .gh .lvl{margin-left:auto;font-weight:600;font-size:12.5px;color:var(--ink3)}
+.genbox .gq{padding:16px 20px 6px;font-size:17px}
+.genbox .gbar{display:flex;flex-wrap:wrap;gap:8px;padding:8px 20px 16px}
+.genbox .gsol{display:none;padding:4px 20px 18px;border-top:1px dashed var(--line)}
+.genbox.open .gsol{display:block}
+.genbox .gsol ol{margin:.6em 0;padding-left:1.3em}
+.genbox .gsol li{margin:.55em 0}
+.genbox .gsol .hint{color:var(--ink3);font-size:14px}
+.genbox .ans{margin-top:10px;padding:10px 14px;border-radius:10px;background:var(--ex-bg);border-left:3px solid var(--ex)}
+.genbox .ghint{display:none;padding:2px 20px 12px;color:var(--rem)}
+.genbox.hinted .ghint{display:block}
+.gen-tally{font-size:13.5px;color:var(--ink3)}
+.gen-self{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;font-size:14px;color:var(--ink2)}
+.inline-gen{margin:22px 0}
+.inline-gen>.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.mx{display:inline-block}
+.missing{border:1px dashed var(--line);border-radius:14px;padding:14px 18px;color:var(--ink2);font-size:14.5px;background:var(--bg2)}
+.exo>header h3{margin:0;padding:0;border:0;font-size:19px}

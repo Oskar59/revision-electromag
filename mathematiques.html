@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mathématiques — Accueil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="mathematiques">
+<article class="content" data-nopager>
+<section class="hero">
+  <div class="kicker">Mathématiques · AP3 · Sciences de l'ingénieur</div>
+  <h1>Les maths qui font tourner la physique.</h1>
+  <p class="lead">Huit chapitres, trois blocs : l'<b>analyse</b> (complexes, intégrales, équations différentielles, intégrales multiples), l'<b>algèbre linéaire</b> (matrices et systèmes) et l'<b>analyse de Fourier</b> (séries, transformées de Fourier et de Laplace). Pour chaque notion : l'image à avoir en tête, une animation à manipuler, la méthode, et des <b>exercices générés à l'infini</b> avec leur correction pas à pas.</p>
+</section>
+
+<div class="quick">
+<a href="ma-gen.html"><span class="qi">🎲</span><b>Générateur d'exercices</b><span>31 types d'exercices, un nouvel énoncé à chaque clic, corrigé pas à pas.</span></a>
+<a href="ma-methodes.html"><span class="qi">★</span><b>Patterns</b><span>Quand on te demande X, tu fais Y : les réflexes de chaque chapitre.</span></a>
+<a href="ma-formulaire.html"><span class="qi">Σ</span><b>Formulaire</b><span>Toutes les formules, avec recherche instantanée.</span></a>
+<a href="ma-quiz.html"><span class="qi">?</span><b>Examen blanc</b><span>QCM expliqués et flashcards de tout le programme.</span></a>
+</div>
+
+<h2 id="carte" data-nomaster>La carte : comment les chapitres s'enchaînent</h2>
+<svg class="schema" viewBox="0 0 760 330" role="img" aria-label="Carte des chapitres de mathématiques" style="width:100%;height:auto;max-width:760px;display:block;margin:10px auto">
+<style>.mb{fill:var(--bg2);stroke:var(--line);stroke-width:1.5}.mt{font:600 13px Inter,sans-serif;fill:var(--ink)}.ms{font:500 11px Inter,sans-serif;fill:var(--ink3)}.ma{stroke:var(--accent);stroke-width:1.6;fill:none;marker-end:url(#mar)}.mg{font:700 11px Inter,sans-serif;fill:var(--accent);letter-spacing:.08em}</style>
+<defs><marker id="mar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker></defs>
+<text class="mg" x="20" y="22">ANALYSE</text><text class="mg" x="20" y="232">ALGÈBRE LINÉAIRE</text><text class="mg" x="470" y="22">ANALYSE DE FOURIER</text>
+<a href="ma1.html"><rect class="mb" x="20" y="36" width="190" height="56" rx="12"/><text class="mt" x="34" y="60">1 · Complexes</text><text class="ms" x="34" y="78">flèches, rotations, e^(iθ)</text></a>
+<a href="ma2.html"><rect class="mb" x="240" y="36" width="190" height="56" rx="12"/><text class="mt" x="254" y="60">2 · Intégrales</text><text class="ms" x="254" y="78">aires, IPP, fractions</text></a>
+<a href="ma3.html"><rect class="mb" x="20" y="130" width="190" height="56" rx="12"/><text class="mt" x="34" y="154">3 · Équations diff.</text><text class="ms" x="34" y="172">u_h + u_p, caractéristique</text></a>
+<a href="ma4.html"><rect class="mb" x="240" y="130" width="190" height="56" rx="12"/><text class="mt" x="254" y="154">4 · Intégrales multiples</text><text class="ms" x="254" y="172">Fubini, polaires</text></a>
+<a href="ma5.html"><rect class="mb" x="20" y="246" width="410" height="56" rx="12"/><text class="mt" x="34" y="270">5 · Matrices, systèmes, déterminants</text><text class="ms" x="34" y="288">Gauss, det = facteur d'aire, inverse, Cramer</text></a>
+<a href="ma6.html"><rect class="mb" x="470" y="36" width="270" height="56" rx="12"/><text class="mt" x="484" y="60">6 · Séries de Fourier</text><text class="ms" x="484" y="78">signal périodique = somme de sinus</text></a>
+<a href="ma7.html"><rect class="mb" x="470" y="130" width="270" height="56" rx="12"/><text class="mt" x="484" y="154">7 · Transformée de Fourier</text><text class="ms" x="484" y="172">intégrales généralisées, spectre continu</text></a>
+<a href="ma8.html"><rect class="mb" x="470" y="246" width="270" height="56" rx="12"/><text class="mt" x="484" y="270">8 · Transformée de Laplace</text><text class="ms" x="484" y="288">EDO → algèbre</text></a>
+<path class="ma" d="M115 92 V128"/><path class="ma" d="M210 64 H238"/><path class="ma" d="M335 92 V128"/>
+<path class="ma" d="M430 64 H468"/><path class="ma" d="M605 92 V128"/><path class="ma" d="M605 186 V244"/>
+<path class="ma" d="M210 158 C330 210 380 250 468 268"/><path class="ma" d="M430 274 H468"/>
+</svg>
+<p class="small muted" style="text-align:center">Les complexes servent partout (Fourier, Laplace, oscillations) ; les intégrales sont l'outil de base ; Laplace résout les équations différentielles du chapitre 3 ; les systèmes du chapitre 5 réapparaissent dans les systèmes d'EDO.</p>
+
+<h2 id="chapitres" data-nomaster>Chapitres &amp; progression</h2>
+<div class="chapgrid">
+<a class="chapcard" href="ma1.html"><div class="n">CHAPITRE 1</div><h3>Nombres complexes</h3><p>Formes algébrique/exponentielle, Euler, De Moivre, racines carrées et n-ièmes, équations.</p><div class="pbar" data-progress="ma1"><i></i></div><div class="plabel small muted"></div></a><a class="chapcard" href="ma2.html"><div class="n">CHAPITRE 2</div><h3>Calcul intégral</h3><p>Primitives, aire signée, IPP, changement de variable, fractions rationnelles.</p><div class="pbar" data-progress="ma2"><i></i></div><div class="plabel small muted"></div></a><a class="chapcard" href="ma3.html"><div class="n">CHAPITRE 3</div><h3>Équations différentielles</h3><p>1ᵉʳ et 2ᵈ ordre, seconds membres, superposition, Cauchy, forme complexe.</p><div class="pbar" data-progress="ma3"><i></i></div><div class="plabel small muted"></div></a><a class="chapcard" href="ma4.html"><div class="n">CHAPITRE 4</div><h3>Intégrales multiples</h3><p>Fubini, polaires, cylindriques, sphériques, masse, centre et moments d'inertie.</p><div class="pbar" data-progress="ma4"><i></i></div><div class="plabel small muted"></div></a><a class="chapcard" href="ma5.html"><div class="n">CHAPITRE 5</div><h3>Matrices & systèmes</h3><p>Produit, Gauss, déterminants, inverse, Cramer.</p><div class="pbar" data-progress="ma5"><i></i></div><div class="plabel small muted"></div></a><a class="chapcard" href="ma6.html"><div class="n">CHAPITRE 6</div><h3>Séries de Fourier</h3><p>Coefficients, Dirichlet, forme complexe, spectre, Parseval.</p><div class="pbar" data-progress="ma6"><i></i></div><div class="plabel small muted"></div></a><a class="chapcard" href="ma7.html"><div class="n">CHAPITRE 7</div><h3>Transformée de Fourier</h3><p>Intégrales généralisées, TF, propriétés, inversion, Plancherel.</p><div class="pbar" data-progress="ma7"><i></i></div><div class="plabel small muted"></div></a><a class="chapcard" href="ma8.html"><div class="n">CHAPITRE 8</div><h3>Transformée de Laplace</h3><p>Définition, propriétés, dictionnaire, inverse, EDO et systèmes.</p><div class="pbar" data-progress="ma8"><i></i></div><div class="plabel small muted"></div></a>
+</div>
+
+<div class="card key"><span class="tag">🎯 Comment réviser avec cette partie</span><ol>
+<li><b>Lis la carte logique</b> en haut de chaque chapitre : elle dit pourquoi chaque notion amène la suivante.</li>
+<li><b>Manipule les animations</b> (et lance « Explication guidée ») : c'est l'image que tu dois garder en tête.</li>
+<li><b>Fais 2 ou 3 exercices générés</b> dans le chapitre, sans regarder, puis la correction pas à pas. Dis honnêtement si tu as réussi : le générateur retient tes points faibles.</li>
+<li>Avant un partiel : <a href="ma-methodes.html">patterns</a> + <a href="ma-gen.html">« Mes points faibles »</a> + <a href="ma-quiz.html">examen blanc</a>.</li></ol></div>
+
+<div class="missing"><b>Au programme mais sans support fourni :</b> la fiche descriptive du module mentionne aussi l'<b>arithmétique modulaire</b> et les <b>statistiques</b>. Envoie les supports de cours correspondants et ils seront ajoutés ici avec le même niveau de détail.</div>
+
+<div class="card trap"><span class="tag">⚠ Les erreurs qui coûtent le plus de points</span><ol>
+<li><b>Argument d'un complexe</b> par arctan(b/a) sans regarder le quadrant.</li>
+<li><b>Changement de variable</b> : oublier dt → φ′(u)du ou les nouvelles bornes.</li>
+<li><b>EDO</b> : appliquer la condition initiale à $u_h$ seule ; oublier le cas de résonance.</li>
+<li><b>Polaires</b> : oublier le facteur r.</li>
+<li><b>Matrices</b> : supposer AB = BA ; inverser sans vérifier det ≠ 0.</li>
+<li><b>Fourier</b> : oublier la parité (calculs inutiles) ou la valeur aux discontinuités.</li>
+<li><b>Laplace</b> : appliquer le retard à une fonction qui n'est pas écrite en (t − a).</li></ol></div>
+</article>
+<script src="js/data-math.js"></script><script src="js/learn-math.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-math.js"></script><script src="js/gen-math.js"></script><script src="js/app.js"></script>
+</body></html>

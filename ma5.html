@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maths Ch. 5 — Matrices, systèmes, déterminants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ma5">
+<article class="content">
+<div class="kicker">Mathématiques · Algèbre linéaire · Chapitre 5</div>
+<h1>Matrices, systèmes linéaires et déterminants</h1>
+<p class="lead">Une matrice n'est pas qu'un tableau de nombres : c'est une <b>machine qui transforme des vecteurs</b> (elle étire, tourne, cisaille le plan). Résoudre un système, c'est chercher quel vecteur la machine a transformé en B ; le déterminant dit <b>de combien elle multiplie les aires</b> — et s'il est nul, la machine écrase tout et on ne peut plus revenir en arrière.</p>
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list"><li>faire un produit de matrices (et vérifier les tailles)</li><li>écrire un système sous forme AX = B</li><li>résoudre par le pivot de Gauss</li><li>lire le nombre de solutions</li><li>calculer un déterminant 2×2, 3×3 (cofacteurs, Sarrus)</li><li>utiliser les propriétés du déterminant</li><li>inverser une matrice (2×2, Gauss-Jordan, cofacteurs)</li><li>appliquer Cramer</li></ul></div>
+
+<h2 id="def"><span class="h2num">5.1</span>Matrices : définitions</h2>
+<div class="grid2">
+<div class="card def"><span class="tag">Matrice n × p</span><p>n lignes, p colonnes ; $a_{ij}$ = ligne i, colonne j. Carrée si $n=p$.</p><ul><li><b>Identité</b> $I_n$ : des 1 sur la diagonale, 0 ailleurs.</li><li><b>Diagonale</b>, <b>triangulaire</b> (supérieure / inférieure).</li><li><b>Transposée</b> $A^T$ : lignes ↔ colonnes ; symétrique si $A^T=A$.</li></ul></div>
+<div class="card def"><span class="tag">Opérations</span><ul><li>Somme : case par case (même taille). Commutative.</li><li>$\lambda A$ : chaque case × λ.</li><li><b>Produit</b> $AB$ : $(AB)_{ij}=\sum_ka_{ik}b_{kj}$ = ligne i de A « scalaire » colonne j de B. Possible si (n×<b>p</b>)·(<b>p</b>×m) ⇒ résultat n×m.</li></ul></div></div>
+<div class="card trap"><span class="tag">⚠ Le produit n'est PAS commutatif</span><p>En général $AB\ne BA$ (et l'un peut exister sans l'autre). Ex. : $\begin{pmatrix}0&1\\0&0\end{pmatrix}\begin{pmatrix}0&0\\1&0\end{pmatrix}=\begin{pmatrix}1&0\\0&0\end{pmatrix}$ mais dans l'autre sens on obtient $\begin{pmatrix}0&0\\0&1\end{pmatrix}$. Aussi : $AB=0$ n'implique pas $A=0$ ou $B=0$. Et $(AB)^T=B^TA^T$.</p></div>
+<div class="card why"><span class="tag">Pourquoi cette règle de produit bizarre ?</span><p>La colonne j de A est l'image du j-ième vecteur de base. Appliquer B puis A, c'est appliquer la machine $AB$ : la règle « ligne × colonne » est exactement ce qu'il faut pour <b>enchaîner deux transformations</b>. Et tourner puis étirer ≠ étirer puis tourner : d'où la non-commutativité.</p></div>
+<figure class="anim tall" data-anim="linmap" data-badge><figcaption>Déplace les pointes : ce sont les deux colonnes de A (les images de e₁ et e₂). Tout le quadrillage suit. Le carré gris devient le parallélogramme coloré, d’aire |det A|.</figcaption></figure><div class="inline-gen" data-gen="m-prod"></div>
+
+<h2 id="gauss"><span class="h2num">5.2</span>Systèmes linéaires et pivot de Gauss</h2>
+<div class="card def"><span class="tag">Forme matricielle</span><p>$\begin{cases}2x+y+z=3\\x-y+3z=8\\x+2y-z=-3\end{cases}\iff AX=B$ avec $A=\begin{pmatrix}2&1&1\\1&-1&3\\1&2&-1\end{pmatrix}$, $X=\begin{pmatrix}x\\y\\z\end{pmatrix}$, $B=\begin{pmatrix}3\\8\\-3\end{pmatrix}$.</p>
+<p>Trois cas : <b>une</b> solution, <b>aucune</b> (incompatible), une <b>infinité</b>. Un système homogène ($B=0$) a toujours au moins la solution nulle.</p></div>
+<div class="card meth"><span class="tag">Méthode du pivot de Gauss</span><p>Opérations autorisées (elles ne changent pas les solutions) :</p><ul><li>échanger deux lignes $L_i\leftrightarrow L_j$ ;</li><li>multiplier une ligne par $\lambda\ne0$ ;</li><li>remplacer $L_i$ par $L_i+\lambda L_j$ ($j\ne i$).</li></ul>
+<ol><li>Choisir un pivot non nul dans la 1ʳᵉ colonne (idéalement 1 ou −1 : échanger les lignes).</li><li>Annuler tout ce qui est sous le pivot.</li><li>Recommencer sur le sous-système (colonne 2, puis 3…) : on obtient un système <b>échelonné</b> (triangulaire).</li><li><b>Remonter</b> : dernière équation ⇒ dernière inconnue, etc.</li></ol></div>
+<div class="card key"><span class="tag">Lire le résultat</span><ul><li>Une ligne $0=c$ avec $c\ne0$ ⇒ <b>aucune solution</b>.</li><li>Moins de pivots que d'inconnues (et pas de contradiction) ⇒ <b>infinité</b> : les inconnues sans pivot sont des paramètres libres.</li><li>Un pivot par inconnue ⇒ <b>solution unique</b>.</li></ul></div>
+<div class="inline-gen" data-gen="m-gauss"></div>
+
+<h2 id="det"><span class="h2num">5.3</span>Déterminant</h2>
+<div class="grid2">
+<div class="card def"><span class="tag">2 × 2</span>$$\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc$$<p>= aire (signée) du parallélogramme formé par les colonnes.</p></div>
+<div class="card def"><span class="tag">3 × 3 : développement (cofacteurs)</span>$$\det A=\sum_j(-1)^{i+j}a_{ij}\,\Delta_{ij}$$<p>selon n'importe quelle ligne i (ou colonne) ; $\Delta_{ij}$ = déterminant obtenu en rayant ligne i et colonne j. Signes en damier $\begin{smallmatrix}+&-&+\\-&+&-\\+&-&+\end{smallmatrix}$. (Sarrus : uniquement en 3×3.)</p></div></div>
+<div class="card key"><span class="tag">Propriétés (elles font gagner tout le temps)</span><ul>
+<li>$\det(AB)=\det A\cdot\det B$ ; $\det A^T=\det A$ ; $\det(\lambda A)=\lambda^n\det A$.</li>
+<li>Échanger deux lignes ⇒ le signe change. Deux lignes égales ou proportionnelles ⇒ det = 0.</li>
+<li>$L_i\leftarrow L_i+\lambda L_j$ ⇒ det <b>inchangé</b> (c'est la base de la méthode « Gauss-cofacteur »).</li>
+<li>Mettre un facteur d'une ligne en facteur du déterminant.</li>
+<li>Matrice triangulaire : det = produit des termes diagonaux.</li></ul></div>
+<div class="card meth"><span class="tag">Méthode pratique « Gauss-cofacteur »</span><p>Faire apparaître des zéros dans une colonne avec des $L_i\leftarrow L_i+\lambda L_j$ (det inchangé), puis développer selon cette colonne : il ne reste qu'un seul terme.</p></div>
+<div class="card why"><span class="tag">L'image à retenir</span><p>$|\det A|$ = facteur par lequel A multiplie les <b>aires</b> (volumes en 3D). Signe négatif = effet miroir. <b>det = 0</b> : le plan est écrasé sur une droite (ou un point), deux vecteurs différents ont la même image ⇒ impossible de revenir en arrière ⇒ <b>A non inversible</b>, et le système AX = B n'a pas de solution unique.</p></div>
+<div class="inline-gen" data-gen="m-det"></div>
+
+<h2 id="inv"><span class="h2num">5.4</span>Matrice inverse</h2>
+<div class="card def"><span class="tag">Définition et critère</span><p>$A$ (carrée) est inversible s'il existe $A^{-1}$ avec $AA^{-1}=A^{-1}A=I_n$. <b>A inversible ⇔ det A ≠ 0.</b> Alors $AX=B\iff X=A^{-1}B$. Et $(AB)^{-1}=B^{-1}A^{-1}$ (on défait dans l'ordre inverse : chaussettes puis chaussures !).</p></div>
+<div class="grid2">
+<div class="card meth"><span class="tag">2 × 2</span>$$\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}=\frac1{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$$<p>Échanger la diagonale, opposer l'anti-diagonale, diviser par det.</p></div>
+<div class="card meth"><span class="tag">Gauss-Jordan (toute taille)</span><p>On écrit $(A\,|\,I_n)$ et on fait des opérations sur les lignes jusqu'à obtenir $(I_n\,|\,A^{-1})$.</p></div></div>
+<div class="card meth"><span class="tag">Cofacteurs</span>$$A^{-1}=\frac1{\det A}\,{}^t\mathrm{com}(A),\qquad\mathrm{com}(A)_{ij}=(-1)^{i+j}\Delta_{ij}$$<p>Pratique en 3×3 si on a déjà les mineurs. Toujours <b>vérifier</b> en calculant $AA^{-1}$ sur une ligne.</p></div>
+<div class="inline-gen" data-gen="m-inv2,m-param"></div>
+
+<h2 id="cramer"><span class="h2num">5.5</span>Systèmes de Cramer</h2>
+<div class="card def"><span class="tag">Formules de Cramer</span><p>Si $\det A\ne0$ (système de Cramer), l'unique solution est</p>$$x_i=\frac{\det A_i}{\det A}$$<p>où $A_i$ = A dont la colonne i est remplacée par B.</p></div>
+<div class="card rem"><span class="tag">Quand l'utiliser ?</span><p>Super en 2×2 et pour un système à paramètre (on obtient directement les formules). En 3×3 et plus, Gauss est en général plus rapide.</p></div>
+<div class="inline-gen" data-gen="m-cramer"></div>
+
+<h2 id="exos"><span class="h2num">5.6</span>Exercices du cours corrigés</h2>
+<section class="exo" id="exo1"><header><h3 id="e1">Produits (Ex. 1.1)</h3><span class="time">5 min</span></header><div class="body">
+<div class="statement">$A=\begin{pmatrix}1&-1&2\\3&-4&5\\5&6&-3\end{pmatrix}$, $B=\begin{pmatrix}3\\1\\4\end{pmatrix}$. Calculer $C=AB$ et $D={}^tB\,A$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> <b>tailles d’abord</b> : (n×p)(p×m) ⇒ n×m. Un vecteur colonne à droite donne un vecteur colonne.</div></div>
+<div class="steps"><div class="step"><h4>C = AB (3×3 · 3×1 = 3×1)</h4><p>$C=\begin{pmatrix}3-1+8\\9-4+20\\15+6-12\end{pmatrix}=\boxed{\begin{pmatrix}10\\25\\9\end{pmatrix}}$.</p></div><div class="step"><h4>D = ᵗB A (1×3 · 3×3 = 1×3)</h4><p>$D=(3+3+20,\ -3-4+24,\ 6+5-12)=\boxed{(26,\ 17,\ -1)}$.</p></div></div></div></section>
+<section class="exo" id="exo2"><header><h3 id="e2">Pivot de Gauss (Ex. 1.3, E₁)</h3><span class="time">15 min</span></header><div class="body">
+<div class="statement">$\begin{cases}2x_1+x_2+x_3=3\\x_1-x_2+3x_3=8\\x_1+2x_2-x_3=-3\end{cases}$</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> choisir un pivot <b>égal à 1</b> (échanger les lignes) évite les fractions.</div></div>
+<div class="steps"><div class="step"><h4>Pivot = 1 : on met $L_2$ en premier</h4><p>$\left(\begin{array}{ccc|c}1&-1&3&8\\2&1&1&3\\1&2&-1&-3\end{array}\right)$</p></div><div class="step"><h4>Annuler la 1ʳᵉ colonne</h4><p>$L_2\leftarrow L_2-2L_1$, $L_3\leftarrow L_3-L_1$ : $\left(\begin{array}{ccc|c}1&-1&3&8\\0&3&-5&-13\\0&3&-4&-11\end{array}\right)$</p></div><div class="step"><h4>Annuler sous le 2ᵉ pivot</h4><p>$L_3\leftarrow L_3-L_2$ : $(0\ 0\ 1\,|\,2)$ ⇒ $x_3=2$.</p></div><div class="step"><h4>Remonter</h4><p>$3x_2-10=-13$ ⇒ $x_2=-1$ ; $x_1+1+6=8$ ⇒ $x_1=1$. $\boxed{(1,-1,2)}$ (vérif dans la 1ʳᵉ équation : $2-1+2=3$ ✓).</p></div></div></div></section>
+<section class="exo" id="exo3"><header><h3 id="e3">Déterminants et inverses (Ex. 1.5 et 1.6)</h3><span class="time">20 min</span></header><div class="body">
+<div class="statement">Inverser $\begin{pmatrix}7&2\\3&1\end{pmatrix}$, $\begin{pmatrix}2&-3\\-5&6\end{pmatrix}$, $\begin{pmatrix}\alpha+1&1\\2&\alpha\end{pmatrix}$ ; puis $A=\begin{pmatrix}1&3&0\\2&1&-1\\-2&1&1\end{pmatrix}$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> det ≠ 0 d’abord ; 2×2 ⇒ formule directe ; 3×3 ⇒ comatrice transposée / det (ou Gauss-Jordan).</div></div>
+<div class="steps"><div class="step"><h4>2×2</h4><p>det = 1 ⇒ $\begin{pmatrix}1&-2\\-3&7\end{pmatrix}$. det = 12 − 15 = −3 ⇒ $-\frac13\begin{pmatrix}6&3\\5&2\end{pmatrix}=\begin{pmatrix}-2&-1\\-\frac53&-\frac23\end{pmatrix}$.</p></div><div class="step"><h4>Paramètre</h4><p>$\det=\alpha^2+\alpha-2=(\alpha-1)(\alpha+2)$ : inversible ⇔ $\alpha\notin\{1,-2\}$, et alors $\frac1{(\alpha-1)(\alpha+2)}\begin{pmatrix}\alpha&-1\\-2&\alpha+1\end{pmatrix}$.</p></div><div class="step"><h4>3×3 : déterminant</h4><p>Selon la 1ʳᵉ ligne : $1\cdot\begin{vmatrix}1&-1\\1&1\end{vmatrix}-3\begin{vmatrix}2&-1\\-2&1\end{vmatrix}+0=1\cdot2-3\cdot0=\boxed{2}$.</p></div><div class="step"><h4>3×3 : comatrice</h4><p>$\mathrm{com}A=\begin{pmatrix}2&0&4\\-3&1&-7\\-3&1&-5\end{pmatrix}$ ⇒ $A^{-1}=\frac12\begin{pmatrix}2&-3&-3\\0&1&1\\4&-7&-5\end{pmatrix}$ (vérifié : $AA^{-1}=I_3$).</p></div></div></div></section>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ma5"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ma5"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=matrice+transformation+lin%C3%A9aire+intuition+d%C3%A9terminant">▶ Matrices = transformations</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=m%C3%A9thode+du+pivot+de+gauss+syst%C3%A8me">▶ Pivot de Gauss</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=inverse+matrice+3x3+comatrice">▶ Inverse d’une matrice</a></p>
+</article>
+<script src="js/data-math.js"></script><script src="js/learn-math.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-math.js"></script><script src="js/gen-math.js"></script><script src="js/app.js"></script>
+</body></html>

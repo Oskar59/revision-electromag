@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Révisions AP3</title>
+<title>Atlas — Révisions AP3</title>
+<meta name="description" content="Atlas : le site pour tout réviser en AP3 — physique, électronique et mathématiques, avec animations, méthodes et exercices générés.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -8,22 +9,54 @@
 <link rel="stylesheet" href="css/style.css">
 </head><body data-page="index">
 <article class="content" data-nopager>
-<section class="hero">
-  <div class="kicker">AP3 · Révisions</div>
-  <h1>Comprendre, pas juste apprendre.</h1>
-  <p class="lead">Deux matières, la même méthode : chaque notion expliquée avec le <b>pourquoi</b>, des animations à manipuler, les TD corrigés pas à pas et surtout les <b>patterns</b> — quand on te pose telle question, quoi faire et pourquoi.</p>
+<section class="atlas-hero">
+  <svg class="orbit" viewBox="0 0 200 200" aria-hidden="true">
+    <circle cx="100" cy="100" r="86" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="4 6"/>
+    <circle cx="100" cy="100" r="56" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+    <circle cx="100" cy="100" r="18" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
+    <g><animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="22s" repeatCount="indefinite"/>
+      <circle cx="186" cy="100" r="12" fill="var(--phys)"/><text x="186" y="104.5" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">∇</text></g>
+    <g><animateTransform attributeName="transform" type="rotate" from="120 100 100" to="480 100 100" dur="30s" repeatCount="indefinite"/>
+      <circle cx="156" cy="100" r="11" fill="var(--elec)"/><text x="156" y="104" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Ω</text></g>
+    <g><animateTransform attributeName="transform" type="rotate" from="240 100 100" to="-120 100 100" dur="26s" repeatCount="indefinite"/>
+      <circle cx="186" cy="100" r="12" fill="var(--math)"/><text x="186" y="104.5" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">∫</text></g>
+  </svg>
+  <div class="kicker">Atlas · AP3 · Physique · Électronique · Maths</div>
+  <h1>Tout réviser,<br><em>en comprenant.</em></h1>
+  <p class="lead">Un seul site pour toute l'année : chaque notion expliquée avec son <b>pourquoi</b>, une <b>image mentale</b>, des animations à manipuler, les TD corrigés pas à pas, les <b>patterns</b> (« quand on te demande X, tu fais Y ») et des exercices générés à l'infini.</p>
 </section>
-<div class="subjects">
-  <a class="subject" href="physique.html"><div class="big phys-ico">∇</div><h2>Physique — Électromagnétisme</h2><p>Partie A (P. Capiod) : des charges aux équations de Maxwell.</p>
-    <ul><li>6 chapitres (0 à 5) + 30 animations</li><li>TD 1, 2 et 3 corrigés</li><li>Patterns, formulaire, examen blanc</li></ul>
-    <div class="pbar" data-progress="ch0,ch1,ch2,ch3,ch4,ch5,td1,td2,td3" style="margin-top:14px;height:6px;border-radius:4px;background:var(--bg3);overflow:hidden"><i style="display:block;height:100%;background:var(--ok)"></i></div></a>
-  <a class="subject" href="electronique.html"><div class="big elec-ico">Ω</div><h2>Électronique analogique</h2><p>J. Philippe : des lois de Kirchhoff aux diagrammes de Bode.</p>
-    <ul><li>3 chapitres + animations (RC, RLC, Bode, phaseurs…)</li><li>TD 1, 2 et 3 entièrement corrigés</li><li>Patterns, formulaire, examen blanc</li></ul>
-    <div class="pbar" data-progress="el1,el2,el3,eltd1,eltd2,eltd3" style="margin-top:14px;height:6px;border-radius:4px;background:var(--bg3);overflow:hidden"><i style="display:block;height:100%;background:var(--ok)"></i></div></a>
+
+<div class="subjects three">
+  <a class="subject s-phys" href="physique.html"><div class="big phys-ico">∇</div><h2>Physique</h2><p>Électromagnétisme (P. Capiod) : des charges aux équations de Maxwell.</p>
+    <ul><li>6 chapitres + 30 animations</li><li>TD 1, 2 et 3 corrigés et guidés</li><li>Patterns, formulaire, examen blanc</li></ul>
+    <div class="pbar" data-progress="ch0,ch1,ch2,ch3,ch4,ch5,td1,td2,td3" style="margin-top:14px;height:6px;border-radius:4px;background:var(--bg3);overflow:hidden"><i style="display:block;height:100%"></i></div><span class="plabel"></span></a>
+  <a class="subject s-elec" href="electronique.html"><div class="big elec-ico">Ω</div><h2>Électronique</h2><p>Analogique (J. Philippe) : des lois de Kirchhoff aux diagrammes de Bode.</p>
+    <ul><li>3 chapitres + animations (RC, RLC, Bode…)</li><li>TD 1, 2 et 3 corrigés et guidés</li><li>Patterns, formulaire, examen blanc</li></ul>
+    <div class="pbar" data-progress="el1,el2,el3,eltd1,eltd2,eltd3" style="margin-top:14px;height:6px;border-radius:4px;background:var(--bg3);overflow:hidden"><i style="display:block;height:100%"></i></div><span class="plabel"></span></a>
+  <a class="subject s-math" href="mathematiques.html"><div class="big math-ico">∫</div><h2>Mathématiques</h2><p>Analyse, algèbre linéaire, Fourier et Laplace : les outils de l'ingénieur.</p>
+    <ul><li>8 chapitres + 15 animations</li><li>Exercices du cours corrigés</li><li>🎲 Générateur : 31 types d'exercices</li></ul>
+    <div class="pbar" data-progress="ma1,ma2,ma3,ma4,ma5,ma6,ma7,ma8" style="margin-top:14px;height:6px;border-radius:4px;background:var(--bg3);overflow:hidden"><i style="display:block;height:100%"></i></div><span class="plabel"></span></a>
 </div>
-<a class="card key" href="liens.html" style="display:block;color:inherit;text-decoration:none"><span class="tag">∞ Commence par là</span><p><b>Les mêmes équations partout</b> : l’image de l’eau et du paysage, et les 5 structures qui reviennent dans les deux matières. 10 minutes qui rendent tout le reste plus simple.</p></a>
-<div class="card why"><span class="tag">Les deux matières se parlent</span>
-<p>Le condensateur ($Q=CU$, $i=C\,\mathrm du/\mathrm dt$), la bobine ($u=L\,\mathrm di/\mathrm dt$), l'oscillateur LC et l'énergie $\frac12CU^2$ : l'électronique les <b>utilise</b>, la physique explique <b>d'où ils viennent</b> (Ch. 2, 3 et 4 d'électromagnétisme). Les liens croisés sont signalés dans les chapitres.</p></div>
+
+<div class="quick">
+  <a href="liens.html"><span class="qi">∞</span><b>Les mêmes équations partout</b><span>L'image de l'eau et les 5 structures communes aux trois matières. Commence par là.</span></a>
+  <a href="ma-gen.html"><span class="qi">🎲</span><b>Exercice au hasard</b><span>Un énoncé de maths neuf à chaque clic, corrigé pas à pas.</span></a>
+  <a href="methodes.html"><span class="qi">★</span><b>Patterns physique</b><span>Gauss, Ampère, induction : quoi faire selon la question.</span></a>
+  <a href="el-methodes.html"><span class="qi">★</span><b>Patterns électronique</b><span>Diviseurs, Thévenin, transitoire, Bode.</span></a>
+</div>
+
+<h2 id="methode" data-nomaster>La méthode, sur chaque page</h2>
+<div class="method-strip">
+  <div><b>🧠 Carte logique</b>pourquoi chaque notion amène la suivante</div>
+  <div><b>🖼 Image mentale</b>une situation concrète à garder en tête</div>
+  <div><b>🔮 Prédis</b>devine avant de manipuler l'animation</div>
+  <div><b>▶ Explication guidée</b>l'animation commentée étape par étape</div>
+  <div><b>🧭 Patterns & TD guidés</b>choisir soi-même l'étape suivante</div>
+  <div><b>✓ Je maîtrise</b>ta progression, sauvegardée sur cet appareil</div>
+</div>
+
+<div class="card why"><span class="tag">Les trois matières se parlent</span>
+<p>Les <b>complexes</b> (maths, ch. 1) deviennent les impédances de l'électronique ; les <b>équations différentielles</b> (maths, ch. 3) sont celles des circuits RC et RLC ; <b>Fourier</b> (maths, ch. 6–7) explique le filtrage ; les <b>intégrales multiples</b> (maths, ch. 4) servent au théorème de Gauss en physique. Les liens croisés sont signalés dans les chapitres.</p></div>
 </article>
 <script src="js/data.js"></script><script src="js/learn-data.js"></script><script src="js/learn.js"></script><script src="js/app.js"></script>
 </body></html>

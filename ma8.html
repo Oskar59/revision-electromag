@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maths Ch. 8 — Transformée de Laplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ma8">
+<article class="content">
+<div class="kicker">Mathématiques · Analyse de Fourier · Chapitre 8</div>
+<h1>Transformée de Laplace</h1>
+<p class="lead">La transformée de Laplace est un <b>traducteur</b> : elle transforme une fonction du temps $f(t)$ en une fonction $F(p)$, et surtout elle transforme <b>dériver en multiplier par p</b>. Une équation différentielle devient une simple équation algébrique : on résout, puis on retraduit avec un dictionnaire.</p>
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list"><li>reconnaître une fonction causale, utiliser U(t)</li><li>calculer F(p) par la définition</li><li>trouver l'abscisse de convergence</li><li>utiliser le dictionnaire et les propriétés</li><li>gérer les retards (fonctions définies par morceaux)</li><li>trouver un original (éléments simples)</li><li>résoudre une EDO avec conditions initiales</li><li>résoudre un système d'EDO</li></ul></div>
+
+<h2 id="def"><span class="h2num">8.1</span>Définition</h2>
+<div class="card def"><span class="tag">L'espace $E_0$ et l'échelon</span><p>On travaille avec des fonctions <b>causales</b> (nulles pour $t<0$ : « rien ne se passe avant qu'on allume »), continues par morceaux et à croissance au plus exponentielle ($|f(t)|\le Me^{at}$). L'échelon unité $U(t)=0$ si $t<0$, $1$ si $t\ge0$ sert à rendre causal : $f(t)U(t)$.</p></div>
+<div class="card def"><span class="tag">Transformée de Laplace</span>$$F(p)=\mathcal L[f](p)=\int_0^{+\infty}f(t)\,e^{-pt}\,\mathrm dt$$<p>Elle existe pour $\mathrm{Re}\,p>\sigma$, où σ est l'<b>abscisse de convergence</b> (le facteur $e^{-pt}$ doit écraser la croissance de f).</p></div>
+<div class="card ex"><span class="tag">Les trois calculs à savoir refaire</span><ul>
+<li>$\mathcal L[U](p)=\int_0^\infty e^{-pt}\mathrm dt=\frac1p$ pour $p>0$.</li>
+<li>$\mathcal L[e^{at}](p)=\int_0^\infty e^{-(p-a)t}\mathrm dt=\frac1{p-a}$ pour $p>a$.</li>
+<li>$\mathcal L[t^n](p)=\frac{n!}{p^{n+1}}$ (par IPP successives), $p>0$.</li></ul></div>
+<div class="card why"><span class="tag">Différence avec Fourier</span><p>Fourier : $p=2i\pi\lambda$ imaginaire pur, intégrale sur tout ℝ, il faut $f\in L^1$. Laplace : p complexe quelconque, le $e^{-\mathrm{Re}(p)t}$ amortit tout, donc ça marche même pour $U(t)$, $t$, $e^{2t}$… Idéal pour les signaux <b>qu'on allume à t = 0</b> et les conditions initiales.</p></div>
+
+<h2 id="prop"><span class="h2num">8.2</span>Propriétés</h2>
+<div class="tablewrap"><table><tr><th>Opération sur f</th><th>Effet sur F</th></tr>
+<tr><td>$\alpha f+\beta g$</td><td>$\alpha F+\beta G$</td></tr>
+<tr><td>$e^{at}f(t)$</td><td>$F(p-a)$ (décalage en p)</td></tr>
+<tr><td>$f(t-a)\,U(t-a)$, $a>0$</td><td>$e^{-ap}F(p)$ (retard)</td></tr>
+<tr><td>$f(kt)$, $k>0$</td><td>$\frac1kF\!\left(\frac pk\right)$</td></tr>
+<tr><td>$f'(t)$</td><td>$pF(p)-f(0^+)$</td></tr>
+<tr><td>$f''(t)$</td><td>$p^2F(p)-pf(0^+)-f'(0^+)$</td></tr>
+<tr><td>$\int_0^tf(u)\,\mathrm du$</td><td>$\frac{F(p)}p$</td></tr>
+<tr><td>$t\,f(t)$</td><td>$-F'(p)$</td></tr>
+<tr><td>$(f*g)(t)=\int_0^tf(u)g(t-u)\,\mathrm du$</td><td>$F(p)\,G(p)$</td></tr></table></div>
+<div class="card key"><span class="tag">La propriété qui fait tout</span><p>$\mathcal L[f']=pF-f(0)$ : <b>dériver devient multiplier par p</b>, et la condition initiale apparaît toute seule. (Preuve : une IPP dans la définition.)</p></div>
+<figure class="anim " data-anim="retard" data-badge><figcaption>Retarder un signal de a (le décaler vers la droite et le couper avant a) revient à multiplier sa transformée par e^(−ap).</figcaption></figure>
+<div class="card trap"><span class="tag">⚠ Piège du retard</span><p>$t^2U(t-1)$ n'est PAS « $t^2$ retardé » : pour appliquer le retard, la fonction doit être écrite en $(t-1)$. On écrit $t^2=(t-1)^2+2(t-1)+1$, d'où $\mathcal L=e^{-p}\left(\frac2{p^3}+\frac2{p^2}+\frac1p\right)$.</p></div>
+<div class="inline-gen" data-gen="l-dir,l-ret"></div>
+
+<h2 id="dico"><span class="h2num">8.3</span>Dictionnaire d'images</h2>
+<div class="tablewrap"><table><tr><th>$f(t)$ (× U(t))</th><th>$F(p)$</th><th>$f(t)$ (× U(t))</th><th>$F(p)$</th></tr>
+<tr><td>$1$</td><td>$\frac1p$</td><td>$t^n$</td><td>$\frac{n!}{p^{n+1}}$</td></tr>
+<tr><td>$e^{at}$</td><td>$\frac1{p-a}$</td><td>$t^ne^{at}$</td><td>$\frac{n!}{(p-a)^{n+1}}$</td></tr>
+<tr><td>$\cos\omega t$</td><td>$\frac p{p^2+\omega^2}$</td><td>$\sin\omega t$</td><td>$\frac\omega{p^2+\omega^2}$</td></tr>
+<tr><td>$\cosh\omega t$</td><td>$\frac p{p^2-\omega^2}$</td><td>$\sinh\omega t$</td><td>$\frac\omega{p^2-\omega^2}$</td></tr>
+<tr><td>$e^{at}\cos\omega t$</td><td>$\frac{p-a}{(p-a)^2+\omega^2}$</td><td>$e^{at}\sin\omega t$</td><td>$\frac\omega{(p-a)^2+\omega^2}$</td></tr>
+<tr><td>$U(t-a)$</td><td>$\frac{e^{-ap}}p$</td><td>$\delta(t)$</td><td>$1$</td></tr></table></div>
+<figure class="anim tall" data-anim="laplace" data-badge><figcaption>Les pôles de F(p) (les ✕) commandent l’allure de f(t) : partie réelle = croissance ou amortissement, partie imaginaire = oscillation. Déplace le pôle à gauche, puis à droite de l’axe.</figcaption></figure>
+
+<h2 id="inverse"><span class="h2num">8.4</span>Transformée inverse : retrouver l'original</h2>
+<div class="card meth"><span class="tag">Méthode</span><ol><li>Factoriser le dénominateur de F(p).</li><li><b>Décomposer en éléments simples</b> (comme au <a href="ma2.html">chapitre 2</a>, avec p à la place de x).</li><li>Facteur irréductible $p^2+bp+c$ : forme canonique $(p-a)^2+\omega^2$, et faire apparaître $(p-a)$ au numérateur.</li><li>Lire chaque morceau dans le dictionnaire.</li></ol></div>
+<div class="card ex"><span class="tag">Exemples du cours</span><p>$\frac1{(p+1)(p-2)}=\frac13\left(\frac1{p-2}-\frac1{p+1}\right)\leftrightarrow\frac{e^{2t}-e^{-t}}3$.</p><p>$\frac{5p+10}{p^2+3p-4}=\frac{5p+10}{(p-1)(p+4)}=\frac3{p-1}+\frac2{p+4}\leftrightarrow3e^t+2e^{-4t}$ (cache : en $p=1$ : $\frac{15}5=3$ ; en $p=-4$ : $\frac{-10}{-5}=2$).</p></div>
+<div class="inline-gen" data-gen="l-inv"></div>
+
+<h2 id="edo"><span class="h2num">8.5</span>Résoudre des équations différentielles</h2>
+<div class="card meth"><span class="tag">Méthode</span><ol><li>Appliquer $\mathcal L$ à toute l'équation (linéarité, formules de dérivation avec les conditions initiales).</li><li>Isoler $Y(p)$ : une fraction rationnelle.</li><li>Décomposer en éléments simples, retour au temps avec le dictionnaire.</li></ol><p>Avantage : les conditions initiales sont prises en compte <b>dès le départ</b>, pas de constantes à déterminer à la fin, et les seconds membres par morceaux (échelons, retards) passent sans difficulté.</p></div>
+<div class="card ex"><span class="tag">Exemple : réponse indicielle d'un 2ᵈ ordre</span><p>$y''+3y'+2y=6$, $y(0)=y'(0)=0$ : $(p^2+3p+2)Y=\frac6p$ ⇒ $Y=\frac6{p(p+1)(p+2)}=\frac3p-\frac6{p+1}+\frac3{p+2}$ ⇒ $\boxed{y=3-6e^{-t}+3e^{-2t}}$ (y(0) = 0 ✓, y′(0) = 6 − 6 = 0 ✓).</p></div>
+<div class="card ex"><span class="tag">Système d'équations</span><p>$x'=y$, $y'=-x$, $x(0)=1$, $y(0)=0$ : $pX-1=Y$ et $pY=-X$ ⇒ $X(p^2+1)=p$ ⇒ $X=\frac p{p^2+1}$, $Y=\frac{-1}{p^2+1}$ ⇒ $x=\cos t$, $y=-\sin t$. On résout le système <b>algébrique</b> en X, Y comme au <a href="ma5.html">chapitre 5</a>.</p></div>
+<div class="card why"><span class="tag">Lien avec l'électronique</span><p>En électronique, la variable de Laplace est la même que $j\omega$ des impédances : $Z_L=Lp$, $Z_C=\frac1{Cp}$, et la fonction de transfert $H(p)$ a des pôles qui décident de la stabilité (pôles à gauche ⇒ ça s'amortit). Le régime sinusoïdal correspond à $p=j\omega$.</p></div>
+<div class="inline-gen" data-gen="l-edo"></div>
+
+<h2 id="exos"><span class="h2num">8.6</span>Exercices du cours corrigés</h2>
+<section class="exo" id="exo1"><header><h3 id="e1">Transformées et abscisses (Ex. 3.1)</h3><span class="time">15 min</span></header><div class="body">
+<div class="statement">(a) $2e^{-6t}$ ; (c) $2t^4$ ; (g) $2e^{-2t}\cos2t+\sin2t$ ; (i) $e^{-4t}\sinh(8t)$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> linéarité + dictionnaire ; l’abscisse de convergence est la <b>plus grande</b> des abscisses des morceaux.</div></div>
+<div class="steps"><div class="step"><h4>(a)</h4><p>$\frac2{p+6}$, $\mathrm{Re}\,p>-6$.</p></div><div class="step"><h4>(c)</h4><p>$2\cdot\frac{4!}{p^5}=\frac{48}{p^5}$, $\mathrm{Re}\,p>0$.</p></div><div class="step"><h4>(g)</h4><p>$\frac{2(p+2)}{(p+2)^2+4}+\frac2{p^2+4}$, $\mathrm{Re}\,p>\max(-2,0)=0$.</p></div><div class="step"><h4>(i)</h4><p>$e^{-4t}\sinh8t=\frac{e^{4t}-e^{-12t}}2$ ⇒ $\frac12\left(\frac1{p-4}-\frac1{p+12}\right)=\frac8{(p-4)(p+12)}$, $\mathrm{Re}\,p>4$.</p></div></div></div></section>
+<section class="exo" id="exo2"><header><h3 id="e2">Retards (Ex. 3.4, 3.5, 3.6)</h3><span class="time">20 min</span></header><div class="body">
+<div class="statement">$t^2U(t-1)$ ; $e^{-2t}U(t-1)$ ; $U(t-1)-U(t-2)$ ; $(t-2)^2U(t-2)$ ; $e(t)=2t$ sur $[0,1]$, $2$ pour $t\ge1$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> fonction définie par morceaux ⇒ l’écrire avec des $U(t-a)$, chaque morceau <b>écrit en $(t-a)$</b>.</div></div>
+<div class="steps"><div class="step"><h4>$t^2U(t-1)$</h4><p>$t^2=(t-1)^2+2(t-1)+1$ ⇒ $e^{-p}\left(\frac2{p^3}+\frac2{p^2}+\frac1p\right)$.</p></div><div class="step"><h4>$e^{-2t}U(t-1)$</h4><p>$=e^{-2}\,e^{-2(t-1)}U(t-1)$ ⇒ $e^{-2}e^{-p}\frac1{p+2}=\frac{e^{-(p+2)}}{p+2}$.</p></div><div class="step"><h4>Créneau et parabole retardée</h4><p>$\frac{e^{-p}-e^{-2p}}p$ ; $(t-2)^2U(t-2)\to\frac{2e^{-2p}}{p^3}$ (directement : déjà écrit en $t-2$).</p></div><div class="step"><h4>Rampe saturée $e(t)$</h4><p>$e(t)=2tU(t)-2(t-1)U(t-1)$ (on « arrête » la rampe en ajoutant une rampe opposée) ⇒ $\boxed{E(p)=\frac{2(1-e^{-p})}{p^2}}$.</p></div></div></div></section>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ma8"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ma8"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=transform%C3%A9e+de+laplace+intuition">▶ Transformée de Laplace intuition</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=r%C3%A9soudre+%C3%A9quation+diff%C3%A9rentielle+transform%C3%A9e+de+laplace">▶ Laplace équation différentielle</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=p%C3%B4les+transform%C3%A9e+de+laplace+stabilit%C3%A9">▶ Pôles et stabilité</a></p>
+</article>
+<script src="js/data-math.js"></script><script src="js/learn-math.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-math.js"></script><script src="js/gen-math.js"></script><script src="js/app.js"></script>
+</body></html>

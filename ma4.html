@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maths Ch. 4 — Intégrales multiples</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ma4">
+<article class="content">
+<div class="kicker">Mathématiques · Analyse · Chapitre 4</div>
+<h1>Intégrales doubles et triples</h1>
+<p class="lead">Une intégrale simple additionne des <b>bandes</b> ; une intégrale double additionne des <b>petits carreaux</b> $\mathrm dx\,\mathrm dy$ d'une plaque, une triple des <b>petits cubes</b> d'un volume. Tout le travail est de <b>décrire le domaine</b> avec des bornes — puis on intègre une variable après l'autre.</p>
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list"><li>dessiner le domaine et le décrire « en tranches »</li><li>appliquer Fubini (et inverser l'ordre)</li><li>séparer les variables sur un rectangle</li><li>passer en polaires (et ne pas oublier r)</li><li>passer en cylindriques / sphériques</li><li>calculer aire, volume, masse</li><li>calculer centre d'inertie et moments d'inertie</li><li>exploiter les symétries</li></ul></div>
+
+<h2 id="double"><span class="h2num">4.1</span>Intégrale double : le principe</h2>
+<div class="card def"><span class="tag">Sens</span><p>$\iint_Df(x,y)\,\mathrm dx\,\mathrm dy$ = somme de $f\times$(aire du carreau) sur tous les carreaux de D. Si $f\ge0$ : <b>volume</b> sous la surface $z=f(x,y)$. Si $f$ est une densité surfacique : <b>masse</b> de la plaque. Si $f=1$ : <b>aire</b> de D.</p></div>
+<div class="card def"><span class="tag">Description hiérarchisée d'un domaine</span><p>« x varie de a à b, et pour chaque x, y varie de $\varphi_1(x)$ à $\varphi_2(x)$ » :</p>$$\iint_Df=\int_a^b\left(\int_{\varphi_1(x)}^{\varphi_2(x)}f(x,y)\,\mathrm dy\right)\mathrm dx$$</div>
+<figure class="anim tall" data-anim="fubini" data-badge><figcaption>Une tranche verticale (x fixé) : on lit sur le dessin où y entre et sort du domaine — ce sont les bornes intérieures. On empile ensuite les tranches. Change l’ordre : les bornes changent, le résultat non.</figcaption></figure>
+<div class="card key"><span class="tag">Théorème de Fubini</span><p>On peut intégrer dans l'ordre qu'on veut, à condition de <b>redécrire le domaine</b> :</p>$$\int_a^b\!\!\int_{\varphi_1(x)}^{\varphi_2(x)}f\,\mathrm dy\,\mathrm dx=\int_c^d\!\!\int_{\psi_1(y)}^{\psi_2(y)}f\,\mathrm dx\,\mathrm dy$$<p>Règle d'or : les bornes <b>intérieures</b> peuvent dépendre de la variable extérieure ; les bornes <b>extérieures</b> sont des nombres.</p></div>
+<div class="card rem"><span class="tag">Cas particulier : rectangle et fonction séparée</span><p>Si $D=[a,b]\times[c,d]$ et $f(x,y)=g(x)h(y)$ : $\iint_Df=\left(\int_a^bg\right)\left(\int_c^dh\right)$.</p></div>
+<div class="inline-gen" data-gen="d-rect,d-tri"></div>
+
+<h2 id="polaire"><span class="h2num">4.2</span>Changement de variables, coordonnées polaires</h2>
+<div class="card def"><span class="tag">Polaires</span>$$x=r\cos\theta,\quad y=r\sin\theta,\qquad\boxed{\mathrm dx\,\mathrm dy=r\,\mathrm dr\,\mathrm d\theta}$$</div>
+<div class="card why"><span class="tag">Pourquoi ce r ?</span><p>Le petit carreau polaire a deux côtés : $\mathrm dr$ (radial) et $r\,\mathrm d\theta$ (un arc, plus long quand on est loin du centre). Son aire est $r\,\mathrm dr\,\mathrm d\theta$. En général, on multiplie par la valeur absolue du <b>jacobien</b> $|\det J|$ (le facteur d'étirement des aires — exactement le déterminant du chapitre 5 !).</p></div>
+<figure class="anim " data-anim="polar" data-badge><figcaption>Deux cases de même taille dr × dθ (à droite, dans le plan (r, θ)) n’ont pas la même aire dans le plan (x, y) : celle qui est loin du centre est plus grande, d’un facteur r.</figcaption></figure>
+<div class="card meth"><span class="tag">Quand passer en polaires ?</span><ul><li>Le domaine est un disque, une couronne, un secteur ($x^2+y^2\le R^2$…).</li><li>La fonction contient $x^2+y^2$ (devient $r^2$).</li><li>Disque décentré $x^2+y^2\le2x$ : $r\le2\cos\theta$, $\theta\in[-\frac\pi2,\frac\pi2]$.</li></ul></div>
+<div class="inline-gen" data-gen="d-pol"></div>
+
+<h2 id="triple"><span class="h2num">4.3</span>Intégrales triples</h2>
+<div class="card def"><span class="tag">Fubini en 3D</span><p>Même idée : « x de a à b ; pour x fixé, y de … à … ; pour x et y fixés, z de … à … ». Image : on empile des colonnes verticales.</p></div>
+<div class="grid2">
+<div class="card def"><span class="tag">Cylindriques (axe Oz)</span>$$x=r\cos\theta,\ y=r\sin\theta,\ z=z$$$$\mathrm dx\,\mathrm dy\,\mathrm dz=r\,\mathrm dr\,\mathrm d\theta\,\mathrm dz$$</div>
+<div class="card def"><span class="tag">Sphériques (convention du cours)</span>$$x=r\cos\varphi\cos\theta,\ y=r\cos\varphi\sin\theta,\ z=r\sin\varphi$$$$\varphi\in\left[-\tfrac\pi2,\tfrac\pi2\right]\ (\text{latitude}),\quad\mathrm dV=r^2\cos\varphi\,\mathrm dr\,\mathrm d\theta\,\mathrm d\varphi$$</div></div>
+<div class="card trap"><span class="tag">⚠ Piège de convention</span><p>En physique, l'angle θ des sphériques se mesure depuis l'axe Oz (colatitude, $\theta\in[0,\pi]$) et $\mathrm dV=r^2\sin\theta\,\mathrm dr\,\mathrm d\theta\,\mathrm d\varphi$. Ici φ est la <b>latitude</b> (depuis l'équateur) : d'où $\cos\varphi$. Vérification : volume de la boule $\int_0^Rr^2\mathrm dr\int_0^{2\pi}\mathrm d\theta\int_{-\pi/2}^{\pi/2}\cos\varphi\,\mathrm d\varphi=\frac{R^3}3\cdot2\pi\cdot2=\frac43\pi R^3$ ✓.</p></div>
+<div class="inline-gen" data-gen="d-cyl"></div>
+
+<h2 id="applis"><span class="h2num">4.4</span>Applications</h2>
+<div class="tablewrap"><table><tr><th>Grandeur</th><th>Formule</th></tr>
+<tr><td>Aire / volume</td><td>$\iint_D\mathrm dx\,\mathrm dy$ / $\iiint_V\mathrm dV$</td></tr>
+<tr><td>Masse</td><td>$m=\iiint_V\rho(x,y,z)\,\mathrm dV$ (ou $\iint\sigma\,\mathrm dS$)</td></tr>
+<tr><td>Centre d'inertie</td><td>$x_G=\frac1m\iiint x\rho\,\mathrm dV$ (idem $y_G$, $z_G$)</td></tr>
+<tr><td>Moment d'inertie / axe Δ</td><td>$J_\Delta=\iiint d^2\rho\,\mathrm dV$, d = distance à l'axe (ex. $J_{Oz}=\iiint(x^2+y^2)\rho\,\mathrm dV$)</td></tr></table></div>
+<div class="card why"><span class="tag">Tu l'as déjà fait en physique</span><p>La charge d'une boule $Q=\iiint\rho\,\mathrm dV$, le flux, les coordonnées adaptées du <a href="ch0.html">chapitre 0 d'électromagnétisme</a> : ce sont exactement ces intégrales. Et les symétries (centre G sur un axe de symétrie) font gagner beaucoup de calculs.</p></div>
+
+<h2 id="exos"><span class="h2num">4.5</span>Exercices du cours corrigés</h2>
+<section class="exo" id="exo1"><header><h3 id="e1">Sur le triangle (Ex. 4.1)</h3><span class="time">15 min</span></header><div class="body">
+<div class="statement">$D=\{x\ge0,y\ge0,x+y\le1\}$. Calculer $\iint_D(x^2+y^2)$ et $\iint_Dxy(x+y)$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> dessiner le triangle, tranche verticale : y va de 0 à la droite $y=1-x$.</div></div>
+<div class="steps"><div class="step"><h4>Description</h4><p>$0\le x\le1$, $0\le y\le1-x$.</p></div><div class="step"><h4>1.</h4><p>$\int_0^1\left[x^2y+\frac{y^3}3\right]_0^{1-x}\mathrm dx=\int_0^1\left(x^2(1-x)+\frac{(1-x)^3}3\right)\mathrm dx=\frac1{12}+\frac1{12}=\boxed{\frac16}$.</p></div><div class="step"><h4>2.</h4><p>$\int_0^1\left(\frac{x^2(1-x)^2}2+\frac{x(1-x)^3}3\right)\mathrm dx=\frac1{60}+\frac1{60}=\boxed{\frac1{30}}$ (développer les polynômes).</p></div></div></div></section>
+<section class="exo" id="exo2"><header><h3 id="e2">Fonction séparable (Ex. 4.3)</h3><span class="time">10 min</span></header><div class="body">
+<div class="statement">$\iint_{[0,\pi]^2}(x+y)\sin x\sin y\,\mathrm dx\,\mathrm dy$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> carré + produit de fonctions d’une variable ⇒ <b>produit d’intégrales simples</b>.</div></div>
+<div class="steps"><div class="step"><h4>Symétrie</h4><p>Le domaine et $\sin x\sin y$ sont symétriques en x ↔ y : $\iint y\sin x\sin y=\iint x\sin x\sin y$. Donc $I=2\iint x\sin x\sin y$.</p></div><div class="step"><h4>Séparer</h4><p>$I=2\left(\int_0^\pi x\sin x\,\mathrm dx\right)\left(\int_0^\pi\sin y\,\mathrm dy\right)=2\cdot\pi\cdot2=\boxed{4\pi}$ (IPP : $\int_0^\pi x\sin x=\pi$).</p></div></div></div></section>
+<section class="exo" id="exo3"><header><h3 id="e3">Polaires (Ex. 4.4)</h3><span class="time">20 min</span></header><div class="body">
+<div class="statement">1. $\iint\frac{\mathrm dx\,\mathrm dy}{1+x^2+y^2}$ sur le quart de disque unité. 2. $\iint\frac{xy}{x^2+y^2}$ sur $x,y\ge0$, $1\le x^2+y^2\le4$. 3. $\iint\sqrt{x^2+y^2}$ sur $x^2+y^2-2x\le0$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> $x^2+y^2$ partout ⇒ polaires ; borne en r qui dépend de θ si le disque est décentré.</div></div>
+<div class="steps"><div class="step"><h4>1.</h4><p>$\int_0^{\pi/2}\mathrm d\theta\int_0^1\frac{r\,\mathrm dr}{1+r^2}=\frac\pi2\cdot\frac{\ln2}2=\boxed{\frac{\pi\ln2}4}$.</p></div><div class="step"><h4>2.</h4><p>$\frac{r^2\cos\theta\sin\theta}{r^2}\cdot r$ : $\int_1^2r\,\mathrm dr\int_0^{\pi/2}\cos\theta\sin\theta\,\mathrm d\theta=\frac32\cdot\frac12=\boxed{\frac34}$.</p></div><div class="step"><h4>3. Reconnaître le domaine</h4><p>$(x-1)^2+y^2\le1$ : disque de centre (1, 0), rayon 1. En polaires $r^2\le2r\cos\theta$ ⇒ $0\le r\le2\cos\theta$, $\theta\in[-\frac\pi2,\frac\pi2]$.</p></div><div class="step"><h4>3. Calcul</h4><p>$\int_{-\pi/2}^{\pi/2}\int_0^{2\cos\theta}r^2\,\mathrm dr\,\mathrm d\theta=\int_{-\pi/2}^{\pi/2}\frac{8\cos^3\theta}3\mathrm d\theta=\frac83\cdot\frac43=\boxed{\frac{32}9}$.</p></div></div></div></section>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ma4"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ma4"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=int%C3%A9grale+double+fubini+bornes">▶ Intégrale double Fubini</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=int%C3%A9grale+double+coordonn%C3%A9es+polaires+jacobien">▶ Coordonnées polaires jacobien</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=int%C3%A9grale+triple+coordonn%C3%A9es+sph%C3%A9riques">▶ Intégrale triple sphériques</a></p>
+</article>
+<script src="js/data-math.js"></script><script src="js/learn-math.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-math.js"></script><script src="js/gen-math.js"></script><script src="js/app.js"></script>
+</body></html>

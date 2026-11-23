@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maths Ch. 2 — Calcul intégral</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ma2">
+<article class="content">
+<div class="kicker">Mathématiques · Analyse · Chapitre 2</div>
+<h1>Calcul intégral</h1>
+<p class="lead">Une intégrale, c'est <b>une somme de petits morceaux</b> : l'aire sous une courbe découpée en rectangles infiniment fins. Une primitive, c'est <b>cette aire qui s'accumule</b> au fur et à mesure qu'on avance. Le théorème fondamental relie les deux — et donne toutes les techniques de calcul.</p>
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list"><li>trouver une primitive des fonctions usuelles</li><li>reconnaître $u'u^n$, $u'/u$, $u'e^u$</li><li>interpréter une intégrale comme une aire signée</li><li>utiliser Chasles, linéarité, parité</li><li>faire une intégration par parties (bien choisir u)</li><li>faire un changement de variable (et changer les bornes)</li><li>décomposer une fraction rationnelle</li><li>intégrer chaque élément simple</li></ul></div>
+
+<h2 id="prim"><span class="h2num">2.1</span>Primitives</h2>
+<div class="card def"><span class="tag">Définition</span><p>$F$ est une primitive de $f$ sur I si $F'=f$. Toutes les primitives sont $F+c$ (c constante) : la dérivée « oublie » les constantes.</p></div>
+<div class="tablewrap"><table><tr><th>$f(x)$</th><th>une primitive</th><th>$f(x)$</th><th>une primitive</th></tr>
+<tr><td>$x^n$ ($n\ne-1$)</td><td>$\frac{x^{n+1}}{n+1}$</td><td>$\frac1x$</td><td>$\ln|x|$</td></tr>
+<tr><td>$e^{ax}$</td><td>$\frac1ae^{ax}$</td><td>$\cos(ax)$</td><td>$\frac1a\sin(ax)$</td></tr>
+<tr><td>$\sin(ax)$</td><td>$-\frac1a\cos(ax)$</td><td>$\frac1{1+x^2}$</td><td>$\arctan x$</td></tr>
+<tr><td>$\frac1{\sqrt{1-x^2}}$</td><td>$\arcsin x$</td><td>$\frac1{\cos^2x}=1+\tan^2x$</td><td>$\tan x$</td></tr>
+<tr><td>$u'u^n$</td><td>$\frac{u^{n+1}}{n+1}$</td><td>$\frac{u'}u$</td><td>$\ln|u|$</td></tr>
+<tr><td>$u'e^u$</td><td>$e^u$</td><td>$\frac{u'}{2\sqrt u}$</td><td>$\sqrt u$</td></tr>
+<tr><td>$u'\cos u$</td><td>$\sin u$</td><td>$\frac{u'}{1+u^2}$</td><td>$\arctan u$</td></tr></table></div>
+<div class="card meth"><span class="tag">Réflexe : chercher la dérivée cachée</span><p>Devant un produit ou un quotient, demande-toi : « est-ce qu'un morceau est la dérivée de l'autre ? » Ex. : $x(x^2-2)^3=\frac12\cdot\underbrace{2x}_{u'}\underbrace{(x^2-2)^3}_{u^3}$ ⇒ primitive $\frac{(x^2-2)^4}{8}$. Et $\frac{3x-2}{\sqrt{1-x^2}}=-3\frac{-x}{\sqrt{1-x^2}}-\frac{2}{\sqrt{1-x^2}}$ ⇒ $-3\sqrt{1-x^2}-2\arcsin x$.</p></div>
+
+<h2 id="integ"><span class="h2num">2.2</span>L'intégrale : une aire signée</h2>
+<div class="card def"><span class="tag">Définition et théorème fondamental</span>$$\int_a^bf(x)\,\mathrm dx=F(b)-F(a)=\big[F(x)\big]_a^b$$<p>C'est la limite des sommes de rectangles (sommes de Riemann). Au-dessus de l'axe l'aire compte <b>positivement</b>, en dessous <b>négativement</b>.</p></div>
+<figure class="anim " data-anim="riemann" data-badge><figcaption>Augmente n : la somme des rectangles s’approche de F(b) − F(a). Essaie sin x jusqu’à 2π : les deux arches s’annulent.</figcaption></figure>
+<div class="card why"><span class="tag">Pourquoi F(b) − F(a) ? L'image clé</span><p>Note $A(x)$ l'aire sous f entre a et x. Si on avance de $\mathrm dx$, l'aire grandit d'une bande fine de hauteur $f(x)$ : $A(x+\mathrm dx)-A(x)\approx f(x)\,\mathrm dx$, donc $A'(x)=f(x)$. <b>L'aire accumulée est une primitive.</b> La hauteur de f dit à quelle vitesse l'aire grandit.</p></div>
+<figure class="anim tall" data-anim="primitive" data-badge><figcaption>En haut : l’aire sous f entre a et x. En bas : sa valeur F(x). La tangente orange a toujours pour pente f(x). Avec e^(−x²) : la primitive existe mais n’a pas de formule !</figcaption></figure>
+<div class="grid2">
+<div class="card def"><span class="tag">Propriétés</span><ul><li><b>Linéarité</b> : $\int(\lambda f+\mu g)=\lambda\int f+\mu\int g$</li><li><b>Chasles</b> : $\int_a^b=\int_a^c+\int_c^b$ ; $\int_b^a=-\int_a^b$</li><li><b>Positivité</b> : $f\ge0$ et $a\le b$ ⇒ $\int_a^bf\ge0$</li><li>$\left|\int_a^bf\right|\le\int_a^b|f|$</li></ul></div>
+<div class="card rem"><span class="tag">Raccourcis de symétrie</span><ul><li>$f$ <b>impaire</b> : $\int_{-a}^af=0$ (les aires s'annulent)</li><li>$f$ <b>paire</b> : $\int_{-a}^af=2\int_0^af$</li><li>$f$ <b>T-périodique</b> : $\int_a^{a+T}f$ ne dépend pas de a</li><li>Valeur moyenne : $\bar f=\frac1{b-a}\int_a^bf$</li></ul></div></div>
+<div class="inline-gen" data-gen="i-poly"></div>
+
+<h2 id="ipp"><span class="h2num">2.3</span>Intégration par parties (IPP)</h2>
+<div class="card def"><span class="tag">Formule</span>$$\int_a^bu\,v'\,\mathrm dx=\big[uv\big]_a^b-\int_a^bu'\,v\,\mathrm dx$$<p>Elle vient de $(uv)'=u'v+uv'$ intégrée entre a et b.</p></div>
+<div class="card meth"><span class="tag">Comment choisir u et v′ ?</span><p>On veut que la nouvelle intégrale $\int u'v$ soit <b>plus simple</b>. Donc :</p><ul><li><b>u</b> = ce qui se <b>simplifie en dérivant</b> : polynôme (son degré baisse), $\ln x$ (devient $1/x$), $\arctan x$.</li><li><b>v′</b> = ce qu'on sait <b>intégrer</b> sans que ça se complique : $e^{ax}$, $\sin$, $\cos$.</li></ul><p>Cas particuliers : $\int\ln x$ (prendre $v'=1$) ; polynôme de degré 2 ⇒ <b>deux</b> IPP ; $\int e^x\cos x$ ⇒ deux IPP et on retombe sur l'intégrale de départ : on la résout comme une équation.</p></div>
+<div class="card ex"><span class="tag">Exemple</span><p>$\int_0^xt\sin t\,\mathrm dt$ : $u=t$, $v'=\sin t$, $v=-\cos t$ ⇒ $\big[-t\cos t\big]_0^x+\int_0^x\cos t\,\mathrm dt=\boxed{\sin x-x\cos x}$.</p></div>
+<div class="inline-gen" data-gen="i-ipp"></div>
+
+<h2 id="chgt"><span class="h2num">2.4</span>Changement de variable</h2>
+<div class="card meth"><span class="tag">Méthode (5 étapes du cours)</span><ol><li>On pose $t=\varphi(u)$ (ou $u=\psi(t)$).</li><li>On remplace $f(t)$ par $f(\varphi(u))$.</li><li>On remplace $\mathrm dt$ par $\varphi'(u)\,\mathrm du$.</li><li>On cherche la valeur de u quand $t=a$…</li><li>…et quand $t=b$ : <b>on change les bornes</b> (on ne revient jamais à t).</li></ol></div>
+<div class="card ex"><span class="tag">Exemple : l'aire d'un demi-disque</span><p>$I=\int_{-1}^1\sqrt{1-t^2}\,\mathrm dt$, on pose $t=\sin u$, $\mathrm dt=\cos u\,\mathrm du$, $u$ de $-\frac\pi2$ à $\frac\pi2$ : $\sqrt{1-\sin^2u}=\cos u$ (positif sur cet intervalle) ⇒ $I=\int_{-\pi/2}^{\pi/2}\cos^2u\,\mathrm du=\int\frac{1+\cos2u}2=\boxed{\frac\pi2}$. C'est bien l'aire d'un demi-disque de rayon 1 !</p></div>
+<div class="card trap"><span class="tag">⚠ Pièges</span><ul><li>Oublier de transformer $\mathrm dt$ (le facteur $\varphi'(u)$).</li><li>Garder les anciennes bornes.</li><li>Oublier que $\sqrt{\cos^2u}=|\cos u|$ : vérifier le signe sur l'intervalle.</li></ul></div>
+<div class="inline-gen" data-gen="i-sub"></div>
+
+<h2 id="frac"><span class="h2num">2.5</span>Fractions rationnelles</h2>
+<div class="card why"><span class="tag">L'idée</span><p>On ne sait pas intégrer $\frac{x+5}{(x-1)(x+2)}$ directement, mais on sait intégrer $\frac{2}{x-1}$ et $\frac{-1}{x+2}$ (des ln). La décomposition en <b>éléments simples</b> casse la fraction en morceaux qu'on sait intégrer. (Même idée que mettre au même dénominateur, <b>à l'envers</b>.)</p></div>
+<div class="card meth"><span class="tag">Méthode</span><ol><li><b>Degré</b> : si deg(numérateur) ≥ deg(dénominateur), division euclidienne d'abord (partie entière).</li><li><b>Factoriser</b> le dénominateur dans ℝ : facteurs $(x-a)^k$ et $(x^2+px+q)^k$ avec $p^2-4q<0$.</li><li><b>Écrire la forme</b> : à chaque $(x-a)^k$ correspondent $\frac{A_1}{x-a}+\dots+\frac{A_k}{(x-a)^k}$ ; à chaque $x^2+px+q$ correspond $\frac{Bx+C}{x^2+px+q}$.</li><li><b>Trouver les constantes</b> : « méthode du cache » (multiplier par $(x-a)$ puis $x=a$), limite en $+\infty$ après multiplication par x, valeurs particulières (x = 0…).</li></ol></div>
+<div class="tablewrap"><table><tr><th>Élément simple</th><th>Primitive</th></tr>
+<tr><td>$\frac{1}{x-a}$</td><td>$\ln|x-a|$</td></tr>
+<tr><td>$\frac{1}{(x-a)^k}$, $k\ge2$</td><td>$\frac{-1}{(k-1)(x-a)^{k-1}}$</td></tr>
+<tr><td>$\frac{Bx+C}{x^2+px+q}$</td><td>faire apparaître $\frac{2x+p}{x^2+px+q}$ (→ ln) + reste en $\frac{1}{(x+\frac p2)^2+\beta^2}$ (→ $\frac1\beta\arctan\frac{x+p/2}\beta$)</td></tr></table></div>
+<div class="card ex"><span class="tag">Exemple (Ex. 2.3.1)</span><p>$\frac1{t(t^2-3t+2)}=\frac1{t(t-1)(t-2)}=\frac{A}{t}+\frac{B}{t-1}+\frac{C}{t-2}$. Cache : $A=\frac1{(-1)(-2)}=\frac12$, $B=\frac1{1\cdot(-1)}=-1$, $C=\frac1{2\cdot1}=\frac12$. Donc $\int_3^x=\left[\frac12\ln t-\ln(t-1)+\frac12\ln(t-2)\right]_3^x$.</p></div>
+<div class="inline-gen" data-gen="i-frac"></div>
+
+<h2 id="exos"><span class="h2num">2.6</span>Exercices du cours corrigés</h2>
+<section class="exo" id="exo1"><header><h3 id="e1">IPP double et cyclique (Ex. 2.1.3 et 2.1.4)</h3><span class="time">15 min</span></header><div class="body">
+<div class="statement">Calculer $\int_0^xt^2\cos t\,\mathrm dt$ et $\int_0^x\cos t\,e^t\,\mathrm dt$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> polynôme × trig ⇒ autant d’IPP que le degré ; exp × trig ⇒ deux IPP puis <b>équation en I</b>.</div></div>
+<div class="steps"><div class="step"><h4>1ʳᵉ intégrale : deux IPP</h4><p>$u=t^2$, $v=\sin t$ : $\big[t^2\sin t\big]_0^x-2\int_0^xt\sin t$. Et $\int_0^xt\sin t=\sin x-x\cos x$ (exemple du cours) ⇒ $\boxed{x^2\sin x+2x\cos x-2\sin x}$.</p></div><div class="step"><h4>2ᵉ intégrale : on retombe sur I</h4><p>$I=\big[e^t\sin t\big]_0^x-\int_0^xe^t\sin t$, puis $\int_0^xe^t\sin t=\big[-e^t\cos t\big]_0^x+\int_0^xe^t\cos t=-e^x\cos x+1+I$.</p></div><div class="step"><h4>On résout en I</h4><p>$I=e^x\sin x+e^x\cos x-1-I$ ⇒ $\boxed{I=\frac{e^x(\cos x+\sin x)-1}{2}}$.</p></div></div></div></section>
+<section class="exo" id="exo2"><header><h3 id="e2">Intégrale de Wallis (Ex. 2.5)</h3><span class="time">20 min</span></header><div class="body">
+<div class="statement">$I_n=\int_0^{\pi/2}\sin^nt\,\mathrm dt$. Montrer que $I_{n+2}=\frac{n+1}{n+2}I_n$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> relation de récurrence ⇒ IPP qui fait réapparaître $I_n$ grâce à $\cos^2=1-\sin^2$.</div></div>
+<div class="steps"><div class="step"><h4>IPP sur $I_{n+2}$</h4><p>$\sin^{n+2}=\sin^{n+1}\cdot\sin$ : $u=\sin^{n+1}t$, $v'=\sin t$, $v=-\cos t$. Le crochet $\big[-\cos t\sin^{n+1}t\big]_0^{\pi/2}=0$.</p></div><div class="step"><h4>Reste</h4><p>$I_{n+2}=(n+1)\int_0^{\pi/2}\sin^nt\cos^2t=(n+1)\int\sin^nt(1-\sin^2t)=(n+1)(I_n-I_{n+2})$.</p></div><div class="step"><h4>Conclusion</h4><p>$(n+2)I_{n+2}=(n+1)I_n$ ✓. Avec $I_0=\frac\pi2$, $I_1=1$ : $I_2=\frac\pi4$, $I_3=\frac23$, $I_4=\frac{3\pi}{16}$…</p></div></div></div></section>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ma2"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ma2"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=int%C3%A9grale+aire+sous+la+courbe+primitive+intuition">▶ Intégrale = aire (intuition)</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=int%C3%A9gration+par+parties+m%C3%A9thode">▶ Intégration par parties</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=d%C3%A9composition+%C3%A9l%C3%A9ments+simples+int%C3%A9grale">▶ Décomposition en éléments simples</a></p>
+</article>
+<script src="js/data-math.js"></script><script src="js/learn-math.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-math.js"></script><script src="js/gen-math.js"></script><script src="js/app.js"></script>
+</body></html>

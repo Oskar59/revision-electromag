@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maths Ch. 1 — Nombres complexes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ma1">
+<article class="content">
+<div class="kicker">Mathématiques · Analyse · Chapitre 1</div>
+<h1>Nombres complexes</h1>
+<p class="lead">Un complexe, ce n'est pas un nombre « imaginaire » mystérieux : c'est <b>un point du plan</b>, ou mieux, <b>une flèche</b>. Additionner = mettre les flèches bout à bout ; multiplier = <b>tourner et étirer</b>. Toute l'électronique en régime sinusoïdal repose là-dessus.</p>
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list"><li>passer d'une forme à l'autre (algébrique, trigo, exponentielle)</li><li>calculer module et argument</li><li>diviser deux complexes (conjugué)</li><li>utiliser Euler et De Moivre (linéariser)</li><li>trouver les racines carrées d'un complexe</li><li>résoudre une équation du 2ᵈ degré dans ℂ</li><li>trouver les racines n-ièmes</li><li>interpréter géométriquement (rotations)</li></ul></div>
+
+<h2 id="def"><span class="h2num">1.1</span>Définition et calcul algébrique</h2>
+<div class="card why"><span class="tag">Pourquoi inventer i ?</span><p>L'équation $x^2+1=0$ n'a pas de solution réelle : aucun carré n'est négatif. On <b>décrète</b> qu'il existe un nombre $i$ tel que $i^2=-1$ et on vérifie que toutes les règles de calcul habituelles continuent de marcher. Bonus énorme : <b>tout</b> polynôme de degré n a alors exactement n racines.</p></div>
+<div class="grid2">
+<div class="card def"><span class="tag">Forme algébrique</span><p>$z=a+ib$ avec $a,b\in\mathbb R$.</p><ul><li>$a=\mathrm{Re}(z)$ : partie réelle (abscisse)</li><li>$b=\mathrm{Im}(z)$ : partie imaginaire (ordonnée)</li><li>$z=0\iff a=0$ et $b=0$</li><li>$z=z'\iff$ mêmes parties réelles <b>et</b> imaginaires (on « identifie »)</li></ul></div>
+<div class="card def"><span class="tag">Conjugué $\bar z=a-ib$</span><p>Symétrique par rapport à l'axe réel.</p><ul><li>$z+\bar z=2\,\mathrm{Re}(z)$, $\;z-\bar z=2i\,\mathrm{Im}(z)$</li><li>$z\bar z=a^2+b^2=|z|^2$ : <b>un réel positif</b></li><li>$\overline{z+z'}=\bar z+\bar z'$, $\overline{zz'}=\bar z\,\bar z'$</li><li>$z$ réel $\iff\bar z=z$ ; imaginaire pur $\iff\bar z=-z$</li></ul></div></div>
+<div class="card meth"><span class="tag">Méthode — diviser deux complexes</span><p>On multiplie en haut et en bas par le <b>conjugué du dénominateur</b> : le dénominateur devient $|w|^2$, un réel.</p>
+$$\frac{2+i}{1-i}=\frac{(2+i)(1+i)}{(1-i)(1+i)}=\frac{2+2i+i+i^2}{1+1}=\frac{1+3i}{2}=\frac12+\frac32i$$</div>
+<div class="inline-gen" data-gen="c-alg"></div>
+
+<h2 id="module"><span class="h2num">1.2</span>Module et argument : la flèche</h2>
+<p>On place $z=a+ib$ au point $(a,b)$. La flèche qui part de l'origine a une <b>longueur</b> (le module) et une <b>direction</b> (l'argument).</p>
+<div class="grid2">
+<div class="card def"><span class="tag">Module</span>$$|z|=\sqrt{a^2+b^2}=\sqrt{z\bar z}$$<p>Distance de l'origine au point. $|z-z'|$ = distance entre deux points.</p></div>
+<div class="card def"><span class="tag">Argument</span><p>Angle $\theta$ (défini à $2\pi$ près) entre l'axe réel et la flèche, pour $z\neq0$ :</p>$$\cos\theta=\frac{a}{|z|},\qquad\sin\theta=\frac{b}{|z|}$$</div></div>
+<figure class="anim tall" data-anim="cplx" data-badge><figcaption>Déplace z (et w) : regarde le module, l’argument, et ce que deviennent le conjugué, la somme, le produit et l’inverse.</figcaption></figure>
+<div class="card trap"><span class="tag">⚠ Piège : arctan(b/a)</span><p>$\tan\theta=b/a$ ne suffit pas : $1+i$ et $-1-i$ ont le même rapport $b/a=1$ mais des arguments $\frac\pi4$ et $-\frac{3\pi}4$. <b>Regarde toujours les signes de a et b</b> (le quadrant) — ou utilise cos et sin ensemble.</p></div>
+<div class="card key"><span class="tag">Propriétés (à connaître par cœur)</span>
+<div class="tablewrap"><table><tr><th></th><th>Module</th><th>Argument (mod 2π)</th></tr>
+<tr><td>Produit $zz'$</td><td>$|z||z'|$</td><td>$\arg z+\arg z'$</td></tr>
+<tr><td>Quotient $z/z'$</td><td>$|z|/|z'|$</td><td>$\arg z-\arg z'$</td></tr>
+<tr><td>Puissance $z^n$</td><td>$|z|^n$</td><td>$n\arg z$</td></tr>
+<tr><td>Conjugué $\bar z$</td><td>$|z|$</td><td>$-\arg z$</td></tr>
+<tr><td>Inverse $1/z$</td><td>$1/|z|$</td><td>$-\arg z$</td></tr></table></div>
+<p>Et l'inégalité triangulaire : $|z+z'|\le|z|+|z'|$ (un côté d'un triangle est plus court que les deux autres).</p></div>
+
+<h2 id="expo"><span class="h2num">1.3</span>Forme exponentielle, Euler et De Moivre</h2>
+<div class="card def"><span class="tag">Les trois écritures du même nombre</span>
+$$z=\underbrace{a+ib}_{\text{algébrique}}=\underbrace{r(\cos\theta+i\sin\theta)}_{\text{trigonométrique}}=\underbrace{r\,e^{i\theta}}_{\text{exponentielle}}\qquad r=|z|,\ \theta=\arg z$$
+<p>avec la définition $e^{i\theta}=\cos\theta+i\sin\theta$ : <b>le point du cercle unité d'angle θ</b>.</p></div>
+<div class="card why"><span class="tag">Pourquoi une exponentielle ?</span><p>Parce que la règle des arguments ($\arg(zz')=\arg z+\arg z'$) est exactement la règle des exposants : $e^{i\theta}e^{i\theta'}=e^{i(\theta+\theta')}$. <b>Multiplier par $e^{i\theta}$, c'est tourner de θ.</b> Algébrique = idéal pour additionner ; exponentielle = idéal pour multiplier, diviser, élever à une puissance.</p></div>
+<figure class="anim " data-anim="euler" data-badge><figcaption>Le point e^(iθ) tourne sur le cercle : son ombre horizontale dessine cos θ, son ombre verticale sin θ. Coche « e^(−iθ) » : la somme des deux flèches est réelle et vaut 2 cos θ.</figcaption></figure>
+<div class="grid2">
+<div class="card def"><span class="tag">Formules d'Euler</span>$$\cos\theta=\frac{e^{i\theta}+e^{-i\theta}}{2}\qquad\sin\theta=\frac{e^{i\theta}-e^{-i\theta}}{2i}$$<p>Image : deux flèches qui tournent en sens contraires ; leurs parties imaginaires s'annulent.</p></div>
+<div class="card def"><span class="tag">Formule de De Moivre</span>$$(\cos\theta+i\sin\theta)^n=\cos n\theta+i\sin n\theta$$<p>C'est juste $(e^{i\theta})^n=e^{in\theta}$ : tourner n fois de θ.</p></div></div>
+<div class="card meth"><span class="tag">Méthode — linéariser $\cos^n$, $\sin^n$ (pour intégrer)</span><ol><li>Remplacer cos et sin par Euler.</li><li>Développer avec le binôme de Newton.</li><li>Regrouper chaque $e^{ikx}$ avec $e^{-ikx}$ : $e^{ikx}+e^{-ikx}=2\cos kx$, $e^{ikx}-e^{-ikx}=2i\sin kx$.</li></ol>
+<p>Ex. : $\cos^3x=\frac{(e^{ix}+e^{-ix})^3}{8}=\frac{e^{3ix}+3e^{ix}+3e^{-ix}+e^{-3ix}}{8}=\frac{\cos3x+3\cos x}{4}$.</p>
+<p><b>Sens inverse</b> (exprimer $\cos3x$ en fonction de $\cos x$) : De Moivre puis partie réelle de $(\cos x+i\sin x)^3$ : $\cos3x=\cos^3x-3\cos x\sin^2x=4\cos^3x-3\cos x$.</p></div>
+<div class="inline-gen" data-gen="c-exp,c-lin"></div>
+
+<h2 id="eq2"><span class="h2num">1.4</span>Racines carrées et équations du 2ᵈ degré</h2>
+<div class="card def"><span class="tag">Coefficients réels, Δ &lt; 0</span><p>$az^2+bz+c=0$ avec $\Delta=b^2-4ac<0$ : on écrit $\Delta=(i\sqrt{-\Delta})^2$, d'où deux racines <b>conjuguées</b> :</p>$$z_{1,2}=\frac{-b\pm i\sqrt{-\Delta}}{2a}$$</div>
+<div class="card meth"><span class="tag">Méthode — racines carrées de $c=X+iY$ (forme algébrique)</span><p>On cherche $w=a+ib$ avec $w^2=c$ :</p>
+$$\begin{cases}a^2-b^2=X&\text{(parties réelles)}\\2ab=Y&\text{(parties imaginaires)}\\a^2+b^2=|c|=\sqrt{X^2+Y^2}&\text{(modules, l'équation « gratuite »)}\end{cases}$$
+<p>Somme et différence de la 1ʳᵉ et de la 3ᵉ ⇒ $a^2$ et $b^2$ ; le <b>signe de Y</b> dit si a et b ont même signe. On obtient toujours deux racines opposées $\pm w$.</p></div>
+<div class="card meth"><span class="tag">Méthode — équation $az^2+bz+c=0$ à coefficients complexes</span><ol><li>$\Delta=b^2-4ac$ (un complexe).</li><li>Trouver $\delta$ tel que $\delta^2=\Delta$ (méthode ci-dessus).</li><li>$z_{1,2}=\dfrac{-b\pm\delta}{2a}$.</li><li>Vérifier : $z_1+z_2=-b/a$ et $z_1z_2=c/a$.</li></ol></div>
+<div class="card trap"><span class="tag">⚠ Piège</span><p>On n'écrit <b>jamais</b> $\sqrt{\Delta}$ quand Δ est complexe (ou négatif) : le symbole √ est réservé aux réels positifs. On parle d'« une racine carrée δ de Δ ».</p></div>
+<div class="inline-gen" data-gen="c-sqrt,c-eq2"></div>
+
+<h2 id="nroot"><span class="h2num">1.5</span>Racines n-ièmes</h2>
+<div class="card def"><span class="tag">Résoudre $z^n=c$ avec $c=Re^{i\alpha}$</span>
+$$z_k=R^{1/n}\,e^{i\left(\frac{\alpha}{n}+\frac{2k\pi}{n}\right)},\qquad k=0,1,\dots,n-1$$
+<p>Il y a exactement <b>n</b> racines : elles forment un <b>polygone régulier</b> à n côtés, sur le cercle de rayon $R^{1/n}$.</p></div>
+<div class="card why"><span class="tag">Pourquoi $+2k\pi$ ?</span><p>L'argument de c n'est connu qu'à $2\pi$ près : $\alpha$, $\alpha+2\pi$, $\alpha+4\pi$… sont le même angle. Mais une fois <b>divisés par n</b>, ils donnent des angles différents ! Au bout de n valeurs, on retombe sur les mêmes points.</p></div>
+<figure class="anim " data-anim="roots" data-badge><figcaption>Déplace c et change n : les n racines restent régulièrement espacées de 2π/n ; la première a pour argument arg(c)/n.</figcaption></figure>
+<div class="card ex"><span class="tag">Racines de l'unité</span><p>$z^n=1$ : $z_k=e^{2ik\pi/n}$. Pour $n=3$ : $1$, $j=e^{2i\pi/3}=-\frac12+i\frac{\sqrt3}2$, $j^2=\bar j$. Leur somme vaut 0 (le polygone est équilibré autour de l'origine).</p></div>
+<div class="inline-gen" data-gen="c-nroot"></div>
+
+<h2 id="elec"><span class="h2num">1.6</span>Le lien avec l'électronique</h2>
+<div class="card why"><span class="tag">Tout le régime sinusoïdal vient d'ici</span><p>Une tension $u(t)=U\sqrt2\cos(\omega t+\varphi)$ est la partie réelle de $U\sqrt2\,e^{i\varphi}e^{i\omega t}$ : une flèche qui tourne à la vitesse ω (le <b>phaseur</b>). Dériver revient à multiplier par $i\omega$ (une rotation de 90°), d'où les impédances $Z_L=jL\omega$ et $Z_C=\frac1{jC\omega}$ (les électroniciens écrivent $j$ pour ne pas confondre avec le courant). Module = amplitude, argument = déphasage. Voir <a href="el3.html">Électronique, chapitre 3</a>.</p></div>
+
+<h2 id="exos"><span class="h2num">1.7</span>Exercices du cours corrigés</h2>
+<section class="exo" id="exo1"><header><h3 id="e1">Formes exponentielles (Ex. 1.2)</h3><span class="time">10 min</span></header><div class="body">
+<div class="statement">Mettre sous forme exponentielle : (a) $z_1=-2$ ; (b) $z_2=3+3i$ ; (d) $z_4=(-1+i)^3e^{3i\pi/4}$ ; (e) $z_5=-2(1+i)^6$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> puissance ou produit ⇒ <b>forme exponentielle</b> d’abord : les modules se multiplient, les arguments s’ajoutent.</div></div>
+<div class="steps"><div class="step"><h4>(a)</h4><p>$|z_1|=2$, point sur l’axe réel négatif : $\arg=\pi$. $\boxed{z_1=2e^{i\pi}}$.</p></div><div class="step"><h4>(b)</h4><p>$|z_2|=\sqrt{9+9}=3\sqrt2$, $\cos\theta=\sin\theta=\frac{\sqrt2}2$ ⇒ $\boxed{z_2=3\sqrt2\,e^{i\pi/4}}$.</p></div><div class="step"><h4>(d) Mettre chaque morceau en exponentielle, puis multiplier</h4><p>$-1+i=\sqrt2e^{3i\pi/4}$ ⇒ $(-1+i)^3=2\sqrt2e^{9i\pi/4}$. Produit : $2\sqrt2\,e^{i(9\pi/4+3\pi/4)}=2\sqrt2e^{3i\pi}=\boxed{2\sqrt2e^{i\pi}=-2\sqrt2}$.</p></div><div class="step"><h4>(e)</h4><p>$1+i=\sqrt2e^{i\pi/4}$ ⇒ $(1+i)^6=8e^{6i\pi/4}=8e^{3i\pi/2}=-8i$ ⇒ $z_5=16i=\boxed{16e^{i\pi/2}}$.</p></div></div></div></section>
+<section class="exo" id="exo2"><header><h3 id="e2">Racines carrées (Ex. 1.3 et 1.4)</h3><span class="time">15 min</span></header><div class="body">
+<div class="statement">(a) Racines carrées de $7+24i$ ; (b) de $-2+i\sqrt{12}$. (Ex. 1.4) Racines carrées de $\frac{1+i}{\sqrt2}$ ; en déduire $\cos\frac\pi8$ et $\sin\frac\pi8$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> comparer forme algébrique et forme exponentielle du <b>même</b> nombre donne des valeurs exactes de cos et sin.</div></div>
+<div class="steps"><div class="step"><h4>(a)</h4><p>$a^2-b^2=7$, $2ab=24$, $a^2+b^2=\sqrt{49+576}=25$ ⇒ $a^2=16$, $b^2=9$, $ab>0$ ⇒ $\boxed{\pm(4+3i)}$.</p></div><div class="step"><h4>(b)</h4><p>$-2+2\sqrt3\,i$ : $a^2-b^2=-2$, $a^2+b^2=\sqrt{4+12}=4$ ⇒ $a^2=1$, $b^2=3$, $ab>0$ ⇒ $\boxed{\pm(1+i\sqrt3)}$.</p></div><div class="step"><h4>Ex. 1.4 — deux méthodes pour le même nombre</h4><p>$\frac{1+i}{\sqrt2}=e^{i\pi/4}$ : ses racines sont $\pm e^{i\pi/8}$ (forme exponentielle). Méthode algébrique : $a^2-b^2=\frac{\sqrt2}2$, $a^2+b^2=1$ ⇒ $a^2=\frac{2+\sqrt2}{4}$, $b^2=\frac{2-\sqrt2}4$.</p></div><div class="step"><h4>Identifier</h4><p>La racine avec $a,b>0$ est $e^{i\pi/8}=\cos\frac\pi8+i\sin\frac\pi8$ ⇒ $\boxed{\cos\frac\pi8=\frac{\sqrt{2+\sqrt2}}2,\ \sin\frac\pi8=\frac{\sqrt{2-\sqrt2}}2}$.</p></div></div></div></section>
+<section class="exo" id="exo3"><header><h3 id="e3">Équations dans ℂ (Ex. 1.5)</h3><span class="time">25 min</span></header><div class="body">
+<div class="statement">1. $z^2-(1+2i)z+i-1=0$. 3. $z^4+(3-6i)z^2-8-6i=0$ (poser $Z=z^2$). 4. $z^3=-8i$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> 2ᵈ degré ⇒ Δ puis <b>une racine carrée δ</b> (système) ; $z^n=c$ ⇒ <b>forme exponentielle</b> ; équation bicarrée ⇒ poser $Z=z^2$.</div></div>
+<div class="steps"><div class="step"><h4>1. Discriminant</h4><p>$\Delta=(1+2i)^2-4(i-1)=1+4i-4-4i+4=1$ ⇒ $\delta=1$ ⇒ $z=\frac{1+2i\pm1}2$ : $\boxed{z_1=1+i,\ z_2=i}$ (somme $1+2i$ ✓, produit $i-1$ ✓).</p></div><div class="step"><h4>3. Équation en Z</h4><p>$Z^2+(3-6i)Z-8-6i=0$ : $\Delta=(3-6i)^2+4(8+6i)=5-12i$. Racine : $a^2-b^2=5$, $a^2+b^2=13$, $ab<0$ ⇒ $\delta=3-2i$.</p></div><div class="step"><h4>3. Valeurs de Z</h4><p>$Z=\frac{-3+6i\pm(3-2i)}2$ : $Z_1=2i$, $Z_2=-3+4i$.</p></div><div class="step"><h4>3. Revenir à z</h4><p>$z^2=2i$ ⇒ $z=\pm(1+i)$ ; $z^2=-3+4i$ ⇒ ($a^2=1$, $b^2=4$, $ab>0$) $z=\pm(1+2i)$. <b>Quatre</b> racines : $\boxed{\pm(1+i),\ \pm(1+2i)}$.</p></div><div class="step"><h4>4. Racines cubiques</h4><p>$-8i=8e^{-i\pi/2}$ ⇒ $z_k=2e^{i(-\pi/6+2k\pi/3)}$ : $\boxed{z_0=\sqrt3-i,\ z_1=2i,\ z_2=-\sqrt3-i}$. Vérif : $(2i)^3=8i^3=-8i$ ✓.</p></div></div></div></section>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ma1"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ma1"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=nombres+complexes+interpr%C3%A9tation+g%C3%A9om%C3%A9trique">▶ Nombres complexes intuition</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=formule+d%27euler+e%5Eix+cercle+trigonom%C3%A9trique">▶ Formule d’Euler</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=racines+n-i%C3%A8mes+nombre+complexe">▶ Racines n-ièmes</a></p>
+</article>
+<script src="js/data-math.js"></script><script src="js/learn-math.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-math.js"></script><script src="js/gen-math.js"></script><script src="js/app.js"></script>
+</body></html>

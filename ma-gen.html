@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maths — Générateur d'exercices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ma-gen">
+<article class="content" data-nopager>
+<div class="kicker">Mathématiques · S'entraîner sans limite</div>
+<h1>Générateur d'exercices</h1>
+<p class="lead">Chaque clic tire un <b>nouvel énoncé</b> (valeurs aléatoires) avec un indice et sa <b>correction pas à pas</b>. Cherche d'abord seul, au brouillon, puis déroule la correction étape par étape. À la fin, dis si tu avais trouvé : le générateur garde le compte et peut te resservir tes <b>points faibles</b>.</p>
+<div id="genpage">
+<h2 id="choix" data-nomaster>1. Choisis les chapitres</h2>
+<div class="gen-pick"></div>
+<div class="gbar" style="display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 8px">
+<button class="btn" data-a="one">🎲 Un exercice</button><button class="btn ghost" data-a="five">Série de 5</button><button class="btn ghost" data-a="weak">🎯 Mes points faibles</button><button class="btn ghost" data-a="clear">Effacer</button></div>
+<details style="margin:10px 0 4px"><summary class="small" style="cursor:pointer;color:var(--ink2)">…ou choisis un type d'exercice précis</summary><div class="gen-pick gen-types" style="margin-top:10px"></div></details>
+<h2 id="exos" data-nomaster>2. Les exercices</h2>
+<div class="gen-list"></div>
+</div>
+</article>
+<script src="js/data-math.js"></script><script src="js/learn-math.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-math.js"></script><script src="js/gen-math.js"></script><script src="js/app.js"></script>
+</body></html>

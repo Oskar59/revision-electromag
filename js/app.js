@@ -1,6 +1,6 @@
 /* ============ Shell, navigation, KaTeX, quiz, flashcards, progression ============ */
 (function(){
-const SUBJ = {phys:{t:"Physique — Électromagnétisme", short:"Physique", home:"physique.html", ico:"∇"}, elec:{t:"Électronique analogique", short:"Électronique", home:"electronique.html", ico:"Ω"}};
+const SUBJ = {phys:{t:"Physique — Électromagnétisme", short:"Physique", home:"physique.html", ico:"∇", form:"formulaire.html"}, elec:{t:"Électronique analogique", short:"Électronique", home:"electronique.html", ico:"Ω", form:"el-formulaire.html"}, math:{t:"Mathématiques", short:"Maths", home:"mathematiques.html", ico:"∫", form:"ma-formulaire.html"}};
 const NAV = [
   {s:"phys",h:"Démarrer"},
   {s:"phys",id:"physique", href:"physique.html", n:"⌂", t:"Accueil Physique & carte"},
@@ -35,11 +35,31 @@ const NAV = [
   {s:"elec",id:"liens", href:"liens.html", n:"∞", t:"Les mêmes équations partout"},
   {s:"elec",id:"el-formulaire", href:"el-formulaire.html", n:"Σ", t:"Formulaire complet"},
   {s:"elec",id:"el-quiz", href:"el-quiz.html", n:"?", t:"Examen blanc & flashcards"},
+  {s:"math",h:"Démarrer"},
+  {s:"math",id:"mathematiques", href:"mathematiques.html", n:"⌂", t:"Accueil Maths & carte"},
+  {s:"math",id:"ma-methodes", href:"ma-methodes.html", n:"★", t:"Patterns : quoi faire quand…"},
+  {s:"math",id:"ma-gen", href:"ma-gen.html", n:"⚄", t:"Générateur d'exercices"},
+  {s:"math",h:"Analyse"},
+  {s:"math",id:"ma1", href:"ma1.html", n:"1", t:"Nombres complexes"},
+  {s:"math",id:"ma2", href:"ma2.html", n:"2", t:"Calcul intégral"},
+  {s:"math",id:"ma3", href:"ma3.html", n:"3", t:"Équations différentielles linéaires"},
+  {s:"math",id:"ma4", href:"ma4.html", n:"4", t:"Intégrales doubles & triples"},
+  {s:"math",h:"Algèbre linéaire"},
+  {s:"math",id:"ma5", href:"ma5.html", n:"5", t:"Matrices, systèmes, déterminants"},
+  {s:"math",h:"Analyse de Fourier"},
+  {s:"math",id:"ma6", href:"ma6.html", n:"6", t:"Séries de Fourier"},
+  {s:"math",id:"ma7", href:"ma7.html", n:"7", t:"Intégrales généralisées & transformée de Fourier"},
+  {s:"math",id:"ma8", href:"ma8.html", n:"8", t:"Transformée de Laplace"},
+  {s:"math",h:"S'entraîner"},
+  {s:"math",id:"liens", href:"liens.html", n:"∞", t:"Les mêmes équations partout"},
+  {s:"math",id:"ma-formulaire", href:"ma-formulaire.html", n:"Σ", t:"Formulaire complet"},
+  {s:"math",id:"ma-quiz", href:"ma-quiz.html", n:"?", t:"Examen blanc & flashcards"},
 ];
 window.EM_NAV = NAV;
 const page = document.body.dataset.page || "index";
 const cur = NAV.find(n=>n.id===page);
 const subj = page==="liens" ? null : (cur ? cur.s : null);
+if(subj) document.documentElement.dataset.subj = subj;
 const LS = {
   get(k,d){try{const v=localStorage.getItem("em:"+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
   set(k,v){try{localStorage.setItem("em:"+k,JSON.stringify(v))}catch(e){}}
@@ -55,9 +75,9 @@ const article = document.querySelector("article.content");
 const top = document.createElement("header");
 top.className="topbar";
 top.innerHTML = `<button class="iconbtn" id="menuBtn" aria-label="Menu">☰</button>
-  <a class="brand" href="index.html"><span class="logo">${subj?SUBJ[subj].ico:"∇"}</span>Révisions AP3${subj?` <span class="brand-sub">· ${SUBJ[subj].short}</span>`:""}</a>
+  <a class="brand" href="index.html"><span class="logo">${subj?SUBJ[subj].ico:"✦"}</span>Atlas${subj?` <span class="brand-sub">· ${SUBJ[subj].short}</span>`:` <span class="brand-sub">· AP3</span>`}</a>
   <span class="spacer"></span>
-  <a class="iconbtn" href="${subj==="elec"?"el-formulaire.html":"formulaire.html"}" title="Formulaire" style="display:grid;place-items:center;text-decoration:none">Σ</a>
+  <a class="iconbtn" href="${subj?SUBJ[subj].form:"formulaire.html"}" title="Formulaire" style="display:grid;place-items:center;text-decoration:none">Σ</a>
   <button class="iconbtn" id="themeBtn" title="Thème clair/sombre">◐</button>`;
 const layout = document.createElement("div"); layout.className="layout";
 const side = document.createElement("nav"); side.className="sidebar";
@@ -184,7 +204,7 @@ article.querySelectorAll(".quiz[data-quiz]").forEach(el=>{
   el._pool=pool; el._n=+el.dataset.n||pool.length;
   buildQuiz(el, keys.length>1||el.dataset.n?pickPool(el):pool, el.dataset.quiz);
 });
-function chapName(k){ return {ch0:"Ch. 0",ch1:"Ch. 1",ch2:"Ch. 2",ch3:"Ch. 3",ch4:"Ch. 4",ch5:"Ch. 5",td1:"TD1",td2:"TD2",td3:"TD3",el1:"Ch. 1",el2:"Ch. 2",el3:"Ch. 3",eltd1:"TD1",eltd2:"TD2",eltd3:"TD3"}[k]||k; }
+function chapName(k){ return {ch0:"Ch. 0",ch1:"Ch. 1",ch2:"Ch. 2",ch3:"Ch. 3",ch4:"Ch. 4",ch5:"Ch. 5",td1:"TD1",td2:"TD2",td3:"TD3",el1:"Ch. 1",el2:"Ch. 2",el3:"Ch. 3",eltd1:"TD1",eltd2:"TD2",eltd3:"TD3",ma1:"Complexes",ma2:"Intégrales",ma3:"EDO",ma4:"Int. multiples",ma5:"Matrices",ma6:"Séries de Fourier",ma7:"Transf. Fourier",ma8:"Laplace"}[k]||k; }
 
 /* ---- flashcards ---- */
 article.querySelectorAll(".flash[data-cards]").forEach(el=>{

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maths Ch. 6 — Séries de Fourier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="ma6">
+<article class="content">
+<div class="kicker">Mathématiques · Analyse de Fourier · Chapitre 6</div>
+<h1>Séries de Fourier</h1>
+<p class="lead">Idée géniale de Fourier : <b>tout signal périodique est une somme de sinusoïdes</b> (un fondamental et ses harmoniques). Comme un prisme qui décompose la lumière en couleurs, ou un accord qu'on décompose en notes. Les coefficients disent « combien » de chaque harmonique il y a : c'est le <b>spectre</b>.</p>
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list"><li>calculer $a_0$, $a_n$, $b_n$ (et utiliser la parité)</li><li>vérifier les hypothèses de Dirichlet</li><li>dire ce que vaut la série aux discontinuités</li><li>passer aux coefficients complexes $c_n$</li><li>tracer un spectre</li><li>appliquer Parseval</li><li>en déduire des sommes de séries numériques</li><li>tracer le signal sur plusieurs périodes</li></ul></div>
+
+<h2 id="serie"><span class="h2num">6.1</span>Séries trigonométriques</h2>
+<div class="card def"><span class="tag">Signal T-périodique, pulsation $\omega=\frac{2\pi}T$</span>$$S(t)=a_0+\sum_{n\ge1}\big(a_n\cos(n\omega t)+b_n\sin(n\omega t)\big)$$<p>$a_0$ = valeur moyenne ; le terme $n=1$ est le <b>fondamental</b> (même période que le signal), les autres sont les <b>harmoniques</b> (périodes T/2, T/3…).</p></div>
+<figure class="anim tall" data-anim="fseries" data-badge><figcaption>Ajoute des harmoniques : la somme (couleur) colle de mieux en mieux au signal (gris). En bas, le spectre. Aux sauts, il reste un dépassement d’environ 9 % : le phénomène de Gibbs.</figcaption></figure>
+
+<h2 id="coef"><span class="h2num">6.2</span>Les coefficients de Fourier</h2>
+<div class="card def"><span class="tag">Formules (intégrales sur une période quelconque)</span>
+$$a_0=\frac1T\int_Tf(t)\,\mathrm dt\qquad a_n=\frac2T\int_Tf(t)\cos(n\omega t)\,\mathrm dt\qquad b_n=\frac2T\int_Tf(t)\sin(n\omega t)\,\mathrm dt$$</div>
+<div class="card why"><span class="tag">Pourquoi ces formules ? La projection</span><p>Les fonctions $\cos(n\omega t)$ et $\sin(m\omega t)$ sont « perpendiculaires » : la moyenne de leur produit sur une période est nulle dès qu'elles sont différentes. Multiplier f par $\cos(n\omega t)$ et moyenner <b>isole</b> la seule composante $a_n$ — exactement comme le produit scalaire isole une coordonnée d'un vecteur (<a href="ch0.html">physique, chapitre 0</a>). Le facteur 2 vient de ce que la moyenne de $\cos^2$ vaut ½.</p></div>
+<div class="card key"><span class="tag">Parité : le gain de temps n°1</span><ul><li>f <b>paire</b> ⇒ $b_n=0$ et $a_n=\frac4T\int_0^{T/2}f\cos(n\omega t)$ (série de cosinus).</li><li>f <b>impaire</b> ⇒ $a_0=a_n=0$ et $b_n=\frac4T\int_0^{T/2}f\sin(n\omega t)$ (série de sinus).</li></ul><p>À connaître : $\cos(n\pi)=(-1)^n$, $\sin(n\pi)=0$, et $1-(-1)^n$ vaut 0 (n pair) ou 2 (n impair).</p></div>
+<div class="inline-gen" data-gen="f-serie"></div>
+
+<h2 id="dirichlet"><span class="h2num">6.3</span>Convergence : théorème de Dirichlet</h2>
+<div class="card def"><span class="tag">Théorème</span><p>Si f est T-périodique et de classe $C^1$ par morceaux (un nombre fini de morceaux réguliers, avec des limites à gauche et à droite), alors la série de Fourier converge en tout t vers</p>$$\frac{f(t^+)+f(t^-)}2$$<p>c'est-à-dire <b>f(t) là où f est continue</b>, et la <b>moyenne des deux limites</b> au niveau d'un saut.</p></div>
+<div class="card meth"><span class="tag">Méthode — « en déduire la somme d'une série numérique »</span><p>Écrire l'égalité de Dirichlet en un point bien choisi (souvent $t=0$, $\frac T4$, $\frac T2$) où les cos/sin valent 0, ±1 ou $(-1)^n$. Ex. : créneau ±1 en $t=\frac\pi2$ : $1=\frac4\pi\sum\frac{(-1)^p}{2p+1}$ ⇒ $\boxed{1-\frac13+\frac15-\dots=\frac\pi4}$.</p></div>
+
+<h2 id="complexe"><span class="h2num">6.4</span>Forme complexe et spectre</h2>
+<div class="card def"><span class="tag">Coefficients complexes</span>$$f(t)=\sum_{n=-\infty}^{+\infty}c_ne^{in\omega t},\qquad c_n=\frac1T\int_Tf(t)e^{-in\omega t}\,\mathrm dt$$
+<p>$c_0=a_0$, $\;c_n=\frac{a_n-ib_n}2$, $\;c_{-n}=\overline{c_n}$ (f réelle) ; et réciproquement $a_n=c_n+c_{-n}$, $b_n=i(c_n-c_{-n})$.</p></div>
+<div class="card why"><span class="tag">Pourquoi c'est plus simple</span><p>Une seule formule au lieu de deux, et intégrer une exponentielle est facile. Chaque $\cos$ est la somme de deux flèches qui tournent en sens contraires (Euler, <a href="ma1.html">chapitre 1</a>) : d'où les fréquences négatives.</p></div>
+<div class="card def"><span class="tag">Spectre</span><p>Amplitude de l'harmonique n : $A_n=\sqrt{a_n^2+b_n^2}=2|c_n|$. On trace $A_n$ en fonction de n (ou de la fréquence $n/T$) : des <b>raies</b>. Plus le signal a des angles/sauts, plus les raies décroissent lentement ($1/n$ pour un saut, $1/n^2$ pour un angle).</p></div>
+<div class="inline-gen" data-gen="f-cplx"></div>
+
+<h2 id="parseval"><span class="h2num">6.5</span>Formule de Parseval</h2>
+<div class="card def"><span class="tag">Énergie = somme des énergies des harmoniques</span>$$\frac1T\int_Tf(t)^2\,\mathrm dt=a_0^2+\frac12\sum_{n\ge1}\left(a_n^2+b_n^2\right)=\sum_{n\in\mathbb Z}|c_n|^2$$</div>
+<div class="card why"><span class="tag">Le sens physique</span><p>Le membre de gauche est la puissance moyenne (le carré de la valeur efficace). Chaque harmonique apporte $\frac{A_n^2}2$ (le carré de sa valeur efficace) et les harmoniques ne « se mélangent » pas (orthogonalité) : c'est Pythagore à l'infini.</p></div>
+<div class="card ex"><span class="tag">Application classique</span><p>Pour $f(t)=t$ sur $]-\pi,\pi[$ : $b_n=\frac{2(-1)^{n+1}}n$ et $\frac1{2\pi}\int_{-\pi}^\pi t^2=\frac{\pi^2}3=\frac12\sum\frac4{n^2}$ ⇒ $\boxed{\sum_{n\ge1}\frac1{n^2}=\frac{\pi^2}6}$.</p></div>
+
+<h2 id="elec"><span class="h2num">6.6</span>Pourquoi c'est central en électronique</h2>
+<div class="card why"><span class="tag">Filtrer = agir sur chaque harmonique</span><p>Un filtre linéaire traite chaque sinusoïde séparément (gain $|H(n\omega)|$, déphasage). Pour savoir ce que devient un créneau, on le décompose, on filtre chaque raie, on recompose. C'est l'animation « créneau filtré » du <a href="el3.html">chapitre 3 d'électronique</a>.</p></div>
+
+<h2 id="exos"><span class="h2num">6.7</span>Exercices du cours corrigés</h2>
+<section class="exo" id="exo1"><header><h3 id="e1">Créneau, dent de scie, parabole (Ex. 1.1)</h3><span class="time">30 min</span></header><div class="body">
+<div class="statement">$2\pi$-périodiques : $f_1$ créneau ($1$ sur $[0,\pi[$, $-1$ sur $[-\pi,0[$), $f_2(t)=t$ et $f_3(t)=t^2$ sur $[-\pi,\pi[$. Coefficients, valeurs aux discontinuités, Parseval.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> <b>parité d’abord</b> ; un saut ⇒ coefficients en 1/n ; Parseval ⇒ une somme de série en $1/n^2$ ou $1/n^4$.</div></div>
+<div class="steps"><div class="step"><h4>Hypothèses de Dirichlet</h4><p>Les trois sont $C^1$ par morceaux (des morceaux de droites/paraboles, sauts finis en $k\pi$). $f_1$ et $f_2$ sont impaires (que des $b_n$), $f_3$ est paire (que des $a_n$).</p></div><div class="step"><h4>$f_1$</h4><p>$b_n=\frac2\pi\int_0^\pi\sin nt=\frac{2(1-(-1)^n)}{n\pi}$ ⇒ $f_1=\frac4\pi\sum\frac{\sin(2p+1)t}{2p+1}$. En $t=k\pi$ : la série vaut $0$ (moyenne de −1 et 1). Parseval : $1=\frac12\sum\frac{16}{\pi^2(2p+1)^2}$ ⇒ $\sum\frac1{(2p+1)^2}=\frac{\pi^2}8$.</p></div><div class="step"><h4>$f_2$</h4><p>IPP : $b_n=\frac{2(-1)^{n+1}}n$. En $t=\pi$ : moyenne de $\pi$ et $-\pi$ = 0. Parseval : $\sum\frac1{n^2}=\frac{\pi^2}6$.</p></div><div class="step"><h4>$f_3$</h4><p>$a_0=\frac{\pi^2}3$, $a_n=\frac{4(-1)^n}{n^2}$ (deux IPP). Continue partout ⇒ égalité partout. Parseval : $\frac{\pi^4}5=\frac{\pi^4}9+\frac12\sum\frac{16}{n^4}$ ⇒ $\boxed{\sum\frac1{n^4}=\frac{\pi^4}{90}}$.</p></div></div></div></section>
+<section class="exo" id="exo2"><header><h3 id="e2">Sinus redressé simple alternance (Ex. 1.2)</h3><span class="time">25 min</span></header><div class="body">
+<div class="statement">$f(t)=\sin t$ sur $[0,\pi[$, $0$ sur $[\pi,2\pi[$, $2\pi$-périodique. Coefficients ; montrer $\frac\pi4=\frac12+\sum_{p\ge1}\frac{(-1)^p}{1-4p^2}$.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> ni paire ni impaire ⇒ formules générales ; le cas $n=1$ se traite <b>à part</b> (dénominateur $1-n^2$ nul).</div></div>
+<div class="steps"><div class="step"><h4>Coefficients réels</h4><p>$a_0=\frac1{2\pi}\int_0^\pi\sin t=\frac1\pi$ ; $b_1=\frac1\pi\int_0^\pi\sin^2t=\frac12$, $b_n=0$ ($n\ge2$) ; $a_1=0$ et pour $n\ge2$ : $a_n=\frac1\pi\int_0^\pi\sin t\cos nt=\frac{1+(-1)^n}{\pi(1-n^2)}$, soit $-\frac{2}{\pi(n^2-1)}$ si n pair, 0 si n impair.</p></div><div class="step"><h4>Série</h4><p>f est continue ⇒ $f(t)=\frac1\pi+\frac12\sin t-\frac2\pi\sum_{p\ge1}\frac{\cos2pt}{4p^2-1}$ pour tout t.</p></div><div class="step"><h4>Valeur particulière $t=\frac\pi2$</h4><p>$1=\frac1\pi+\frac12-\frac2\pi\sum\frac{(-1)^p}{4p^2-1}$ ⇒ en multipliant par $\frac\pi2$ : $\frac\pi4=\frac12+\sum_{p\ge1}\frac{(-1)^p}{1-4p^2}$ ✓.</p></div></div></div></section>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="ma6"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="ma6"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=s%C3%A9rie+de+fourier+intuition+harmoniques">▶ Séries de Fourier intuition</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=ph%C3%A9nom%C3%A8ne+de+gibbs+s%C3%A9rie+de+fourier">▶ Phénomène de Gibbs</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=formule+de+parseval+s%C3%A9rie+de+fourier">▶ Parseval</a></p>
+</article>
+<script src="js/data-math.js"></script><script src="js/learn-math.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-math.js"></script><script src="js/gen-math.js"></script><script src="js/app.js"></script>
+</body></html>
