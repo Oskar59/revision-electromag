@@ -1,6 +1,24 @@
 /* ============ Shell, navigation, KaTeX, quiz, flashcards, progression ============ */
 (function(){
 const SUBJ = {phys:{t:"Physique — Électromagnétisme", short:"Physique", home:"physique.html", ico:"∇", form:"formulaire.html"}, elec:{t:"Électronique analogique", short:"Électronique", home:"electronique.html", ico:"Ω", form:"el-formulaire.html"}, math:{t:"Mathématiques", short:"Maths", home:"mathematiques.html", ico:"∫", form:"ma-formulaire.html"}};
+const GAMES=window.ATLAS_GAMES=[
+ {id:"ch0",ch:"ch0",s:"phys",ico:"🧭",t:"Main droite",d:"Rafale de vecteurs : scalaire, vectoriel, gradient, coordonnées."},
+ {id:"ch1",ch:"ch1",s:"phys",ico:"⚡",t:"Champ libre",d:"Pose des charges + et − pour guider une particule jusqu’à la cible."},
+ {id:"ch2",ch:"ch2",s:"phys",ico:"🔋",t:"L’atelier",d:"Règle la géométrie pour obtenir la capacité ou la résistance voulue."},
+ {id:"ch3",ch:"ch3",s:"phys",ico:"🌀",t:"Cyclotron",d:"Choisis le champ B pour courber les particules dans le détecteur."},
+ {id:"ch4",ch:"ch4",s:"phys",ico:"🧲",t:"Loi de Lenz",d:"Aimants, rails, spires : prédis le phénomène induit."},
+ {id:"ch5",ch:"ch5",s:"phys",ico:"🌊",t:"Onde & Maxwell",d:"Trièdre E, B, k ; quelle équation pour quelle image ; λ = c/f."},
+ {id:"el1",ch:"el1",s:"elec",ico:"🔌",t:"Banc de test",d:"Diviseurs, associations, Thévenin : vise la bonne valeur."},
+ {id:"el2",ch:"el2",s:"elec",ico:"⏱",t:"Chrono τ",d:"Arrête la charge du condensateur au bon instant."},
+ {id:"el3",ch:"el3",s:"elec",ico:"📈",t:"Bode match",d:"Retrouve le filtre et sa coupure à partir de la courbe de gain."},
+ {id:"ma1",ch:"ma1",s:"math",ico:"🚀",t:"Rotor complexe",d:"Multiplie pour tourner : amène le vaisseau sur la cible."},
+ {id:"ma2",ch:"ma2",s:"math",ico:"🎯",t:"Chasseur de primitives",d:"Attrape la bonne primitive, évite les pièges."},
+ {id:"ma3",ch:"ma3",s:"math",ico:"🎛",t:"Régime parfait",d:"Règle λ et ω₀ pour imiter la solution de l’EDO."},
+ {id:"ma4",ch:"ma4",s:"math",ico:"🍰",t:"Tranches",d:"Trouve les bornes du domaine et le bon repère."},
+ {id:"ma5",ch:"ma5",s:"math",ico:"🧮",t:"Pivot",d:"Échelonne la matrice en un minimum de coups."},
+ {id:"ma6",ch:"ma6",s:"math",ico:"🎹",t:"Synthé de Fourier",d:"Reconstruis le signal harmonique par harmonique."},
+ {id:"ma7",ch:"ma7",s:"math",ico:"🌈",t:"Le prisme",d:"Signaux, spectres et intégrales généralisées."},
+ {id:"ma8",ch:"ma8",s:"math",ico:"📖",t:"Traducteur de Laplace",d:"Attrape la bonne image F(p)."}];
 const NAV = [
   {s:"phys",h:"Démarrer"},
   {s:"phys",id:"physique", href:"physique.html", n:"⌂", t:"Accueil Physique & carte"},
@@ -17,6 +35,7 @@ const NAV = [
   {s:"phys",id:"td2", href:"td2.html", n:"T2", t:"TD 2 — Conducteurs & courant"},
   {s:"phys",id:"td3", href:"td3.html", n:"T3", t:"TD 3 — Magnétostatique (Ampère)"},
   {s:"phys",h:"S'entraîner"},
+  {s:"phys",id:"jeux", href:"jeux.html", n:"🕹", t:"Arcade : les jeux"},
   {s:"phys",id:"liens", href:"liens.html", n:"∞", t:"Les mêmes équations partout"},
   {s:"phys",id:"formulaire", href:"formulaire.html", n:"Σ", t:"Formulaire complet"},
   {s:"phys",id:"quiz", href:"quiz.html", n:"?", t:"Examen blanc & flashcards"},
@@ -32,6 +51,7 @@ const NAV = [
   {s:"elec",id:"eltd2", href:"eltd2.html", n:"T2", t:"TD 2 — Régime transitoire"},
   {s:"elec",id:"eltd3", href:"eltd3.html", n:"T3", t:"TD 3 — Sinusoïdal & fonction de transfert"},
   {s:"elec",h:"S'entraîner"},
+  {s:"elec",id:"jeux", href:"jeux.html", n:"🕹", t:"Arcade : les jeux"},
   {s:"elec",id:"liens", href:"liens.html", n:"∞", t:"Les mêmes équations partout"},
   {s:"elec",id:"el-formulaire", href:"el-formulaire.html", n:"Σ", t:"Formulaire complet"},
   {s:"elec",id:"el-quiz", href:"el-quiz.html", n:"?", t:"Examen blanc & flashcards"},
@@ -51,6 +71,7 @@ const NAV = [
   {s:"math",id:"ma7", href:"ma7.html", n:"7", t:"Intégrales généralisées & transformée de Fourier"},
   {s:"math",id:"ma8", href:"ma8.html", n:"8", t:"Transformée de Laplace"},
   {s:"math",h:"S'entraîner"},
+  {s:"math",id:"jeux", href:"jeux.html", n:"🕹", t:"Arcade : les jeux"},
   {s:"math",id:"liens", href:"liens.html", n:"∞", t:"Les mêmes équations partout"},
   {s:"math",id:"ma-formulaire", href:"ma-formulaire.html", n:"Σ", t:"Formulaire complet"},
   {s:"math",id:"ma-quiz", href:"ma-quiz.html", n:"?", t:"Examen blanc & flashcards"},
@@ -58,7 +79,8 @@ const NAV = [
 window.EM_NAV = NAV;
 const page = document.body.dataset.page || "index";
 const cur = NAV.find(n=>n.id===page);
-const subj = page==="liens" ? null : (cur ? cur.s : null);
+const gameQ = page==="jeu" ? GAMES.find(g=>g.id===new URLSearchParams(location.search).get("g")) : null;
+const subj = (page==="liens"||page==="jeux") ? null : gameQ ? gameQ.s : (cur ? cur.s : null);
 if(subj) document.documentElement.dataset.subj = subj;
 const LS = {
   get(k,d){try{const v=localStorage.getItem("em:"+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
@@ -77,11 +99,12 @@ top.className="topbar";
 top.innerHTML = `<button class="iconbtn" id="menuBtn" aria-label="Menu">☰</button>
   <a class="brand" href="index.html"><span class="logo">${subj?SUBJ[subj].ico:"✦"}</span>Atlas${subj?` <span class="brand-sub">· ${SUBJ[subj].short}</span>`:` <span class="brand-sub">· AP3</span>`}</a>
   <span class="spacer"></span>
+  <a class="toparcade" href="jeux.html" title="Les jeux pour apprendre">🕹 <span>Arcade</span></a>
   <a class="iconbtn" href="${subj?SUBJ[subj].form:"formulaire.html"}" title="Formulaire" style="display:grid;place-items:center;text-decoration:none">Σ</a>
   <button class="iconbtn" id="themeBtn" title="Thème clair/sombre">◐</button>`;
 const layout = document.createElement("div"); layout.className="layout";
 const side = document.createElement("nav"); side.className="sidebar";
-let sh = `<a href="index.html" class="${page==="index"?"active":""}"><span class="num">⌂</span><span>Accueil (toutes les matières)</span></a><a href="liens.html" class="${page==="liens"?"active":""}"><span class="num">∞</span><span>Les mêmes équations partout</span></a><div class="subjsw">${Object.entries(SUBJ).map(([k,v])=>`<a href="${v.home}" class="${k===subj?"on":""}">${v.ico} ${v.short}</a>`).join("")}</div>`;
+let sh = `<a href="index.html" class="${page==="index"?"active":""}"><span class="num">⌂</span><span>Accueil (toutes les matières)</span></a><a href="liens.html" class="${page==="liens"?"active":""}"><span class="num">∞</span><span>Les mêmes équations partout</span></a><a href="jeux.html" class="arcade-link ${page==="jeux"||page==="jeu"?"active":""}"><span class="num">🕹</span><span>Arcade : 17 jeux</span></a><div class="subjsw">${Object.entries(SUBJ).map(([k,v])=>`<a href="${v.home}" class="${k===subj?"on":""}">${v.ico} ${v.short}</a>`).join("")}</div>`;
 NAV.forEach(it=>{
   if(subj ? it.s!==subj : true) return;
   if(it.h){sh+=`<h4>${it.h}</h4>`;return;}
@@ -111,6 +134,13 @@ function progressOf(id){
   return Math.round(100*n/total);
 }
 window.EM_progressOf = progressOf;
+
+/* ---- carte « jeu du chapitre » ---- */
+const myGame=GAMES.find(g=>g.ch===page);
+if(myGame){ const rec=LS.get("game:"+myGame.id,{best:0,stars:0}); const gc=document.createElement("a"); gc.className="gamecard"; gc.href="jeu.html?g="+myGame.id;
+  gc.innerHTML=`<div class="gico">${myGame.ico}</div><div><span>🎮 Le jeu du chapitre ${rec.stars?"· "+"★".repeat(rec.stars):""}</span><b>${myGame.t}</b><span>${myGame.d}</span></div><div class="play">▶ Jouer</div>`;
+  const anchor=article.querySelector(".lmap")||article.querySelector(".card.key"); if(anchor) anchor.after(gc); else article.querySelector("h1")?.after(gc);
+  const gc2=gc.cloneNode(true); const fl=article.querySelector("#flash,#retenir"); if(fl) fl.before(gc2); }
 
 /* ---- TOC + mastery toggles ---- */
 const h2s = [...article.querySelectorAll("h2[id]")];
@@ -238,6 +268,12 @@ function renderMath(node){
 window.EM_renderMath=renderMath;
 function initMath(){ if(window.renderMathInElement){ renderMath(article); window.dispatchEvent(new Event("mathready")); } else setTimeout(initMath,60); }
 initMath();
+
+/* ---- révélation au scroll ---- */
+if("IntersectionObserver" in window){ const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }),{rootMargin:"0px 0px -6% 0px"});
+  article.querySelectorAll(":scope>.card,:scope>.grid2,:scope>.grid3,:scope>figure,:scope>.exo,:scope>.chapgrid,:scope>.subjects,:scope>.quick,:scope>.arcade-grid,:scope>.decision,:scope>.tablewrap,:scope>.gamecard").forEach(el=>{ const r=el.getBoundingClientRect(); if(r.top>innerHeight){ el.classList.add("rv"); io.observe(el);} });
+  const showAll=()=>article.querySelectorAll(".rv:not(.in)").forEach(el=>{ const r=el.getBoundingClientRect(); if(r.top<innerHeight*1.2) el.classList.add("in"); });
+  window.addEventListener("scroll",()=>{ clearTimeout(showAll._t); showAll._t=setTimeout(showAll,250); },{passive:true}); }
 
 /* ---- home progress cards ---- */
 document.querySelectorAll("[data-progress]").forEach(el=>{
