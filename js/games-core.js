@@ -70,7 +70,7 @@ const G=window.G={def:DEF,meta,ctx,C,VW,VH,sfx,LS,root,
     if(expl){ G.expl(expl+`<div style="margin-top:8px"><button class="gbtn" style="padding:8px 16px;font-size:14px">${opts.retry?'Réessayer':'Continuer'} →</button></div>`); $('.expl button').onclick=go; }
     else setTimeout(go,900); },
   next(){ G.i++; G.hud(); if(G.i>=G.n) return G.finish(true); G.expl(null); kind.round(G,G.i); },
-  finish(done){ G.state='end'; G.prompt(null); G.panel([]); G.expl(null);
+  finish(done){ if(G.state==='end') return; G.state='end'; G.prompt(null); G.panel([]); G.expl(null);
     const max=G.n*(DEF.maxPerRound||100)*1.25; const ratio=G.score/max; const st=!done?0:ratio>=.8?3:ratio>=.55?2:1;
     const rec=LS.get('game:'+gid,{best:0,stars:0}); const nb=G.score>rec.best; LS.set('game:'+gid,{best:Math.max(rec.best,Math.round(G.score)),stars:Math.max(rec.stars,st),plays:(rec.plays||0)+1});
     sfx(done?'win':'bad');

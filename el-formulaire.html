@@ -64,6 +64,19 @@
 <div class="frow" data-k="r lc parallele passe bande"><div class="fname">R + (L ∥ C)</div><div>$\frac{1}{1+jR(C\omega-\frac1{L\omega})}$, $Q=R\sqrt{C/L}$</div></div>
 <div class="frow" data-k="creneau harmoniques fourier"><div class="fname">Créneau ±U</div><div>$\frac{4U}{\pi}\left(\sin\omega t+\frac{\sin3\omega t}3+\frac{\sin5\omega t}5+\dots\right)$</div></div>
 </div></div>
+<div class="fgroup"><h2 id="f4" data-nomaster>Ch. 4 — Amplificateur opérationnel</h2><div class="fbox">
+<div class="frow" data-k="aop ideal"><div class="fname">AOP idéal</div><div>$i_+=i_-=0$, $v_s=A(v_+-v_-)$ ; contre-réaction ⇒ $v_+=v_-$</div></div>
+<div class="frow" data-k="inverseur"><div class="fname">Inverseur</div><div>$v_s=-\frac{R_2}{R_1}v_e$</div></div>
+<div class="frow" data-k="non inverseur"><div class="fname">Non-inverseur</div><div>$v_s=\left(1+\frac{R_2}{R_1}\right)v_e$</div></div>
+<div class="frow" data-k="suiveur"><div class="fname">Suiveur</div><div>$v_s=v_e$</div></div>
+<div class="frow" data-k="sommateur"><div class="fname">Sommateur</div><div>$v_s=-R_f\left(\frac{v_{e1}}{R_1}+\frac{v_{e2}}{R_2}\right)$</div></div>
+<div class="frow" data-k="soustracteur differentiel"><div class="fname">Différentiel</div><div>$v_s=\frac{R_1+R_2}{R_3+R_4}\frac{R_4}{R_1}v_{e2}-\frac{R_2}{R_1}v_{e1}$</div></div>
+<div class="frow" data-k="integrateur derivateur"><div class="fname">Intégrateur / dérivateur</div><div>$v_s=-\frac1{RC}\int v_e\,\mathrm dt$ ; $v_s=-RC\frac{\mathrm dv_e}{\mathrm dt}$</div></div>
+<div class="frow" data-k="comparateur hysteresis seuils"><div class="fname">Hystérésis</div><div>$V_{T\pm}=\frac{(R_1+R_2)V_{ref}\pm R_1V_{cc}}{R_2}$</div></div>
+<div class="frow" data-k="gbw bande passante"><div class="fname">Gain × bande</div><div>$G\times BW=GBW$</div></div>
+<div class="frow" data-k="slew rate"><div class="fname">Slew rate</div><div>$2\pi fA\le SR$</div></div>
+<div class="frow" data-k="offset"><div class="fname">Offset</div><div>$V_{out}=-\frac{R_2}{R_1}V_{in}\pm\left(1+\frac{R_2}{R_1}\right)V_{OS}$</div></div>
+</div></div>
 </article>
 <script src="js/data.js"></script><script src="js/data-elec.js"></script><script src="js/learn-data.js"></script><script src="js/learn.js"></script><script src="js/app.js"></script>
 </body></html>

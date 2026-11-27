@@ -48,7 +48,16 @@
 <div class="row"><div class="if">« Charge branchée en sortie »</div><div class="arrow">→</div><div>L'impédance de sortie change ⇒ H change : recalculer avec $Z\parallel R_L$.</div></div>
 </div>
 
-<h2 id="verifs"><span class="h2num">D</span>Check-list avant de rendre</h2>
+<h2 id="aop"><span class="h2num">D</span>Amplificateur opérationnel (Ch. 4)</h2>
+<div class="decision">
+<div class="row"><div class="if">« Exprimer vs en fonction de ve » (AOP)</div><div class="arrow">→</div><div>Contre-réaction ? ⇒ $v_+=v_-$ et $i_\pm=0$ ; Millman/diviseur au nœud $v_-$ ; isoler $v_s$ ; vérifier $|v_s|&lt;V_{sat}$.</div></div>
+<div class="row"><div class="if">Sortie reliée à v₊ ou pas de réaction</div><div class="arrow">→</div><div><b>Comparateur</b> : $v_s=\pm V_{cc}$ selon le signe de ε. Pas de $v_+=v_-$ !</div></div>
+<div class="row"><div class="if">« Seuils de basculement »</div><div class="arrow">→</div><div>Exprimer $V_+$ (Millman), écrire $V_+=V_-$ à l'instant du basculement avec $V_s=\mp V_{cc}$.</div></div>
+<div class="row"><div class="if">« Bande passante du montage »</div><div class="arrow">→</div><div>$BW=GBW/G$ (gain non inverseur $1+R_2/R_1$).</div></div>
+<div class="row"><div class="if">« Fréquence max sans distorsion »</div><div class="arrow">→</div><div>Slew rate : $f\le\frac{SR}{2\pi A}$.</div></div>
+</div>
+
+<h2 id="verifs"><span class="h2num">E</span>Check-list avant de rendre</h2>
 <div class="card key"><span class="tag">Les vérifications qui rattrapent les erreurs</span><ol>
 <li><b>Homogénéité</b> : RC, L/R en secondes ; LC en s² ; RCω, Lω/R sans unité.</li>
 <li><b>Cas limites</b> : R → 0, R → ∞, ω → 0, ω → ∞, t → ∞ redonnent-ils l'évidence ?</li>

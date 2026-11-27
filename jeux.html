@@ -11,7 +11,7 @@
 <section class="atlas-hero">
   <div class="kicker">Atlas · Arcade</div>
   <h1>Apprendre <em>en jouant.</em></h1>
-  <p class="lead">Un jeu par chapitre, 17 en tout. Chacun est construit sur <b>la notion du chapitre</b> : on ne répond pas à un QCM déguisé, on manipule la physique et les maths — poser des charges, courber des particules, faire tourner un nombre complexe, échelonner une matrice, reconstruire un signal.</p>
+  <p class="lead">Un jeu par chapitre, plus quelques jeux d’entraînement. Chacun est construit sur <b>la notion du chapitre</b> : on ne répond pas à un QCM déguisé, on manipule la physique et les maths — poser des charges, courber des particules, faire tourner un nombre complexe, échelonner une matrice, reconstruire un signal.</p>
 </section>
 <div class="game-how">
 <div><b>⭐ 3 étoiles</b>Chaque jeu se termine avec 1 à 3 étoiles selon ton score. Ton record est gardé sur cet appareil.</div>
@@ -26,7 +26,7 @@
  let total=0, got=0; let h='';
  Object.entries(S).forEach(([k,[t]])=>{ const L=G.filter(g=>g.s===k); h+=`<h2 id="${k}" data-nomaster>${t}</h2><div class="arcade-grid">`;
    L.forEach(g=>{ const r=LS.get('game:'+g.id,{best:0,stars:0}); total+=3; got+=r.stars||0; const n=g.ch.replace(/^(ch|el|ma)/,'');
-     h+=`<a class="acard s-${k}" href="jeu.html?g=${g.id}"><span class="ach">CH. ${n}</span><span class="ai">${g.ico}</span><b>${g.t}</b><small>${g.d}</small><span class="astars">${'★'.repeat(r.stars||0)}<span style="opacity:.35">${'★'.repeat(3-(r.stars||0))}</span>${r.best?` <small style="letter-spacing:0">· record ${r.best}</small>`:''}</span></a>`; });
+     h+=`<a class="acard s-${k}" href="jeu.html?g=${g.id}"${g.q?' style="opacity:.85"':''}><span class="ach">CH. ${n}${g.q?' · ENTRAÎNEMENT':''}</span><span class="ai">${g.ico}</span><b>${g.t}</b><small>${g.d}</small><span class="astars">${'★'.repeat(r.stars||0)}<span style="opacity:.35">${'★'.repeat(3-(r.stars||0))}</span>${r.best?` <small style="letter-spacing:0">· record ${r.best}</small>`:''}</span></a>`; });
    h+='</div>'; });
  document.getElementById('arcade').innerHTML=`<div class="callout-big">🏆 ${got} / ${total} étoiles</div>`+h;
 })();

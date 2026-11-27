@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Élec Ch. 4 — Amplificateur opérationnel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head><body data-page="el4">
+<article class="content">
+<div class="kicker">Électronique analogique · Chapitre 4</div>
+<h1>L'amplificateur opérationnel (AOP)</h1>
+<p class="lead">Jusqu'ici, tous les composants étaient <b>passifs</b> : une résistance, un condensateur ou une bobine ne peuvent qu'atténuer ou déphaser un signal. Pour <b>amplifier</b> (micro, radio, capteur), il faut un composant <b>actif</b>, alimenté par une source d'énergie : l'AOP. Avec deux résistances autour, il devient un amplificateur précis, un sommateur, un intégrateur, un comparateur…</p>
+<div class="card key"><span class="tag">✅ À la fin tu dois savoir</span>
+<ul class="twocol-list"><li>le modèle de l'AOP idéal ($i_+=i_-=0$, $v_s=A\varepsilon$)</li><li>reconnaître contre-réaction et réaction positive</li><li>utiliser $v_+=v_-$ en régime linéaire</li><li>établir le gain d'un inverseur, non-inverseur, sommateur, soustracteur</li><li>intégrateur et dérivateur</li><li>comparateur simple et à hystérésis (seuils)</li><li>saturation, tension de déchet, offset</li><li>produit gain × bande passante, slew rate</li></ul></div>
+
+<h2 id="intro"><span class="h2num">4.1</span>Pourquoi un composant actif ?</h2>
+<div class="card why"><span class="tag">Le besoin</span><p>Un signal de micro fait quelques millivolts ; un haut-parleur en veut plusieurs volts. Aucun assemblage de R, L, C ne peut <b>fournir</b> plus de puissance qu'il n'en reçoit. L'AOP puise l'énergie dans son <b>alimentation</b> ($V_{cc}$, $V_{dd}$) et la « dose » selon le signal d'entrée. C'est un circuit intégré (des dizaines de transistors sur une puce).</p></div>
+<div class="grid2">
+<div class="card def"><span class="tag">Les bornes</span><ul><li>$v_+$ : entrée <b>non inverseuse</b></li><li>$v_-$ : entrée <b>inverseuse</b></li><li>$v_s$ : sortie</li><li>deux bornes d'alimentation (souvent pas dessinées)</li></ul></div>
+<div class="card def"><span class="tag">Ce qu'il fait</span><p>C'est un amplificateur <b>de différence</b> à gain énorme :</p>$$v_s=A\,\varepsilon,\qquad\varepsilon=v_+-v_-,\qquad A>10^5$$<p>La sortie est limitée par l'alimentation : $-V_{sat}\le v_s\le+V_{sat}$.</p></div></div>
+
+<h2 id="ideal"><span class="h2num">4.2</span>Le modèle idéal</h2>
+<div class="card def"><span class="tag">Hypothèses de l'AOP idéal</span>
+<div class="tablewrap"><table><tr><th>Hypothèse</th><th>Conséquence</th></tr>
+<tr><td>Impédance d'entrée $Z_e\to\infty$</td><td>$\boxed{i_+=i_-=0}$ : aucun courant n'entre dans l'AOP</td></tr>
+<tr><td>Impédance de sortie $Z_s\to0$</td><td>la sortie est une source de tension parfaite : $v_s=A\varepsilon$ quelle que soit la charge</td></tr>
+<tr><td>Gain $A\to\infty$</td><td>si $v_s$ reste fini (non saturé) : $\varepsilon=v_s/A\to0$, donc $\boxed{v_+=v_-}$</td></tr></table></div></div>
+<figure class="anim " data-anim="aopmodel" data-badge><figcaption>Déplace ε : la sortie n’est pas saturée que pour quelques dizaines de microvolts ! En pratique, en régime linéaire, ε ≈ 0.</figcaption></figure>
+<div class="card trap"><span class="tag">⚠ Le piège classique</span><p>$v_+=v_-$ n'est vrai <b>que</b> si l'AOP fonctionne en régime linéaire, c'est-à-dire avec une <b>contre-réaction</b> (et sans saturation). Pour un comparateur, c'est faux !</p></div>
+
+<h2 id="reaction"><span class="h2num">4.3</span>Contre-réaction et réaction positive</h2>
+<div class="grid2">
+<div class="card def"><span class="tag">Contre-réaction (réaction négative)</span><p>La sortie est reliée à l'entrée <b>inverseuse</b> $v_-$. Si $v_s$ monte trop, $v_-$ monte, ε diminue, $v_s$ redescend : le système se <b>stabilise</b> avec ε ≈ 0. ⇒ <b>Régime linéaire</b>.</p></div>
+<div class="card def"><span class="tag">Réaction positive</span><p>La sortie est reliée à l'entrée <b>non inverseuse</b> $v_+$. Si $v_s$ monte, ε augmente, $v_s$ monte encore… jusqu'à la <b>saturation</b>. ⇒ Régime non linéaire (bascule).</p></div></div>
+<div class="card img"><span class="tag">🖼 Image mentale — le thermostat et le micro qui larsen</span><p>Contre-réaction = un <b>thermostat</b> : trop chaud, il coupe ; trop froid, il chauffe ⇒ température stable. Réaction positive = le <b>larsen</b> : le micro capte le haut-parleur qui amplifie le micro… le son monte jusqu'au maximum.</p></div>
+
+<h2 id="methode"><span class="h2num">4.4</span>La méthode pour tous les montages linéaires</h2>
+<div class="card meth"><span class="tag">Méthode en 4 étapes</span><ol>
+<li>Vérifier qu'il y a une <b>contre-réaction</b> (sortie → $v_-$) : régime linéaire ⇒ $v_+=v_-$.</li>
+<li>Utiliser $i_+=i_-=0$ : le courant qui arrive sur l'entrée continue dans la résistance de contre-réaction.</li>
+<li>Exprimer $v_+$ et $v_-$ en fonction de $v_e$ et $v_s$ (diviseur de tension, <b>Millman</b> au nœud $v_-$).</li>
+<li>Écrire $v_+=v_-$ et isoler $v_s$. Vérifier que $|v_s|<V_{sat}$.</li></ol></div>
+
+<h2 id="lineaires"><span class="h2num">4.5</span>Montages linéaires</h2>
+<figure class="anim tall" data-anim="aopmontage" data-badge><figcaption>Choisis un montage et règle R₁, R₂ et l’amplitude : la sortie (orange) suit la formule… tant qu’elle ne dépasse pas ±Vcc. Augmente le gain pour voir l’écrêtage.</figcaption></figure>
+<div class="grid2">
+<div class="card def"><span class="tag">Suiveur (buffer)</span>$$v_s=v_e$$<p>Sortie reliée directement à $v_-$, $v_e$ sur $v_+$. Gain 1, mais impédance d'entrée infinie et de sortie nulle : il <b>isole</b> deux étages (adaptation d'impédance) sans prélever de courant.</p></div>
+<div class="card def"><span class="tag">Inverseur</span>$$v_s=-\frac{R_2}{R_1}v_e$$<p>$v_+=0$ ⇒ $v_-=0$ (« masse virtuelle »). Courant $i=v_e/R_1$ dans $R_1$, qui continue dans $R_2$ : $v_s=0-R_2i$. Gain quelconque (même &lt; 1), signal inversé. Impédance d'entrée = $R_1$.</p></div>
+<div class="card def"><span class="tag">Non-inverseur</span>$$v_s=\left(1+\frac{R_2}{R_1}\right)v_e$$<p>$v_+=v_e$ et $v_-=v_s\frac{R_1}{R_1+R_2}$ (diviseur, car $i_-=0$). Gain toujours ≥ 1, pas d'inversion.</p></div>
+<div class="card def"><span class="tag">Sommateur inverseur</span>$$v_s=-R_f\left(\frac{v_{e1}}{R_1}+\frac{v_{e2}}{R_2}\right)$$<p>Les courants des entrées s'additionnent au nœud $v_-=0$ et passent tous dans $R_f$. Base des tables de mixage.</p></div></div>
+<div class="card def"><span class="tag">Amplificateur différentiel / soustracteur</span>$$v_s=\frac{R_1+R_2}{R_3+R_4}\cdot\frac{R_4}{R_1}v_{e2}-\frac{R_2}{R_1}v_{e1}$$<p>Si $R_1=R_3$ et $R_2=R_4$ : $v_s=\frac{R_2}{R_1}(v_{e2}-v_{e1})$ (amplificateur de différence) ; si de plus $R_1=R_2$ : $v_s=v_{e2}-v_{e1}$ (soustracteur).</p></div>
+<div class="grid2">
+<div class="card def"><span class="tag">Intégrateur (C dans la contre-réaction)</span>$$v_s(t)=-\frac1{RC}\int v_e(t)\,\mathrm dt$$<p>Le courant $v_e/R$ charge le condensateur : $i=-C\frac{\mathrm dv_s}{\mathrm dt}$.</p></div>
+<div class="card def"><span class="tag">Dérivateur (C à l'entrée)</span>$$v_s(t)=-RC\frac{\mathrm dv_e}{\mathrm dt}$$<p>Le courant $C\frac{\mathrm dv_e}{\mathrm dt}$ traverse R. Très sensible au bruit (il amplifie les variations rapides).</p></div></div>
+<figure class="anim " data-anim="aopintdiff" data-badge><figcaption>Créneau intégré = triangle ; triangle dérivé = créneau. C’est la même chose qu’au chapitre 2 et 3, mais exact grâce à l’AOP.</figcaption></figure>
+<div class="card ex"><span class="tag">Exponentiel, logarithmique, multiplicateur</span><p>Avec une <b>diode</b> ($i_D=I_se^{qV_D/kT}$) à la place d'une résistance : diode à l'entrée ⇒ $u_s=-RI_se^{qu_e/kT}$ (exponentiel) ; diode dans la contre-réaction ⇒ $u_s=-\frac{kT}q\ln\frac{u_e}{RI_s}$ (logarithmique). En enchaînant log → sommateur → exponentiel : $\ln a+\ln b=\ln(ab)$ ⇒ un <b>multiplicateur analogique</b> $V_s=KV_1V_2V_3$.</p></div>
+
+<h2 id="comparateurs"><span class="h2num">4.6</span>Montages non linéaires : comparateurs</h2>
+<div class="card def"><span class="tag">Principe</span><p>Pas de contre-réaction ⇒ ε n'est plus nul : $v_s=+V_{cc}$ si ε &gt; 0, $v_s=-V_{cc}$ (ou $V_{dd}$) si ε &lt; 0. L'AOP répond par « oui / non ».</p></div>
+<div class="card def"><span class="tag">Comparateur simple</span><p>$V_{ref}$ sur une entrée, $u_e$ sur l'autre. Avec $u_e$ sur $v_+$ : $u_s=V_{cc}$ si $u_e&gt;V_{ref}$, $u_s=V_{dd}$ si $u_e&lt;V_{ref}$.</p></div>
+<figure class="anim tall" data-anim="comparator" data-badge><figcaption>Avec du bruit, le comparateur simple « bégaye » autour de Vref. L’hystérésis crée deux seuils écartés : le bruit ne suffit plus à faire basculer.</figcaption></figure>
+<div class="card meth"><span class="tag">Comparateur à hystérésis (trigger de Schmitt) — trouver les seuils</span>
+<p>Montage du cours : $V_e$ → $R_1$ → $v_+$, $R_2$ de $v_+$ vers $V_s$ (réaction positive), $V_{ref}$ sur $v_-$.</p><ol>
+<li><b>Exprimer $V_+$</b> (Millman, $i_+=0$) : $V_+=\dfrac{R_2V_e+R_1V_s}{R_1+R_2}$.</li>
+<li><b>Basculement quand $V_+=V_-=V_{ref}$</b> : $V_e=\dfrac{(R_1+R_2)V_{ref}-R_1V_s}{R_2}$.</li>
+<li><b>Seuils</b> : on passe de $-V_{cc}$ à $+V_{cc}$ (on remplace $V_s=-V_{cc}$) en $V_{T+}=\dfrac{(R_1+R_2)V_{ref}+R_1V_{cc}}{R_2}$ ; de $+V_{cc}$ à $-V_{cc}$ en $V_{T-}=\dfrac{(R_1+R_2)V_{ref}-R_1V_{cc}}{R_2}$.</li></ol>
+<p>Largeur du cycle : $V_{T+}-V_{T-}=2\frac{R_1}{R_2}V_{cc}$. Le cycle est parcouru dans le sens : monte jusqu'à $V_{T+}$, redescend jusqu'à $V_{T-}$.</p></div>
+
+<h2 id="reel"><span class="h2num">4.7</span>L'AOP réel : ses limites</h2>
+<div class="grid2">
+<div class="card rem"><span class="tag">Alimentation</span><p><b>Split-supply</b> : $V_{SS}=-V_{DD}$, le signal oscille autour de 0. <b>Single-supply</b> : $V_{SS}=0$ ; il faut recentrer le signal autour de $V_{DD}/2$ (capacité de liaison pour supprimer l'offset continu de l'entrée).</p></div>
+<div class="card rem"><span class="tag">Tension de déchet</span><p>La sortie n'atteint pas exactement $V_{SS}$ et $V_{DD}$ : il manque quelques dizaines de mV (drop-out). Les AOP « rail-to-rail » s'en approchent le plus.</p></div>
+<div class="card rem"><span class="tag">Limitation en courant</span><p>La sortie est un générateur non idéal : le courant $|I_o|$ doit rester inférieur au courant de court-circuit $I_{SC}$ de la datasheet. Cela impose des valeurs minimales pour $R_2$, $R_L$…</p></div>
+<div class="card rem"><span class="tag">Offset et courants de biais</span><p>ε n'est pas exactement nul : on modélise une source $V_{OS}$. Inverseur : $V_{out}=-\frac{R_2}{R_1}V_{in}\pm\left(1+\frac{R_2}{R_1}\right)V_{OS}$. Les courants de biais ajoutent $\pm R_2I_2\pm R_2I_{OS}$.</p></div></div>
+<div class="card key"><span class="tag">Gain × bande passante = constante</span><p>Le gain A de l'AOP chute avec la fréquence. Tant que $A\gg G$, le montage a bien son gain $G$ ; au-delà, il suit la courbe de l'AOP. Produit constant : $\boxed{G\times BW=GBW}$. MCP6271 : $GBW=2$ MHz ⇒ gain 1 : 2 MHz ; gain 100 : 20 kHz ; gain 10 000 : 200 Hz.</p></div>
+<figure class="anim " data-anim="gbw" data-badge><figcaption>Augmente le gain du montage : la bande passante diminue d’autant. Le produit reste égal à 2 MHz.</figcaption></figure>
+<div class="card key"><span class="tag">Slew rate (vitesse de balayage)</span><p>La sortie ne peut pas varier plus vite que $SR$ (en V/µs). Pour un sinus $V(t)=A\sin\omega t$, la pente maximale est $\left.\frac{\mathrm dV}{\mathrm dt}\right|_{max}=2\pi fA$. Condition : $\boxed{2\pi fA\le SR}$, sinon le sinus se déforme en triangle.</p></div>
+<figure class="anim " data-anim="slew" data-badge><figcaption>Monte la fréquence ou l’amplitude : quand 2πfA dépasse le slew rate, la sortie ne suit plus.</figcaption></figure>
+
+<h2 id="exos"><span class="h2num">4.8</span>Exercices types corrigés</h2>
+<section class="exo" id="exo1"><header><h3 id="e1">Amplificateur inverseur</h3><span class="time">10 min</span></header><div class="body">
+<div class="statement">$R_1=10$ kΩ, $R_2=47$ kΩ, $V_{sat}=\pm15$ V, $v_e=0{,}5\sin\omega t$. 1. $v_s(t)$. 2. Amplitude maximale de $v_e$ sans saturation. 3. Résistance d'entrée du montage.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> contre-réaction + $v_+$ à la masse ⇒ <b>masse virtuelle</b> $v_-=0$ ; le courant de $R_1$ traverse $R_2$.</div></div>
+<div class="steps"><div class="step"><h4>1. Gain</h4><p>Contre-réaction ⇒ $v_-=v_+=0$. $v_s=-\frac{R_2}{R_1}v_e=-4{,}7v_e$ ⇒ $\boxed{v_s=-2{,}35\sin\omega t\ \text{V}}$ (inversé = déphasé de π).</p></div><div class="step"><h4>2. Saturation</h4><p>$4{,}7\,|v_e|\le15$ ⇒ $\boxed{|v_e|_{max}\approx3{,}2\ \text{V}}$.</p></div><div class="step"><h4>3. Résistance d’entrée</h4><p>La source voit $R_1$ reliée à la masse virtuelle : $R_e=\frac{v_e}{i}=\boxed{R_1=10\ \text{kΩ}}$ (pour une résistance d’entrée infinie, on préfère le non-inverseur ou un suiveur devant).</p></div></div></div></section>
+<section class="exo" id="exo2"><header><h3 id="e2">Non-inverseur et sommateur</h3><span class="time">15 min</span></header><div class="body">
+<div class="statement">1. Montrer $v_s=(1+R_2/R_1)v_e$ ; quelles résistances pour un gain 11 ? 2. Sommateur : $v_{e1}=1$ V, $v_{e2}=-0{,}5$ V, $R_1=R_2=10$ kΩ, $R_f=20$ kΩ.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> non-inverseur ⇒ <b>diviseur de tension</b> au nœud $v_-$ ; sommateur ⇒ les courants s’additionnent à la masse virtuelle.</div></div>
+<div class="steps"><div class="step"><h4>1. Diviseur sur v₋</h4><p>$i_-=0$ ⇒ $R_1$ et $R_2$ en série entre $v_s$ et la masse : $v_-=v_s\frac{R_1}{R_1+R_2}$. Avec $v_-=v_+=v_e$ : $v_s=\left(1+\frac{R_2}{R_1}\right)v_e$. Gain 11 : $R_2=10R_1$, par exemple $\boxed{R_1=1\ \text{kΩ},\ R_2=10\ \text{kΩ}}$.</p></div><div class="step"><h4>2. Sommateur</h4><p>$v_s=-R_f\left(\frac{v_{e1}}{R_1}+\frac{v_{e2}}{R_2}\right)=-20\left(\frac1{10}-\frac{0{,}5}{10}\right)=\boxed{-1\ \text{V}}$.</p></div></div></div></section>
+<section class="exo" id="exo3"><header><h3 id="e3">Comparateur à hystérésis</h3><span class="time">20 min</span></header><div class="body">
+<div class="statement">Montage du cours avec $R_1=10$ kΩ, $R_2=40$ kΩ, $V_{cc}=12$ V ($V_s=\pm12$ V). 1. $V_+$. 2. Seuils pour $V_{ref}=0$. 3. Seuils pour $V_{ref}=1$ V. 4. Pourquoi est-ce utile ?</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> réaction <b>positive</b> ⇒ PAS de $v_+=v_-$ en permanence : on l’utilise seulement à l’instant du basculement, avec $V_s=\pm V_{cc}$.</div></div>
+<div class="steps"><div class="step"><h4>1. Millman</h4><p>$i_+=0$ : $V_+=\frac{V_e/R_1+V_s/R_2}{1/R_1+1/R_2}=\frac{R_2V_e+R_1V_s}{R_1+R_2}=\frac{4V_e+V_s}{5}$.</p></div><div class="step"><h4>2. V_ref = 0</h4><p>Bascule quand $V_+=0$ ⇒ $V_e=-\frac{R_1}{R_2}V_s=-\frac{V_s}4$. Depuis $V_s=-12$ : $\boxed{V_{T+}=3\ \text{V}}$ ; depuis $V_s=+12$ : $\boxed{V_{T-}=-3\ \text{V}}$.</p></div><div class="step"><h4>3. V_ref = 1 V</h4><p>$V_e=\frac{5V_{ref}-V_s}{4}$ : $V_{T+}=\frac{5+12}4=\boxed{4{,}25\ \text{V}}$, $V_{T-}=\frac{5-12}4=\boxed{-1{,}75\ \text{V}}$. Le cycle (largeur 6 V) est décalé de $\frac{R_1+R_2}{R_2}V_{ref}=1{,}25$ V.</p></div><div class="step"><h4>4. Intérêt</h4><p>Un signal bruité qui traverse lentement le seuil ne fait basculer la sortie qu’<b>une</b> fois, tant que le bruit est plus petit que la largeur du cycle (6 V ici).</p></div></div></div></section>
+<section class="exo" id="exo4"><header><h3 id="e4">Limites réelles : GBW, slew rate, offset</h3><span class="time">15 min</span></header><div class="body">
+<div class="statement">AOP : GBW = 2 MHz, SR = 0,9 V/µs, $V_{OS}=3$ mV. 1. Bande passante d’un non-inverseur de gain 50. 2. On veut un gain 1000 jusqu’à 20 kHz. 3. Fréquence maximale d’un sinus de 10 V d’amplitude. 4. Erreur de sortie due à l’offset pour un inverseur de gain −100.</div><div class="pattern"><span class="ico">🧭</span><div><b>Réflexe :</b> gain × bande = constante ; slew rate ⇒ $2\pi fA$ ; offset ⇒ multiplié par le gain <b>non inverseur</b> $1+R_2/R_1$.</div></div>
+<div class="steps"><div class="step"><h4>1.</h4><p>$BW=\frac{GBW}{G}=\frac{2\cdot10^6}{50}=\boxed{40\ \text{kHz}}$.</p></div><div class="step"><h4>2.</h4><p>Un seul étage : $BW=2$ kHz, insuffisant (il faudrait GBW = 20 MHz). Deux étages de gain $\sqrt{1000}\approx31{,}6$ : chacun a $BW\approx63$ kHz ⇒ <b>ça passe</b>.</p></div><div class="step"><h4>3.</h4><p>$2\pi fA\le SR$ ⇒ $f\le\frac{0{,}9\cdot10^6}{2\pi\times10}\approx\boxed{14\ \text{kHz}}$ (au-delà, sortie triangulaire).</p></div><div class="step"><h4>4.</h4><p>$\left(1+\frac{R_2}{R_1}\right)V_{OS}=101\times3\ \text{mV}\approx\boxed{\pm0{,}3\ \text{V}}$ en continu sur la sortie.</p></div></div></div></section>
+
+<h2 id="retenir" data-nomaster>À retenir</h2>
+<div class="card key"><span class="tag">Récapitulatif (à savoir)</span><ul><li>Modèle de l'AOP idéal et son utilisation : $i_+=i_-=0$, et $v_+=v_-$ si contre-réaction.</li><li>Fonctionnement linéaire grâce à la contre-réaction ; formules des montages et leur démonstration.</li><li>Principe des comparateurs (simple, hystérésis) et calcul des seuils.</li><li>Non-linéarités : saturation, déchet, courant max, offset, GBW, slew rate.</li></ul></div>
+
+<h2 id="flash" data-nomaster>Flashcards</h2>
+<div class="flash" data-cards="el4"></div>
+<h2 id="quiz" data-nomaster>Quiz du chapitre</h2>
+<div class="quiz" data-quiz="el4"></div>
+<h3>Aller plus loin en vidéo</h3>
+<p class="video-links"><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=amplificateur+op%C3%A9rationnel+id%C3%A9al+cours">▶ AOP idéal</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=montage+amplificateur+inverseur+AOP">▶ Montage inverseur</a><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=comparateur+%C3%A0+hyst%C3%A9r%C3%A9sis+AOP">▶ Trigger de Schmitt</a></p>
+</article>
+<script src="js/data.js"></script><script src="js/data-elec.js"></script><script src="js/learn-data.js"></script><script src="js/learn-el4.js"></script><script src="js/learn.js"></script><script src="js/anims-core.js"></script><script src="js/anims-elec.js"></script><script src="js/anims-aop.js"></script><script src="js/app.js"></script>
+</body></html>

@@ -8,9 +8,13 @@ const GAMES=window.ATLAS_GAMES=[
  {id:"ch3",ch:"ch3",s:"phys",ico:"🌀",t:"Cyclotron",d:"Choisis le champ B pour courber les particules dans le détecteur."},
  {id:"ch4",ch:"ch4",s:"phys",ico:"🧲",t:"Loi de Lenz",d:"Aimants, rails, spires : prédis le phénomène induit."},
  {id:"ch5",ch:"ch5",s:"phys",ico:"🌊",t:"Onde & Maxwell",d:"Trièdre E, B, k ; quelle équation pour quelle image ; λ = c/f."},
- {id:"el1",ch:"el1",s:"elec",ico:"🔌",t:"Banc de test",d:"Diviseurs, associations, Thévenin : vise la bonne valeur."},
- {id:"el2",ch:"el2",s:"elec",ico:"⏱",t:"Chrono τ",d:"Arrête la charge du condensateur au bon instant."},
- {id:"el3",ch:"el3",s:"elec",ico:"📈",t:"Bode match",d:"Retrouve le filtre et sa coupure à partir de la courbe de gain."},
+ {id:"el1",ch:"el1",s:"elec",ico:"💡",t:"Court-circuit",d:"Un vrai circuit calculé en direct : place les résistances, allume, ne grille pas les fusibles."},
+ {id:"el2",ch:"el2",s:"elec",ico:"🔫",t:"Condensator",d:"Shoot’em up : ton canon tire l’énergie ½Cu² d’un condensateur en charge."},
+ {id:"el3",ch:"el3",s:"elec",ico:"🛡",t:"Filtre-Défense",d:"Bloque le bruit, laisse passer les données : choisis et règle ton filtre en temps réel."},
+ {id:"el4",ch:"el4",s:"elec",ico:"🛸",t:"Saturation",d:"Ton vaisseau est la sortie de l’AOP : change de montage pour passer les portes."},
+ {id:"el1q",ch:"el1",s:"elec",ico:"🔌",t:"Banc de test",d:"Entraînement : diviseurs, associations, Thévenin.",q:1},
+ {id:"el2q",ch:"el2",s:"elec",ico:"⏱",t:"Chrono τ",d:"Entraînement : arrête la charge au bon instant.",q:1},
+ {id:"el3q",ch:"el3",s:"elec",ico:"📈",t:"Bode match",d:"Entraînement : retrouve le filtre à partir de la courbe.",q:1},
  {id:"ma1",ch:"ma1",s:"math",ico:"🚀",t:"Rotor complexe",d:"Multiplie pour tourner : amène le vaisseau sur la cible."},
  {id:"ma2",ch:"ma2",s:"math",ico:"🎯",t:"Chasseur de primitives",d:"Attrape la bonne primitive, évite les pièges."},
  {id:"ma3",ch:"ma3",s:"math",ico:"🎛",t:"Régime parfait",d:"Règle λ et ω₀ pour imiter la solution de l’EDO."},
@@ -46,6 +50,7 @@ const NAV = [
   {s:"elec",id:"el1", href:"el1.html", n:"1", t:"Notions de base : lois, diviseurs, Thévenin, Millman"},
   {s:"elec",id:"el2", href:"el2.html", n:"2", t:"Régime transitoire : RC, RL, RLC"},
   {s:"elec",id:"el3", href:"el3.html", n:"3", t:"Régime sinusoïdal & filtrage (Bode)"},
+  {s:"elec",id:"el4", href:"el4.html", n:"4", t:"Amplificateur opérationnel (AOP)"},
   {s:"elec",h:"Travaux dirigés"},
   {s:"elec",id:"eltd1", href:"eltd1.html", n:"T1", t:"TD 1 — Notions de base"},
   {s:"elec",id:"eltd2", href:"eltd2.html", n:"T2", t:"TD 2 — Régime transitoire"},
@@ -104,7 +109,7 @@ top.innerHTML = `<button class="iconbtn" id="menuBtn" aria-label="Menu">☰</but
   <button class="iconbtn" id="themeBtn" title="Thème clair/sombre">◐</button>`;
 const layout = document.createElement("div"); layout.className="layout";
 const side = document.createElement("nav"); side.className="sidebar";
-let sh = `<a href="index.html" class="${page==="index"?"active":""}"><span class="num">⌂</span><span>Accueil (toutes les matières)</span></a><a href="liens.html" class="${page==="liens"?"active":""}"><span class="num">∞</span><span>Les mêmes équations partout</span></a><a href="jeux.html" class="arcade-link ${page==="jeux"||page==="jeu"?"active":""}"><span class="num">🕹</span><span>Arcade : 17 jeux</span></a><div class="subjsw">${Object.entries(SUBJ).map(([k,v])=>`<a href="${v.home}" class="${k===subj?"on":""}">${v.ico} ${v.short}</a>`).join("")}</div>`;
+let sh = `<a href="index.html" class="${page==="index"?"active":""}"><span class="num">⌂</span><span>Accueil (toutes les matières)</span></a><a href="liens.html" class="${page==="liens"?"active":""}"><span class="num">∞</span><span>Les mêmes équations partout</span></a><a href="jeux.html" class="arcade-link ${page==="jeux"||page==="jeu"?"active":""}"><span class="num">🕹</span><span>Arcade : ${GAMES.length} jeux</span></a><div class="subjsw">${Object.entries(SUBJ).map(([k,v])=>`<a href="${v.home}" class="${k===subj?"on":""}">${v.ico} ${v.short}</a>`).join("")}</div>`;
 NAV.forEach(it=>{
   if(subj ? it.s!==subj : true) return;
   if(it.h){sh+=`<h4>${it.h}</h4>`;return;}
@@ -234,7 +239,7 @@ article.querySelectorAll(".quiz[data-quiz]").forEach(el=>{
   el._pool=pool; el._n=+el.dataset.n||pool.length;
   buildQuiz(el, keys.length>1||el.dataset.n?pickPool(el):pool, el.dataset.quiz);
 });
-function chapName(k){ return {ch0:"Ch. 0",ch1:"Ch. 1",ch2:"Ch. 2",ch3:"Ch. 3",ch4:"Ch. 4",ch5:"Ch. 5",td1:"TD1",td2:"TD2",td3:"TD3",el1:"Ch. 1",el2:"Ch. 2",el3:"Ch. 3",eltd1:"TD1",eltd2:"TD2",eltd3:"TD3",ma1:"Complexes",ma2:"Intégrales",ma3:"EDO",ma4:"Int. multiples",ma5:"Matrices",ma6:"Séries de Fourier",ma7:"Transf. Fourier",ma8:"Laplace"}[k]||k; }
+function chapName(k){ return {ch0:"Ch. 0",ch1:"Ch. 1",ch2:"Ch. 2",ch3:"Ch. 3",ch4:"Ch. 4",ch5:"Ch. 5",td1:"TD1",td2:"TD2",td3:"TD3",el1:"Ch. 1",el2:"Ch. 2",el3:"Ch. 3",el4:"Ch. 4",eltd1:"TD1",eltd2:"TD2",eltd3:"TD3",ma1:"Complexes",ma2:"Intégrales",ma3:"EDO",ma4:"Int. multiples",ma5:"Matrices",ma6:"Séries de Fourier",ma7:"Transf. Fourier",ma8:"Laplace"}[k]||k; }
 
 /* ---- flashcards ---- */
 article.querySelectorAll(".flash[data-cards]").forEach(el=>{

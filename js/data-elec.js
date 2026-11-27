@@ -115,4 +115,19 @@ Q.eltd3=[
 C.eltd1=[{f:`Dipôle AB complexe → générateur réel`,b:`Convertir chaque branche (E,R) en Norton (E/R ∥ R), sommer les courants, combiner les R en parallèle, reconvertir en Thévenin.`},{f:`Résistances avec un fil entre deux points milieux`,b:`Les deux points sont au même potentiel : on les fusionne → associations parallèles puis série.`}];
 C.eltd2=[{f:`« Fermé depuis très longtemps »`,b:`= régime permanent continu : C = circuit ouvert, L = fil. On calcule les valeurs à 0⁻, puis continuité de u_C / i_L.`},{f:`Thévenin vu par C (ou L)`,b:`Le reste du circuit → (E_th, R_th) ; τ = R_th·C (ou L/R_th), u_C∞ = E_th.`}];
 C.eltd3=[{f:`Approximation à une fréquence donnée`,b:`Calculer x = ω/ω_c : x ≪ 1 ou x ≫ 1 ⇒ garder le terme dominant de H ; sinon module + argument exacts.`},{f:`Créneau à travers un filtre`,b:`Somme d'harmoniques impairs (4U/π)·sin(nωt)/n : chacun multiplié par |H(nω)| et déphasé de arg H(nω).`}];
+Q.el4=[
+{q:`Dans le modèle de l’AOP idéal, les courants d’entrée valent…`,o:[`i₊ = i₋ = 0`,`i₊ = i₋ ≠ 0`,`i₊ = −i₋`,`ils dépendent de la charge`],a:0,e:`Impédance d’entrée infinie.`},
+{q:r`La relation $v_+=v_-$ est valable…`,o:[`en régime linéaire, avec une contre-réaction`,`toujours`,`seulement pour un comparateur`,`seulement en continu`],a:0,e:`Elle vient de ε = vs/A avec A → ∞ et vs fini (non saturé).`},
+{q:`La contre-réaction relie la sortie à…`,o:[`l’entrée inverseuse v₋`,`l’entrée non inverseuse v₊`,`la masse`,`l’alimentation`],a:0,e:`Réaction négative ⇒ stabilisation (régime linéaire).`},
+{q:`Une réaction positive provoque…`,o:[`la saturation de l’AOP`,`un gain de 1`,`un fonctionnement linéaire`,`une impédance d’entrée nulle`],a:0,e:`La sortie s’emballe jusqu’à ±Vsat.`},
+{q:r`Gain de l’inverseur ($R_1$ à l’entrée, $R_2$ en contre-réaction) :`,o:[r`$-\frac{R_2}{R_1}$`,r`$1+\frac{R_2}{R_1}$`,r`$\frac{R_1}{R_2}$`,r`$-\frac{R_1}{R_2}$`],a:0,e:`Masse virtuelle : i = ve/R₁ traverse R₂.`},
+{q:`Gain du non-inverseur :`,o:[r`$1+\frac{R_2}{R_1}$`,r`$-\frac{R_2}{R_1}$`,r`$\frac{R_2}{R_1}$`,`1`],a:0,e:`Diviseur au nœud v₋ : v₋ = vs·R₁/(R₁+R₂) = ve.`},
+{q:`À quoi sert un suiveur (gain 1) ?`,o:[`isoler deux étages (adaptation d’impédance)`,`amplifier`,`inverser le signal`,`filtrer`],a:0,e:`Impédance d’entrée infinie, de sortie nulle.`},
+{q:`Un intégrateur à AOP transforme un créneau en…`,o:[`un triangle`,`un sinus`,`des pics`,`un créneau plus grand`],a:0,e:`Une constante intégrée donne une rampe.`},
+{q:`Comparateur simple, ue sur v₊ : si ue > Vref, alors us =`,o:[`+Vcc`,`−Vcc`,`0`,`Vref`],a:0,e:`ε = ue − Vref > 0.`},
+{q:`L’intérêt du comparateur à hystérésis :`,o:[`éviter les basculements multiples dus au bruit`,`amplifier linéairement`,`augmenter la bande passante`,`supprimer l’offset`],a:0,e:`Deux seuils écartés de 2(R₁/R₂)Vcc.`},
+{q:`GBW = 2 MHz, gain du montage 100 : bande passante ?`,o:[`20 kHz`,`200 MHz`,`2 MHz`,`200 Hz`],a:0,e:`BW = GBW / G.`},
+{q:`Slew rate 1 V/µs, sinus de 5 V d’amplitude : fréquence max ≈`,o:[`32 kHz`,`200 kHz`,`5 MHz`,`1 kHz`],a:0,e:`f ≤ SR/(2πA) = 10⁶/(31,4) ≈ 32 kHz.`},
+{q:`En single-supply (VSS = 0), il faut…`,o:[`recentrer le signal autour de VDD/2`,`rien de spécial`,`inverser l’alimentation`,`supprimer la contre-réaction`],a:0,e:`Sinon la partie négative du signal est coupée.`}];
+C.el4=[{f:`AOP idéal`,b:`i₊ = i₋ = 0 ; vs = Aε ; si contre-réaction et non saturé : v₊ = v₋.`},{f:`Inverseur`,b:`vs = −(R₂/R₁)ve ; masse virtuelle v₋ = 0 ; Re = R₁.`},{f:`Non-inverseur`,b:`vs = (1 + R₂/R₁)ve ; gain ≥ 1.`},{f:`Sommateur`,b:`vs = −Rf(ve₁/R₁ + ve₂/R₂).`},{f:`Soustracteur`,b:`R₁ = R₃, R₂ = R₄ : vs = (R₂/R₁)(ve₂ − ve₁).`},{f:`Intégrateur / dérivateur`,b:`vs = −(1/RC)∫ve dt ; vs = −RC dve/dt.`},{f:`Seuils de l’hystérésis`,b:`VT± = [(R₁+R₂)Vref ± R₁Vcc]/R₂ ; largeur 2(R₁/R₂)Vcc.`},{f:`GBW`,b:`G × BW = constante (2 MHz pour le MCP6271).`},{f:`Slew rate`,b:`2πfA ≤ SR, sinon sortie triangulaire.`},{f:`Offset`,b:`Vout = −(R₂/R₁)Vin ± (1 + R₂/R₁)V_OS.`}];
 })();
